@@ -6,6 +6,12 @@
   <title>Coordenada Viajes — Administrador</title>
   <!-- Netlify Identity Widget (required for git-gateway login) -->
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  <!-- Redirect confirmation tokens (email invite flow) to the admin panel -->
+  <script>
+    if (window.location.hash && window.location.hash.includes('confirmation_token')) {
+      window.location.href = '/admin/' + window.location.hash;
+    }
+  </script>
 </head>
 <body>
   <!-- Decap CMS

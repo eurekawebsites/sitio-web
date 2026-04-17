@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- HORIZONTAL · oscuro · transparent background · for use on dark/green backgrounds -->
+<svg width="800" height="220" viewBox="0 0 800 220" xmlns="http://www.w3.org/2000/svg">
+
+  <!-- Body -->
+  <rect x="182" y="56" width="136" height="108" rx="8" ry="8"
+        fill="none" stroke="#F8F5EE" stroke-width="3.5"/>
+  <!-- Inner border -->
+  <rect x="188" y="62" width="124" height="96" rx="4" ry="4"
+        fill="none" stroke="#F8F5EE" stroke-width="1.2"/>
+
+  <!-- Belt left -->
+  <rect x="221" y="56" width="12" height="108" fill="none" stroke="#F8F5EE" stroke-width="3"/>
+  <line x1="225" y1="56" x2="225" y2="164" stroke="#F8F5EE" stroke-width="1"/>
+  <line x1="229" y1="56" x2="229" y2="164" stroke="#F8F5EE" stroke-width="1"/>
+  <rect x="223" y="105" width="8" height="10" rx="1" ry="1"
+        fill="none" stroke="#F0C070" stroke-width="2.5"/>
+  <circle cx="227" cy="110" r="2" fill="none" stroke="#F0C070" stroke-width="2.5"/>
+
+  <!-- Belt right -->
+  <rect x="267" y="56" width="12" height="108" fill="none" stroke="#F8F5EE" stroke-width="3"/>
+  <line x1="271" y1="56" x2="271" y2="164" stroke="#F8F5EE" stroke-width="1"/>
+  <line x1="275" y1="56" x2="275" y2="164" stroke="#F8F5EE" stroke-width="1"/>
+  <rect x="269" y="105" width="8" height="10" rx="1" ry="1"
+        fill="none" stroke="#F0C070" stroke-width="2.5"/>
+  <circle cx="273" cy="110" r="2" fill="none" stroke="#F0C070" stroke-width="2.5"/>
+
+  <!-- Handle clips + arch -->
+  <rect x="222" y="50" width="10" height="10" rx="1.5" ry="1.5"
+        fill="none" stroke="#F8F5EE" stroke-width="2.5"/>
+  <rect x="268" y="50" width="10" height="10" rx="1.5" ry="1.5"
+        fill="none" stroke="#F8F5EE" stroke-width="2.5"/>
+  <path d="M 227,56 C 227,22 273,22 273,56"
+        fill="none" stroke="#F8F5EE" stroke-width="3.5"/>
+
+  <!-- Corner brackets -->
+  <path d="M 182,68 L 182,56 L 194,56"   fill="none" stroke="#F0C070" stroke-width="3"/>
+  <path d="M 306,56 L 318,56 L 318,68"   fill="none" stroke="#F0C070" stroke-width="3"/>
+  <path d="M 182,152 L 182,164 L 194,164" fill="none" stroke="#F0C070" stroke-width="3"/>
+  <path d="M 306,164 L 318,164 L 318,152" fill="none" stroke="#F0C070" stroke-width="3"/>
+
+  <!-- Center lock -->
+  <rect x="243" y="103" width="14" height="10" rx="2" ry="2"
+        fill="none" stroke="#F8F5EE" stroke-width="2.5"/>
+  <circle cx="250" cy="116" r="2.5" fill="none" stroke="#F8F5EE" stroke-width="2.5"/>
+
+  <!-- Stickers -->
+  <circle cx="205" cy="94" r="9" fill="none" stroke="#EDE0C4" stroke-width="2"/>
+  <circle cx="205" cy="94" r="6" fill="none" stroke="#EDE0C4" stroke-width="1"/>
+  <path d="M 296,84 L 306,94 L 296,104 L 286,94 Z" fill="none" stroke="#D4AF6A" stroke-width="2"/>
+  <path d="M 296,88 L 302,94 L 296,100 L 290,94 Z" fill="none" stroke="#D4AF6A" stroke-width="1"/>
+  <rect x="194" y="119" width="22" height="14" rx="3" ry="3"
+        fill="none" stroke="#D4AF6A" stroke-width="2"/>
+  <rect x="197" y="122" width="16" height="8" rx="2" ry="2"
+        fill="none" stroke="#D4AF6A" stroke-width="1"/>
+  <circle cx="296" cy="126" r="9" fill="none" stroke="#EDE0C4" stroke-width="2"/>
+  <circle cx="296" cy="126" r="6" fill="none" stroke="#EDE0C4" stroke-width="1"/>
+
+  <!-- Type -->
+  <text x="358" y="98" font-family="Georgia,'EB Garamond',serif"
+        font-size="30" fill="#F8F5EE" text-anchor="start" letter-spacing="7">COORDENADA</text>
+  <line x1="358" y1="114" x2="628" y2="114" stroke="#D4AF6A" stroke-width="0.9"/>
+  <text x="358" y="136" font-family="Arial,Helvetica,sans-serif"
+        font-size="12" fill="#F8F5EE" text-anchor="start" letter-spacing="9">VIAJES</text>
+</svg>

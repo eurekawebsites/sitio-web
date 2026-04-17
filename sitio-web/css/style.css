@@ -83,25 +83,14 @@ h1, h2, h3, h4 {
 }
 
 /* ── Logo ── */
-/* REPLACE WITH LOGO SVG — swap out .nav-logo content */
 .nav-logo {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  background: var(--green);
-  padding: 8px 16px;
   flex-shrink: 0;
   transition: opacity var(--ease);
 }
-.nav-logo:hover { opacity: 0.88; }
-
-.nav-logo-text {
-  font-family: var(--serif);
-  font-size: 0.85rem;
-  letter-spacing: 3.5px;
-  color: var(--gold);
-  white-space: nowrap;
-}
+.nav-logo:hover { opacity: 0.82; }
+.nav-logo img { display: block; width: 140px; height: auto; }
 
 /* ── Nav links ── */
 .nav-links {
@@ -307,6 +296,14 @@ h1, h2, h3, h4 {
   color: var(--gold);
   margin-bottom: 52px;
   opacity: 0.85;
+}
+
+.hero-logo {
+  display: block;
+  width: min(320px, 72%);
+  height: auto;
+  margin: 0 auto 48px;
+  opacity: 0.95;
 }
 
 .hero-cta {

@@ -1,7 +1,13 @@
 [build]
-  publish = "."
+  publish = "sitio-web/sitio-web"
 
 [[redirects]]
   from = "/admin"
   to = "/admin/index.html"
   status = 200
+
+[[redirects]]
+  from = "/"
+  to = "/admin/"
+  status = 200
+  conditions = {Role = ["admin"]}

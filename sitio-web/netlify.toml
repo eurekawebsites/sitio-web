@@ -1,5 +1,5 @@
 [build]
-  publish = "."
+  publish = "sitio-web"
 
 [[redirects]]
   from = "/admin"

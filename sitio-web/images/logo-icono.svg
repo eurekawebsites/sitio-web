@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ICON · oscuro · transparent background · for use on dark/green backgrounds -->
+<svg width="800" height="800" viewBox="0 0 800 800" xmlns="http://www.w3.org/2000/svg">
+
+  <!-- Body -->
+  <rect x="284" y="333" width="232" height="172" rx="8" ry="8"
+        fill="none" stroke="#F8F5EE" stroke-width="3.5"/>
+  <!-- Inner border -->
+  <rect x="290" y="339" width="220" height="160" rx="4" ry="4"
+        fill="none" stroke="#F8F5EE" stroke-width="1.2"/>
+
+  <!-- Belt left -->
+  <rect x="355" y="333" width="12" height="172" fill="none" stroke="#F8F5EE" stroke-width="3"/>
+  <line x1="359" y1="333" x2="359" y2="505" stroke="#F8F5EE" stroke-width="1"/>
+  <line x1="363" y1="333" x2="363" y2="505" stroke="#F8F5EE" stroke-width="1"/>
+  <rect x="357" y="413" width="8" height="12" rx="1" ry="1"
+        fill="none" stroke="#F0C070" stroke-width="2.5"/>
+  <circle cx="361" cy="419" r="2.5" fill="none" stroke="#F0C070" stroke-width="2.5"/>
+
+  <!-- Belt right -->
+  <rect x="433" y="333" width="12" height="172" fill="none" stroke="#F8F5EE" stroke-width="3"/>
+  <line x1="437" y1="333" x2="437" y2="505" stroke="#F8F5EE" stroke-width="1"/>
+  <line x1="441" y1="333" x2="441" y2="505" stroke="#F8F5EE" stroke-width="1"/>
+  <rect x="435" y="413" width="8" height="12" rx="1" ry="1"
+        fill="none" stroke="#F0C070" stroke-width="2.5"/>
+  <circle cx="439" cy="419" r="2.5" fill="none" stroke="#F0C070" stroke-width="2.5"/>
+
+  <!-- Handle clips + arch -->
+  <rect x="355" y="326" width="12" height="11" rx="1.5" ry="1.5"
+        fill="none" stroke="#F8F5EE" stroke-width="2.5"/>
+  <rect x="433" y="326" width="12" height="11" rx="1.5" ry="1.5"
+        fill="none" stroke="#F8F5EE" stroke-width="2.5"/>
+  <path d="M 361,333 C 361,295 439,295 439,333"
+        fill="none" stroke="#F8F5EE" stroke-width="3.5"/>
+
+  <!-- Corner brackets -->
+  <path d="M 284,349 L 284,333 L 300,333" fill="none" stroke="#F0C070" stroke-width="3"/>
+  <path d="M 500,333 L 516,333 L 516,349" fill="none" stroke="#F0C070" stroke-width="3"/>
+  <path d="M 284,489 L 284,505 L 300,505" fill="none" stroke="#F0C070" stroke-width="3"/>
+  <path d="M 500,505 L 516,505 L 516,489" fill="none" stroke="#F0C070" stroke-width="3"/>
+
+  <!-- Center lock -->
+  <rect x="390" y="409" width="20" height="14" rx="2" ry="2"
+        fill="none" stroke="#F8F5EE" stroke-width="2.5"/>
+  <circle cx="400" cy="427" r="3.5" fill="none" stroke="#F8F5EE" stroke-width="2.5"/>
+
+  <!-- Stickers -->
+  <circle cx="320" cy="381" r="12" fill="none" stroke="#D4AF6A" stroke-width="2"/>
+  <circle cx="320" cy="381" r="8"  fill="none" stroke="#D4AF6A" stroke-width="1"/>
+  <path d="M 481,369 L 493,381 L 481,393 L 469,381 Z" fill="none" stroke="#EDE0C4" stroke-width="2"/>
+  <path d="M 481,373 L 489,381 L 481,389 L 473,381 Z" fill="none" stroke="#EDE0C4" stroke-width="1"/>
+  <rect x="306" y="448" width="28" height="18" rx="3" ry="3"
+        fill="none" stroke="#EDE0C4" stroke-width="2"/>
+  <rect x="310" y="451" width="20" height="12" rx="2" ry="2"
+        fill="none" stroke="#EDE0C4" stroke-width="1"/>
+  <circle cx="481" cy="457" r="12" fill="none" stroke="#D4AF6A" stroke-width="2"/>
+  <circle cx="481" cy="457" r="8"  fill="none" stroke="#D4AF6A" stroke-width="1"/>
+</svg>

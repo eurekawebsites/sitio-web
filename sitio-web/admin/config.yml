@@ -1,0 +1,48 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "images"
+public_folder: "/images"
+
+# NOTE: This collection saves each trip as a separate JSON file in data/trips/.
+# The main site JS reads data/trips.json (a single array file).
+# Until a build step aggregates the individual files, manage trips by
+# editing data/trips.json directly, or switch this to a file collection.
+collections:
+  - name: "trips"
+    label: "Viajes"
+    folder: "data/trips"
+    create: true
+    slug: "{{slug}}"
+    format: "json"
+    fields:
+      - { label: "Nombre del viaje",            name: "name",           widget: "string" }
+      - { label: "Destino (para WhatsApp)",      name: "destination",    widget: "string" }
+      - { label: "Ruta",                         name: "route",          widget: "string",  hint: "Ej: Bangkok · Chiang Mai · Phuket" }
+      - { label: "Fecha de salida",              name: "departure_date", widget: "string" }
+      - { label: "Duración",                     name: "duration",       widget: "string" }
+      - { label: "Foto",                         name: "photo",          widget: "image",   required: false }
+      - { label: "Mostrar detalles completos",   name: "detailed",       widget: "boolean", default: false }
+      - { label: "Activo (visible en el sitio)", name: "active",         widget: "boolean", default: true }
+      - { label: "Orden",                        name: "sort_order",     widget: "number",  default: 99 }
+      - label: "El viaje incluye"
+        name: "includes"
+        widget: "list"
+        required: false
+        field: { label: "Elemento", name: "item", widget: "string" }
+      - { label: "Nota destacada (cursiva)",     name: "highlight_note", widget: "string",  required: false }
+      - { label: "Precio desde",                 name: "price_from",     widget: "string",  required: false, hint: "Ej: $78,205 MXN" }
+      - { label: "Nota de precio",               name: "price_note",     widget: "string",  required: false, hint: "Ej: por persona en ocupación doble" }
+
+  - name: "settings"
+    label: "Configuración"
+    files:
+      - label: "General"
+        name: "general"
+        file: "data/settings.json"
+        fields:
+          - { label: "Número WhatsApp",    name: "whatsapp_number", widget: "string" }
+          - { label: "Titular del hero",   name: "hero_headline",   widget: "string" }
+          - { label: "Texto Nosotros",     name: "about_text",      widget: "markdown" }
+          - { label: "Foto Nosotros",      name: "about_photo",     widget: "image",   required: false }

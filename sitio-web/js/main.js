@@ -57,7 +57,29 @@ function waLink(destination) {
 
 /* ── Trip card renderers ─────────────────────────────────── */
 
+function carouselWrap(trip) {
+  const slides = trip.photos.map((src, i) => `
+    <div class="carousel-slide${i === 0 ? ' active' : ''}">
+      <img src="${esc(src)}" alt="${esc(trip.name)} ${i + 1}" loading="${i === 0 ? 'eager' : 'lazy'}">
+    </div>`).join('');
+
+  const dots = trip.photos.map((_, i) => `
+    <button class="carousel-dot${i === 0 ? ' active' : ''}" aria-label="Foto ${i + 1}"></button>`).join('');
+
+  return `
+    <div class="trip-photo-wrap" data-carousel>
+      <div class="trip-carousel">
+        ${slides}
+        <button class="carousel-btn carousel-btn--prev" aria-label="Anterior">&#8249;</button>
+        <button class="carousel-btn carousel-btn--next" aria-label="Siguiente">&#8250;</button>
+        <div class="carousel-dots">${dots}</div>
+      </div>
+      <div class="trip-date-badge">${esc(trip.departure_date)}</div>
+    </div>`;
+}
+
 function photoWrap(trip) {
+  if (trip.photos && trip.photos.length > 1) return carouselWrap(trip);
   // If no photo, the green background of .trip-photo-wrap serves as placeholder.
   // Never render a broken <img>.
   const img = trip.photo
@@ -170,4 +192,46 @@ async function loadTrips() {
   }
 }
 
-loadTrips();
+/* ── Carousel logic ──────────────────────────────────────── */
+
+function initCarousels() {
+  document.querySelectorAll('[data-carousel]').forEach(wrap => {
+    const slides = wrap.querySelectorAll('.carousel-slide');
+    const dots   = wrap.querySelectorAll('.carousel-dot');
+    const prev   = wrap.querySelector('.carousel-btn--prev');
+    const next   = wrap.querySelector('.carousel-btn--next');
+    if (!slides.length) return;
+
+    let current = 0;
+    let timer   = null;
+
+    function goTo(idx) {
+      slides[current].classList.remove('active');
+      dots[current].classList.remove('active');
+      current = (idx + slides.length) % slides.length;
+      slides[current].classList.add('active');
+      dots[current].classList.add('active');
+    }
+
+    function startAuto() {
+      timer = setInterval(() => goTo(current + 1), 4000);
+    }
+
+    function stopAuto() {
+      clearInterval(timer);
+    }
+
+    prev.addEventListener('click', () => { stopAuto(); goTo(current - 1); startAuto(); });
+    next.addEventListener('click', () => { stopAuto(); goTo(current + 1); startAuto(); });
+    dots.forEach((dot, i) => {
+      dot.addEventListener('click', () => { stopAuto(); goTo(i); startAuto(); });
+    });
+
+    wrap.addEventListener('mouseenter', stopAuto);
+    wrap.addEventListener('mouseleave', startAuto);
+
+    startAuto();
+  });
+}
+
+loadTrips().then(initCarousels);

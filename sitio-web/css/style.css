@@ -666,34 +666,29 @@ h1, h2, h3, h4 {
 
 
 /* ══════════════════════════════════════════════════════════════
+   SERVICE STRIP
+══════════════════════════════════════════════════════════════ */
+.service-strip {
+  background: var(--cream);
+  border-top:    1px solid rgba(201,168,76,0.4);
+  border-bottom: 1px solid rgba(201,168,76,0.4);
+  padding: 18px 24px;
+  text-align: center;
+  font-family: var(--serif);
+  font-size: clamp(0.85rem, 2vw, 1rem);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+
+/* ══════════════════════════════════════════════════════════════
    ABOUT
 ══════════════════════════════════════════════════════════════ */
-.about-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 72px;
-  align-items: center;
-}
-
-@media (max-width: 760px) {
-  .about-grid {
-    grid-template-columns: 1fr;
-    gap: 40px;
-    max-width: 560px;
-    margin: 0 auto;
-  }
-}
-
-.about-photo {
-  position: relative;
-}
-
-/* REPLACE WITH PHOTO — swap .photo-placeholder with an <img> */
-.photo-placeholder {
-  width: 100%;
-  padding-top: 120%; /* portrait */
-  background: var(--green);
-  border-radius: var(--radius);
+.about-centered {
+  max-width: 640px;
+  margin: 0 auto;
+  text-align: center;
 }
 
 .about-body {

@@ -328,6 +328,8 @@ h1, h2, h3, h4 {
   background: var(--cream);
 }
 
+#nosotros { padding-top: 0; }
+
 .section-heading {
   font-family: var(--serif);
   font-size: clamp(1.9rem, 3.2vw, 2.6rem);
@@ -669,15 +671,16 @@ h1, h2, h3, h4 {
    SERVICE STRIP
 ══════════════════════════════════════════════════════════════ */
 .service-strip {
-  background: var(--cream);
-  border-top:    1px solid rgba(201,168,76,0.4);
-  border-bottom: 1px solid rgba(201,168,76,0.4);
+  background: var(--green);
+  border-top:    1px solid rgba(201,168,76,0.3);
+  border-bottom: 1px solid rgba(201,168,76,0.3);
   padding: 28px 24px;
   text-align: center;
   font-family: var(--serif);
-  font-style: italic;
-  font-size: clamp(1.3rem, 3vw, 1.7rem);
-  color: var(--green);
+  font-size: clamp(1.1rem, 2.5vw, 1.45rem);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--gold);
 }
 
 

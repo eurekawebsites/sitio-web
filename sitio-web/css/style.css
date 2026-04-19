@@ -686,9 +686,28 @@ h1, h2, h3, h4 {
    ABOUT
 ══════════════════════════════════════════════════════════════ */
 .about-centered {
-  max-width: 640px;
+  max-width: 680px;
   margin: 0 auto;
   text-align: center;
+  padding: 0 24px;
+}
+
+.about-lead {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 20px;
+  line-height: 1.7;
+  color: var(--text);
+  margin-bottom: 24px;
+}
+
+.about-accent {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 18px;
+  line-height: 1.7;
+  color: var(--gold);
+  margin-bottom: 24px;
 }
 
 .about-body {
@@ -696,10 +715,8 @@ h1, h2, h3, h4 {
   font-size: 0.9rem;
   line-height: 1.85;
   color: var(--muted);
-  margin-bottom: 18px;
+  margin-bottom: 0;
 }
-
-.about-body:last-child { margin-bottom: 0; }
 
 
 /* ══════════════════════════════════════════════════════════════

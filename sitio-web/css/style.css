@@ -672,11 +672,11 @@ h1, h2, h3, h4 {
   background: var(--cream);
   border-top:    1px solid rgba(201,168,76,0.4);
   border-bottom: 1px solid rgba(201,168,76,0.4);
-  padding: 20px 24px;
+  padding: 28px 24px;
   text-align: center;
   font-family: var(--serif);
   font-style: italic;
-  font-size: clamp(1rem, 2.2vw, 1.15rem);
+  font-size: clamp(1.3rem, 3vw, 1.7rem);
   color: var(--green);
 }
 

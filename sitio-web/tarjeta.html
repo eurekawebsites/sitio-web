@@ -9,7 +9,6 @@
   <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html, body { height: 100%; }
     a { color: inherit; text-decoration: none; }
     img { display: block; max-width: 100%; }
 
@@ -26,10 +25,9 @@
     body {
       background: var(--dark);
       display: flex;
-      align-items: center;
       justify-content: center;
-      min-height: 100%;
-      padding: 32px 20px;
+      min-height: 100dvh;
+      padding: 40px 20px;
       font-family: var(--sans);
       -webkit-font-smoothing: antialiased;
     }
@@ -104,11 +102,10 @@
 
     /* ── Services strip ── */
     .card-services {
-      padding: 16px 24px;
+      padding: 14px 24px;
       text-align: center;
-      background: rgba(0,0,0,0.18);
-      border-bottom: 1px solid rgba(201,168,76,0.2);
-      border-top: 1px solid rgba(201,168,76,0.2);
+      border-bottom: 1px solid rgba(201,168,76,0.25);
+      border-top: 1px solid rgba(201,168,76,0.25);
       font-family: var(--sans);
       font-size: 0.62rem;
       letter-spacing: 3px;

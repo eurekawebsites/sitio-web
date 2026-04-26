@@ -90,7 +90,14 @@ h1, h2, h3, h4 {
   transition: opacity var(--ease);
 }
 .nav-logo:hover { opacity: 0.82; }
-.nav-logo img { display: block; width: 140px; height: auto; }
+
+.nav-logo-text {
+  font-family: var(--serif);
+  font-size: 1rem;
+  letter-spacing: 3px;
+  color: var(--green);
+  white-space: nowrap;
+}
 
 /* ── Nav links ── */
 .nav-links {
@@ -300,10 +307,10 @@ h1, h2, h3, h4 {
 
 .hero-logo {
   display: block;
-  width: min(320px, 72%);
+  width: min(220px, 55%);
   height: auto;
-  margin: 0 auto 48px;
-  opacity: 0.95;
+  margin: 0 auto 40px;
+  border-radius: 4px;
 }
 
 .hero-cta {

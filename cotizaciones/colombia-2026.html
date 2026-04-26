@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cotización Colombia 2026 — Coordenada Viajes</title>
+  <meta name="description" content="Propuesta de tours en Colombia para 4 personas — Zipaquirá, Guatavita y más.">
+
+  <!-- Fonts (same as main site) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="quote.css">
+</head>
+<body>
+
+  <!-- ── Top bar ─────────────────────────────────────────── -->
+  <div class="quote-topbar">
+    <span class="quote-topbar-logo">Coordenada Viajes</span>
+    <div style="display:flex;align-items:center;gap:20px;">
+      <button class="btn-print" onclick="window.print()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/>
+        </svg>
+        Imprimir / PDF
+      </button>
+      <a class="quote-topbar-back" href="../index.html">← Sitio principal</a>
+    </div>
+  </div>
+
+  <!-- ── Hero (rendered by JS) ──────────────────────────── -->
+  <section class="quote-hero" id="quote-hero"></section>
+
+  <!-- ── Intro note ─────────────────────────────────────── -->
+  <div id="quote-intro"></div>
+
+  <!-- ── Tours ──────────────────────────────────────────── -->
+  <section class="tours-section" id="tours-section"></section>
+
+  <!-- ── Flights (hidden if no data) ───────────────────── -->
+  <section class="flights-section" id="flights-section"></section>
+
+  <!-- ── Hotels (hidden if no data) ────────────────────── -->
+  <section class="hotels-section" id="hotels-section"></section>
+
+  <!-- ── Cruise (hidden if no data) ────────────────────── -->
+  <section class="cruise-section" id="cruise-section"></section>
+
+  <!-- ── Pricing summary ────────────────────────────────── -->
+  <section id="pricing-section"></section>
+
+  <!-- ── CTA ────────────────────────────────────────────── -->
+  <div class="quote-cta" id="quote-cta"></div>
+
+  <!-- ── Footer ─────────────────────────────────────────── -->
+  <footer class="quote-footer">
+    <div id="quote-footer-content"></div>
+  </footer>
+
+
+  <!-- ════════════════════════════════════════════════════════
+       QUOTE DATA
+       — Rellena aquí los detalles de esta cotización.
+       — Para una nueva cotización, duplica este archivo y
+         actualiza únicamente el objeto QUOTE.
+  ════════════════════════════════════════════════════════════ -->
+  <script>
+  const QUOTE = {
+
+    /* ── Identificación ──────────────────────────────────── */
+    ref:          'CVJ-COL-2026-001',
+    type:         'tours',
+    destination:  'Colombia',
+    tagline:      'Bogotá · Zipaquirá · Guatavita',
+    dates:        '14 o 15 de mayo, 2026',
+    pax:          4,
+    currency:     'MXN',
+
+    valid_until:  'Por confirmar',
+
+    client: {
+      name:  'Por confirmar',
+      email: '',
+    },
+
+    intro: 'Estimados viajeros, con mucho gusto les presentamos esta propuesta de tours para su visita a Colombia. Hemos seleccionado experiencias que les permitirán aprovechar al máximo cada día y descubrir lo mejor del país. Este tour está disponible para el 14 o 15 de mayo — próximamente les compartiremos una segunda opción para que elijan la experiencia que más les llame la atención en cada fecha.',
+
+    /* ── Tours ───────────────────────────────────────────── */
+    tours: [
+      {
+        name:          'Zipaquirá y Guatavita: 5 destinos en un día',
+        duration:      '12 horas aprox. · Día completo',
+        description:   'Una de las excursiones más completas que puedes hacer desde Bogotá: en un solo día visitas 5 lugares imperdibles. El recorrido inicia a las 7 am con recogida en tu alojamiento. Pasarás por el pintoresco Pueblo Colonial de Guatavita, subirás a la mítica Laguna de Guatavita rodeada de leyendas muiscas, disfrutarás los paisajes de la Sabana de Bogotá, comerás en un restaurante de comida típica colombiana en Zipaquirá y cerrarás el día maravillándote en la Catedral de Sal, considerada la Primera Maravilla de Colombia.',
+        photos: [
+          'colombia/tour-bogota-1.jpg',
+          'colombia/tour-bogota-2.jpg',
+          'colombia/tour-bogota-3.jpg',
+          'colombia/tour-bogota-4.jpg',
+        ],
+        pickup_points: ['Tu alojamiento en Bogotá'],
+        schedule:      '7:00 am – regreso aprox. 7:00 pm',
+        meeting_point: 'Recogida directa en tu hotel o alojamiento',
+        includes: [
+          'Transporte de ida y vuelta',
+          'Recogida en alojamiento',
+          'Guía bilingüe (Español / Inglés)',
+          'SUV o furgoneta cómoda',
+          'Seguro de viaje',
+          'Tiempo para almuerzo en restaurante típico',
+          'Audioguía gratuita en Catedral de Sal (solicitar en entrada)',
+        ],
+        not_includes: [
+          'Entradas a Laguna de Guatavita',
+          'Entrada a Catedral de Sal de Zipaquirá',
+          'Desayuno, almuerzo o cena',
+          'Gastos personales y souvenirs',
+        ],
+        notes: 'Tour grupal apto para todas las edades, incluyendo niños y adultos mayores. Se recomienda llevar dinero en efectivo en pesos colombianos para entradas, cafeterías y tiendas de souvenirs. La caminata a la Laguna de Guatavita es moderada (90 min). No recomendado para mujeres embarazadas ni personas con lesiones espinales o problemas cardiovasculares graves.',
+        price_per_person: 1108.75,  // $4,435 MXN ÷ 4
+      },
+    ],
+
+    /* ── Vuelos (no aplica) ──────────────────────────────── */
+    flights: [],
+
+    /* ── Hoteles (no aplica) ─────────────────────────────── */
+    hotels: [],
+
+    /* ── Crucero (no aplica) ─────────────────────────────── */
+    cruise: null,
+
+    /* ── Desglose de precios ─────────────────────────────── */
+    pricing: {
+      line_items: [
+        {
+          description: 'Tour Zipaquirá & Guatavita — 5 destinos en un día (precio por persona)',
+          qty: 4,
+          amount: 4435,
+        },
+      ],
+      subtotal: 4435,
+      extras: [],
+      total: 4435,
+      note: 'Precio en MXN para el grupo completo (4 personas). No incluye entradas a Laguna de Guatavita ni Catedral de Sal — estas se pagan directamente en taquilla (precios varían según nacionalidad).',
+    },
+
+    /* ── Condiciones ─────────────────────────────────────── */
+    terms: [
+      'Cancelación gratuita disponible — consulta política exacta al reservar.',
+      'Confirmación instantánea al momento de reservar.',
+      'Esta cotización es válida para las fechas indicadas sujeto a disponibilidad.',
+      'Los precios no incluyen entradas a atracciones salvo que se indique lo contrario.',
+      'Se requiere confirmación con al menos 48 horas de anticipación.',
+      'Tipo de cambio referencial al momento de cotizar; puede variar al confirmar.',
+    ],
+  };
+  </script>
+
+  <script src="quote.js"></script>
+</body>
+</html>

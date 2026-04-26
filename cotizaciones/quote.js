@@ -1,0 +1,414 @@
+'use strict';
+
+/* ══════════════════════════════════════════════════════════════
+   COORDENADA VIAJES — quote.js
+   Renders a cotización from a QUOTE data object defined in
+   the individual quote HTML file before this script loads.
+══════════════════════════════════════════════════════════════ */
+
+const WA_NUMBER = '525657917967';
+
+/* ── Currency formatter ──────────────────────────────────── */
+function fmt(amount, currency) {
+  currency = currency || 'MXN';
+  return new Intl.NumberFormat('es-MX', {
+    style: 'currency', currency, maximumFractionDigits: 0
+  }).format(amount);
+}
+
+/* ── Escape HTML ─────────────────────────────────────────── */
+function esc(s) {
+  return String(s ?? '')
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
+/* ── WhatsApp link ───────────────────────────────────────── */
+function waLink(quoteRef, clientName) {
+  const msg = `Hola, tengo preguntas sobre mi cotización ${quoteRef} — ${clientName}`;
+  return `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   RENDER FUNCTIONS
+══════════════════════════════════════════════════════════════ */
+
+function renderHero(q) {
+  const el = document.getElementById('quote-hero');
+  if (!el) return;
+
+  const typeLabel = {
+    tours:    'Cotización de Tours',
+    full:     'Cotización de Viaje Completo',
+    cruise:   'Cotización de Crucero',
+    hotel:    'Cotización de Hotel',
+    mixed:    'Cotización de Viaje',
+  }[q.type] || 'Cotización';
+
+  el.innerHTML = `
+    <div class="quote-hero-inner">
+      <div class="quote-badge">${esc(typeLabel)}</div>
+      <h1>${esc(q.destination)}</h1>
+      <p class="quote-hero-sub">${esc(q.tagline || '')}</p>
+      <div class="quote-meta-grid">
+        <span>Cliente<strong>${esc(q.client.name)}</strong></span>
+        <span>Viajeros<strong>${esc(q.pax)} personas</strong></span>
+        <span>Fechas<strong>${esc(q.dates)}</strong></span>
+        <span>Cotización<strong>#${esc(q.ref)}</strong></span>
+        <span>Válida hasta<strong>${esc(q.valid_until)}</strong></span>
+      </div>
+    </div>`;
+}
+
+function renderIntro(q) {
+  const el = document.getElementById('quote-intro');
+  if (!el || !q.intro) return;
+  el.innerHTML = `
+    <div class="quote-intro container">
+      <p class="section-label">Nota introductoria</p>
+      <p>${esc(q.intro)}</p>
+    </div>`;
+}
+
+/* ── Tours ───────────────────────────────────────────────── */
+function renderTours(q) {
+  const section = document.getElementById('tours-section');
+  if (!section || !q.tours || !q.tours.length) {
+    if (section) section.style.display = 'none';
+    return;
+  }
+
+  const cards = q.tours.map((t, tourIdx) => {
+    const photos = t.photos && t.photos.length ? t.photos : (t.photo ? [t.photo] : []);
+    let photoBlock;
+    if (photos.length > 1) {
+      const id = `carousel-${tourIdx}`;
+      const imgs = photos.map(src =>
+        `<img src="${esc(src)}" alt="${esc(t.name)}" loading="lazy">`
+      ).join('');
+      const dots = photos.map((_, i) =>
+        `<button class="carousel-dot${i === 0 ? ' active' : ''}" data-index="${i}" aria-label="Foto ${i+1}"></button>`
+      ).join('');
+      photoBlock = `
+        <div class="carousel" id="${id}" data-current="0">
+          <div class="carousel-track">${imgs}</div>
+          <button class="carousel-btn prev" aria-label="Anterior">&#8249;</button>
+          <button class="carousel-btn next" aria-label="Siguiente">&#8250;</button>
+          <div class="carousel-dots">${dots}</div>
+        </div>`;
+    } else if (photos.length === 1) {
+      photoBlock = `<img class="tour-card-photo" src="${esc(photos[0])}" alt="${esc(t.name)}" loading="lazy">`;
+    } else {
+      photoBlock = `<div class="tour-card-photo-placeholder">sin imagen</div>`;
+    }
+
+    const includes = t.includes && t.includes.length
+      ? `<div class="tour-card-includes">
+           <label>Incluye</label>
+           <ul>${t.includes.map(i => `<li>${esc(i)}</li>`).join('')}</ul>
+         </div>`
+      : '';
+
+    const notIncludes = t.not_includes && t.not_includes.length
+      ? `<div class="tour-card-includes">
+           <label>No incluye</label>
+           <ul>${t.not_includes.map(i => `<li>${esc(i)}</li>`).join('')}</ul>
+         </div>`
+      : '';
+
+    const pickups = t.pickup_points && t.pickup_points.length
+      ? `<div class="tour-detail-block">
+           <label>Puntos de salida</label>
+           <p>${t.pickup_points.map(esc).join(' · ')}</p>
+         </div>`
+      : '';
+
+    const totalPrice = t.price_per_person * q.pax;
+
+    return `
+      <div class="tour-card">
+        ${photoBlock}
+        <div class="tour-card-body">
+          <h3 class="tour-card-title">${esc(t.name)}</h3>
+          <p class="tour-card-duration">${esc(t.duration)}</p>
+          <p class="tour-card-desc">${esc(t.description)}</p>
+          <div class="tour-card-details">
+            ${pickups}
+            ${t.schedule ? `<div class="tour-detail-block"><label>Horario</label><p>${esc(t.schedule)}</p></div>` : ''}
+            ${t.meeting_point ? `<div class="tour-detail-block"><label>Punto de encuentro</label><p>${esc(t.meeting_point)}</p></div>` : ''}
+            ${t.notes ? `<div class="tour-detail-block"><label>Notas</label><p>${esc(t.notes)}</p></div>` : ''}
+          </div>
+          ${includes}
+          ${notIncludes}
+          <div class="tour-card-price-row">
+            <div class="tour-price-unit">
+              ${fmt(t.price_per_person, q.currency)}<span>por persona</span>
+            </div>
+            <div class="tour-price-total">
+              Total ${q.pax} personas
+              <strong>${fmt(totalPrice, q.currency)}</strong>
+            </div>
+          </div>
+        </div>
+      </div>`;
+  }).join('');
+
+  section.innerHTML = `
+    <div class="container">
+      <p class="section-label">Tours incluidos</p>
+      <h2>Experiencias seleccionadas</h2>
+      ${cards}
+    </div>`;
+}
+
+/* ── Flights ─────────────────────────────────────────────── */
+function renderFlights(q) {
+  const section = document.getElementById('flights-section');
+  if (!section || !q.flights || !q.flights.length) {
+    if (section) section.style.display = 'none';
+    return;
+  }
+
+  const cards = q.flights.map(f => `
+    <div class="flight-card">
+      <div class="flight-route">
+        ${esc(f.origin)} <span class="flight-route-arrow">→</span> ${esc(f.destination)}
+      </div>
+      <div class="flight-meta">
+        ${f.date ? `<span>${esc(f.date)}</span>` : ''}
+        ${f.airline ? `<span>${esc(f.airline)}</span>` : ''}
+        ${f.flight_number ? `<span>Vuelo ${esc(f.flight_number)}</span>` : ''}
+        ${f.class ? `<span>${esc(f.class)}</span>` : ''}
+        ${f.baggage ? `<span>Equipaje: ${esc(f.baggage)}</span>` : ''}
+      </div>
+    </div>`).join('');
+
+  section.innerHTML = `
+    <div class="container">
+      <p class="section-label">Vuelos</p>
+      <h2>Vuelos incluidos</h2>
+      ${cards}
+    </div>`;
+}
+
+/* ── Hotels ──────────────────────────────────────────────── */
+function renderHotels(q) {
+  const section = document.getElementById('hotels-section');
+  if (!section || !q.hotels || !q.hotels.length) {
+    if (section) section.style.display = 'none';
+    return;
+  }
+
+  const cards = q.hotels.map(h => {
+    const photo = h.photo
+      ? `<img src="${esc(h.photo)}" alt="${esc(h.name)}" style="width:100%;height:160px;object-fit:cover;margin-bottom:14px;">`
+      : '';
+    return `
+      <div class="hotel-card">
+        ${photo}
+        <p class="hotel-name">${esc(h.name)}</p>
+        <div class="hotel-meta">
+          ${h.category ? `<span>${esc(h.category)}</span>` : ''}
+          ${h.city ? `<span>${esc(h.city)}</span>` : ''}
+          ${h.check_in ? `<span>Check-in: ${esc(h.check_in)}</span>` : ''}
+          ${h.check_out ? `<span>Check-out: ${esc(h.check_out)}</span>` : ''}
+          ${h.nights ? `<span>${esc(h.nights)} noches</span>` : ''}
+          ${h.room_type ? `<span>${esc(h.room_type)}</span>` : ''}
+        </div>
+        ${h.notes ? `<p style="font-size:0.83rem;color:var(--muted);margin-top:8px;">${esc(h.notes)}</p>` : ''}
+      </div>`;
+  }).join('');
+
+  section.innerHTML = `
+    <div class="container">
+      <p class="section-label">Hospedaje</p>
+      <h2>Hoteles seleccionados</h2>
+      ${cards}
+    </div>`;
+}
+
+/* ── Cruise ──────────────────────────────────────────────── */
+function renderCruise(q) {
+  const section = document.getElementById('cruise-section');
+  if (!section || !q.cruise) {
+    if (section) section.style.display = 'none';
+    return;
+  }
+
+  const c = q.cruise;
+  const photo = c.photo
+    ? `<img src="${esc(c.photo)}" alt="${esc(c.name)}" style="width:100%;height:200px;object-fit:cover;margin-bottom:16px;">`
+    : '';
+
+  const includes = c.includes && c.includes.length
+    ? `<div class="tour-card-includes" style="margin-top:14px;">
+         <label>Incluye</label>
+         <ul>${c.includes.map(i => `<li>${esc(i)}</li>`).join('')}</ul>
+       </div>`
+    : '';
+
+  section.innerHTML = `
+    <div class="container">
+      <p class="section-label">Crucero</p>
+      <h2>${esc(c.name)}</h2>
+      <div class="cruise-card">
+        ${photo}
+        <p style="font-size:0.94rem;line-height:1.7;margin-bottom:14px;">${esc(c.description || '')}</p>
+        <div class="hotel-meta" style="margin-bottom:12px;">
+          ${c.ship ? `<span>Barco: ${esc(c.ship)}</span>` : ''}
+          ${c.line ? `<span>${esc(c.line)}</span>` : ''}
+          ${c.departure ? `<span>Salida: ${esc(c.departure)}</span>` : ''}
+          ${c.duration ? `<span>${esc(c.duration)}</span>` : ''}
+          ${c.cabin_type ? `<span>Cabina: ${esc(c.cabin_type)}</span>` : ''}
+          ${c.ports && c.ports.length ? `<span>Puertos: ${c.ports.map(esc).join(' · ')}</span>` : ''}
+        </div>
+        ${includes}
+      </div>
+    </div>`;
+}
+
+/* ── Pricing summary ─────────────────────────────────────── */
+function renderPricing(q) {
+  const section = document.getElementById('pricing-section');
+  if (!section) return;
+
+  const cur = q.currency || 'MXN';
+
+  const rows = (q.pricing.line_items || []).map(item => `
+    <tr>
+      <td>${esc(item.description)}</td>
+      <td>${item.qty ? esc(String(item.qty)) : '—'}</td>
+      <td class="col-amount">${item.amount != null ? fmt(item.amount, cur) : '—'}</td>
+    </tr>`).join('');
+
+  const subtotal = q.pricing.subtotal != null
+    ? `<tr class="row-subtotal">
+         <td colspan="2">Subtotal</td>
+         <td class="col-amount">${fmt(q.pricing.subtotal, cur)}</td>
+       </tr>` : '';
+
+  const extras = (q.pricing.extras || []).map(e => `
+    <tr>
+      <td>${esc(e.description)}</td>
+      <td>—</td>
+      <td class="col-amount">${fmt(e.amount, cur)}</td>
+    </tr>`).join('');
+
+  const note = q.pricing.note
+    ? `<p class="pricing-note">${esc(q.pricing.note)}</p>` : '';
+
+  section.innerHTML = `
+    <div class="container">
+      <hr class="section-divider">
+      <p class="section-label">Resumen económico</p>
+      <h2>Desglose de costos</h2>
+      <table class="pricing-table">
+        <thead>
+          <tr>
+            <th>Concepto</th>
+            <th>Cant.</th>
+            <th style="text-align:right">Importe</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${rows}
+          ${subtotal}
+          ${extras}
+          <tr class="row-total">
+            <td colspan="2"><strong>Total general (${q.pax} personas)</strong></td>
+            <td class="col-amount">${fmt(q.pricing.total, cur)}</td>
+          </tr>
+        </tbody>
+      </table>
+      ${note}
+    </div>`;
+}
+
+/* ── CTA band ────────────────────────────────────────────── */
+function renderCTA(q) {
+  const el = document.getElementById('quote-cta');
+  if (!el) return;
+  el.innerHTML = `
+    <p>¿Tienes preguntas sobre tu cotización? Escríbenos por WhatsApp.</p>
+    <a class="btn-cta" href="${waLink(q.ref, q.client.name)}" target="_blank" rel="noopener">
+      Contactar a Coordenada Viajes
+    </a>`;
+}
+
+/* ── Footer ──────────────────────────────────────────────── */
+function renderFooter(q) {
+  const el = document.getElementById('quote-footer-content');
+  if (!el) return;
+
+  const conditions = (q.terms || [
+    'Esta cotización es válida únicamente hasta la fecha indicada.',
+    'Los precios están sujetos a disponibilidad al momento de confirmar.',
+    'Se requiere un depósito del 30% para reservar.',
+    'Los precios no incluyen gastos personales, propinas ni servicios no mencionados.',
+  ]);
+
+  el.innerHTML = `
+    <div>
+      <h4>Vigencia y condiciones</h4>
+      <ul>${conditions.map(c => `<li>${esc(c)}</li>`).join('')}</ul>
+    </div>
+    <div>
+      <h4>Próximos pasos</h4>
+      <p>Para confirmar tu reservación contáctanos vía WhatsApp o correo electrónico. Con gusto resolvemos cualquier duda.</p>
+    </div>
+    <div class="quote-footer-brand">
+      <span class="quote-footer-brand-name">Coordenada Viajes</span>
+      <span class="quote-footer-contact">hola@coordenaviajes.com · +52 55 6579 1796</span>
+    </div>`;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   INIT — called once QUOTE is defined in the HTML
+══════════════════════════════════════════════════════════════ */
+function initCarousels() {
+  document.querySelectorAll('.carousel').forEach(carousel => {
+    const track = carousel.querySelector('.carousel-track');
+    const dots  = carousel.querySelectorAll('.carousel-dot');
+    const total = track.querySelectorAll('img').length;
+
+    function goTo(idx) {
+      carousel.dataset.current = idx;
+      track.style.transform = `translateX(-${idx * 100}%)`;
+      dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+    }
+
+    carousel.querySelector('.prev').addEventListener('click', () => {
+      const cur = parseInt(carousel.dataset.current);
+      goTo((cur - 1 + total) % total);
+    });
+    carousel.querySelector('.next').addEventListener('click', () => {
+      const cur = parseInt(carousel.dataset.current);
+      goTo((cur + 1) % total);
+    });
+    dots.forEach(dot => {
+      dot.addEventListener('click', () => goTo(parseInt(dot.dataset.index)));
+    });
+  });
+}
+
+function renderQuote() {
+  if (typeof QUOTE === 'undefined') {
+    console.error('QUOTE data object not defined.');
+    return;
+  }
+
+  document.title = `Cotización ${QUOTE.destination} — Coordenada Viajes`;
+
+  renderHero(QUOTE);
+  renderIntro(QUOTE);
+  renderTours(QUOTE);
+  renderFlights(QUOTE);
+  renderHotels(QUOTE);
+  renderCruise(QUOTE);
+  renderPricing(QUOTE);
+  renderCTA(QUOTE);
+  renderFooter(QUOTE);
+  initCarousels();
+}
+
+document.addEventListener('DOMContentLoaded', renderQuote);

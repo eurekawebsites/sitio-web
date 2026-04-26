@@ -142,10 +142,10 @@ function renderTours(q) {
           ${notIncludes}
           <div class="tour-card-price-row">
             <div class="tour-price-unit">
-              ${fmt(t.price_per_person, q.currency)}<span>por persona</span>
+              ${fmt(t.price_per_person, q.currency)}<span>MXN por persona</span>
             </div>
             <div class="tour-price-total">
-              Total ${q.pax} personas
+              Total ${q.pax} personas (MXN)
               <strong>${fmt(totalPrice, q.currency)}</strong>
             </div>
           </div>
@@ -354,11 +354,11 @@ function renderFooter(q) {
     </div>
     <div>
       <h4>Próximos pasos</h4>
-      <p>Para confirmar tu reservación contáctanos vía WhatsApp o correo electrónico. Con gusto resolvemos cualquier duda.</p>
+      <p>Para confirmar tu reservación contáctanos por WhatsApp o Instagram. Con gusto resolvemos cualquier duda.</p>
     </div>
     <div class="quote-footer-brand">
-      <span class="quote-footer-brand-name">Coordenada Viajes</span>
-      <span class="quote-footer-contact">hola@coordenaviajes.com · +52 55 6579 1796</span>
+      <img src="../images/logo-horizontal-oscuro.svg" alt="Coordenada Viajes" style="height:38px;width:auto;">
+      <span class="quote-footer-contact">WhatsApp: +52 55 6579 1796 · IG: @coordenada.viajes</span>
     </div>`;
 }
 

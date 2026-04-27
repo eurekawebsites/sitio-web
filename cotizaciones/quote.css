@@ -53,7 +53,7 @@ h1, h2, h3, h4, h5 {
 
 /* ── Top bar ─────────────────────────────────────────────── */
 .quote-topbar {
-  background: var(--green);
+  background: var(--dark-green);
   padding: 16px 32px;
   display: flex;
   align-items: center;
@@ -175,7 +175,6 @@ h1, h2, h3, h4, h5 {
   font-family: var(--serif);
   font-size: 1.1rem;
   color: var(--muted);
-  max-width: 640px;
 }
 
 /* ── Tour cards ──────────────────────────────────────────── */

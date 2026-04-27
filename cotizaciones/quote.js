@@ -367,17 +367,23 @@ function renderFooter(q) {
   ]);
 
   el.innerHTML = `
-    <div>
-      <h4>Vigencia y condiciones</h4>
-      <ul>${conditions.map(c => `<li>${esc(c)}</li>`).join('')}</ul>
-    </div>
-    <div>
-      <h4>Próximos pasos</h4>
-      <p>Para confirmar tu reservación contáctanos por WhatsApp o Instagram. Con gusto resolvemos cualquier duda.</p>
-    </div>
-    <div class="quote-footer-brand">
-      <img src="../images/logo-horizontal-oscuro.svg" alt="Coordenada Viajes" style="height:38px;width:auto;">
-      <span class="quote-footer-contact">WhatsApp: +52 55 6579 1796 · IG: @coordenada.viajes</span>
+    <div class="quote-footer-inner">
+      <div>
+        <h4>Vigencia y condiciones</h4>
+        <ul>${conditions.map(c => `<li>${esc(c)}</li>`).join('')}</ul>
+      </div>
+      <div>
+        <h4>Próximos pasos</h4>
+        <p>Para confirmar tu reservación contáctanos por WhatsApp o Instagram. Con gusto resolvemos cualquier duda y ajustamos lo que necesites.</p>
+        <p style="margin-top:10px;">
+          <a href="https://wa.me/525657917967" target="_blank" rel="noopener" style="color:var(--gold);">WhatsApp: +52 55 6579 1796</a><br>
+          <a href="https://instagram.com/coordenada.viajes" target="_blank" rel="noopener" style="color:var(--gold);">IG: @coordenada.viajes</a>
+        </p>
+      </div>
+      <div class="quote-footer-brand">
+        <img src="../images/logo-icono.jpeg" alt="Coordenada Viajes" style="height:64px;width:auto;">
+        <span class="quote-footer-contact">Coordenada Viajes · Ciudad de México</span>
+      </div>
     </div>`;
 }
 
@@ -389,6 +395,7 @@ function initCarousels() {
     const track = carousel.querySelector('.carousel-track');
     const dots  = carousel.querySelectorAll('.carousel-dot');
     const total = track.querySelectorAll('img').length;
+    let timer;
 
     function goTo(idx) {
       carousel.dataset.current = idx;
@@ -396,17 +403,37 @@ function initCarousels() {
       dots.forEach((d, i) => d.classList.toggle('active', i === idx));
     }
 
-    carousel.querySelector('.prev').addEventListener('click', () => {
-      const cur = parseInt(carousel.dataset.current);
-      goTo((cur - 1 + total) % total);
-    });
-    carousel.querySelector('.next').addEventListener('click', () => {
+    function next() {
       const cur = parseInt(carousel.dataset.current);
       goTo((cur + 1) % total);
+    }
+
+    function startAuto() { timer = setInterval(next, 3500); }
+    function stopAuto()  { clearInterval(timer); }
+
+    carousel.querySelector('.prev').addEventListener('click', () => {
+      stopAuto();
+      const cur = parseInt(carousel.dataset.current);
+      goTo((cur - 1 + total) % total);
+      startAuto();
+    });
+    carousel.querySelector('.next').addEventListener('click', () => {
+      stopAuto();
+      next();
+      startAuto();
     });
     dots.forEach(dot => {
-      dot.addEventListener('click', () => goTo(parseInt(dot.dataset.index)));
+      dot.addEventListener('click', () => {
+        stopAuto();
+        goTo(parseInt(dot.dataset.index));
+        startAuto();
+      });
     });
+
+    carousel.addEventListener('mouseenter', stopAuto);
+    carousel.addEventListener('mouseleave', startAuto);
+
+    startAuto();
   });
 }
 

@@ -57,6 +57,7 @@ function renderHero(q) {
         <span>Fechas<strong>${esc(q.dates)}</strong></span>
         <span>Cotización<strong>#${esc(q.ref)}</strong></span>
         <span>Válida hasta<strong>${esc(q.valid_until)}</strong></span>
+        ${q.agent ? `<span>Tu agente<strong>${esc(q.agent)}</strong></span>` : ''}
       </div>
     </div>`;
 }

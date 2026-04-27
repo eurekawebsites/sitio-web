@@ -584,11 +584,10 @@ h1, h2, h3, h4, h5 {
   grid-column: 1 / -1;
   border-top: 1px solid rgba(245,240,232,0.15);
   padding-top: 24px;
-  display: flex;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
   align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 12px;
+  gap: 16px;
 }
 
 .quote-footer-brand-name {
@@ -602,6 +601,7 @@ h1, h2, h3, h4, h5 {
 .quote-footer-contact {
   font-size: 0.82rem;
   color: var(--gold);
+  text-align: center;
 }
 
 .quote-footer-powered {

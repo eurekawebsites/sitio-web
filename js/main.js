@@ -58,16 +58,60 @@ function waLink(destination) {
 /* ── Trip card renderers ─────────────────────────────────── */
 
 function photoWrap(trip) {
-  // If no photo, the green background of .trip-photo-wrap serves as placeholder.
-  // Never render a broken <img>.
-  const img = trip.photo
-    ? `<img src="${esc(trip.photo)}" alt="${esc(trip.name)}" loading="lazy">`
-    : ''; // placeholder = CSS background-color on .trip-photo-wrap
+  const photos = trip.photos && trip.photos.length ? trip.photos
+                 : trip.photo ? [trip.photo] : [];
+
+  if (photos.length > 1) {
+    const id = 'tc-' + trip.id;
+    const imgs = photos.map(src =>
+      `<img src="${esc(src)}" alt="${esc(trip.name)}" loading="lazy">`
+    ).join('');
+    const dots = photos.map((_, i) =>
+      `<button class="tc-dot${i===0?' active':''}" data-i="${i}"></button>`
+    ).join('');
+    return `
+      <div class="trip-photo-wrap trip-carousel" id="${esc(id)}" data-cur="0">
+        <div class="tc-track">${imgs}</div>
+        <button class="tc-btn tc-prev">&#8249;</button>
+        <button class="tc-btn tc-next">&#8250;</button>
+        <div class="tc-dots">${dots}</div>
+        <div class="trip-date-badge">${esc(trip.departure_date)}</div>
+      </div>`;
+  }
+
+  const img = photos.length === 1
+    ? `<img src="${esc(photos[0])}" alt="${esc(trip.name)}" loading="lazy">` : '';
   return `
     <div class="trip-photo-wrap">
       ${img}
       <div class="trip-date-badge">${esc(trip.departure_date)}</div>
     </div>`;
+}
+
+function initTripCarousels() {
+  document.querySelectorAll('.trip-carousel').forEach(c => {
+    const track = c.querySelector('.tc-track');
+    const dots  = c.querySelectorAll('.tc-dot');
+    const total = track.querySelectorAll('img').length;
+    let timer;
+
+    function goTo(idx) {
+      c.dataset.cur = idx;
+      track.style.transform = `translateX(-${idx * 100}%)`;
+      dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+    }
+    function next() { goTo((+c.dataset.cur + 1) % total); }
+
+    function startAuto() { timer = setInterval(next, 3500); }
+    function stopAuto()  { clearInterval(timer); }
+
+    c.querySelector('.tc-prev').addEventListener('click', () => { stopAuto(); goTo((+c.dataset.cur - 1 + total) % total); startAuto(); });
+    c.querySelector('.tc-next').addEventListener('click', () => { stopAuto(); next(); startAuto(); });
+    dots.forEach(d => d.addEventListener('click', () => { stopAuto(); goTo(+d.dataset.i); startAuto(); }));
+    c.addEventListener('mouseenter', stopAuto);
+    c.addEventListener('mouseleave', startAuto);
+    startAuto();
+  });
 }
 
 function renderDetailedCard(t) {
@@ -163,6 +207,8 @@ async function loadTrips() {
     grid.innerHTML = visible
       .map(t => t.detailed ? renderDetailedCard(t) : renderSimpleCard(t))
       .join('');
+
+    initTripCarousels();
 
   } catch (err) {
     console.error('[Coordenada Viajes] Error loading trips:', err);

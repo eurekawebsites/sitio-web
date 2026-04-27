@@ -309,7 +309,7 @@ h1, h2, h3, h4 {
 
 .hero-logo {
   display: block;
-  width: min(260px, 55%);
+  width: min(420px, 70%);
   height: auto;
   margin: 0 auto 48px;
 }
@@ -421,6 +421,72 @@ h1, h2, h3, h4 {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+/* ── Trip card carousel ──────────────────────────────────── */
+.trip-carousel { overflow: hidden; }
+
+.tc-track {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  transition: transform 0.45s cubic-bezier(0.4,0,0.2,1);
+}
+
+.tc-track img {
+  flex-shrink: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: relative;
+}
+
+.tc-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0,0,0,0.4);
+  color: #fff;
+  border: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  font-size: 1.2rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  transition: background 0.2s;
+  line-height: 1;
+}
+.tc-btn:hover { background: rgba(0,0,0,0.65); }
+.tc-prev { left: 10px; }
+.tc-next { right: 10px; }
+
+.tc-dots {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 6px;
+  z-index: 2;
+}
+
+.tc-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.5);
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.2s, transform 0.2s;
+}
+.tc-dot.active {
+  background: var(--gold);
+  transform: scale(1.3);
 }
 
 /* Departure date badge */

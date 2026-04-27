@@ -6,7 +6,8 @@
     "route": "Bangkok · Chiang Mai · Phuket · París",
     "departure_date": "2 nov 2026",
     "duration": "15 días / 14 noches",
-    "photo": "",
+    "photo": "images/thailand/1.png",
+    "photos": ["images/thailand/1.png","images/thailand/2.png","images/thailand/3.png","images/thailand/4.png","images/thailand/5.png"],
     "detailed": true,
     "active": true,
     "sort_order": 1,
@@ -20,7 +21,7 @@
       "Entradas a templos y atracciones",
       "Guías locales en excursiones"
     ],
-    "highlight_note": "Escala extendida en París con cena crucero por el Sena incluida",
+    "highlight_note": "Escala extendida en París con cena crucero incluida",
     "price_from": "$78,205 MXN",
     "price_note": "por persona en ocupación doble"
   }

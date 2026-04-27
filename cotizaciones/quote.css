@@ -54,7 +54,7 @@ h1, h2, h3, h4, h5 {
 /* ── Top bar ─────────────────────────────────────────────── */
 .quote-topbar {
   background: var(--green);
-  padding: 14px 24px;
+  padding: 16px 32px;
   display: flex;
   align-items: center;
   justify-content: space-between;

@@ -11,9 +11,10 @@ const WA_NUMBER = '525657917967';
 /* ── Currency formatter ──────────────────────────────────── */
 function fmt(amount, currency) {
   currency = currency || 'MXN';
-  return new Intl.NumberFormat('es-MX', {
+  const number = new Intl.NumberFormat('es-MX', {
     style: 'currency', currency, maximumFractionDigits: 0
   }).format(amount);
+  return number + ' MXN';
 }
 
 /* ── Escape HTML ─────────────────────────────────────────── */

@@ -584,10 +584,9 @@ h1, h2, h3, h4, h5 {
   grid-column: 1 / -1;
   border-top: 1px solid rgba(245,240,232,0.15);
   padding-top: 24px;
-  display: grid;
-  grid-template-columns: auto 1fr auto;
+  display: flex;
   align-items: center;
-  gap: 16px;
+  justify-content: space-between;
 }
 
 .quote-footer-brand-name {

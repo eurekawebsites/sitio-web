@@ -393,11 +393,7 @@ function renderFooter(q) {
       </div>
       <div class="quote-footer-brand">
         <img src="../images/logo-icono.svg" alt="Coordenada Viajes" style="height:80px;width:auto;">
-        <a href="https://www.eurekawebsites.tech/" target="_blank" rel="noopener noreferrer" class="quote-footer-powered">
-          <span>Powered by</span>
-          <img src="../images/eureka-websites/eureka-bird-head.png" alt="Eureka Websites" class="footer-powered-bird">
-          <span>Eureka Websites</span>
-        </a>
+        <a href="https://www.eurekawebsites.tech/" target="_blank" rel="noopener noreferrer" class="quote-footer-powered">Powered by Eureka Websites</a>
       </div>
     </div>`;
 }

@@ -737,29 +737,15 @@ h1, h2, h3, h4 {
 }
 
 .footer-powered {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  margin-top: 32px;
-  padding: 6px 18px 6px 6px;
-  background: #F5F0E8;
-  border-radius: 999px;
+  display: block;
+  margin-top: 24px;
   font-size: 0.65rem;
   letter-spacing: 1.5px;
   text-transform: uppercase;
-  color: #444;
+  color: rgba(245,240,232,0.4);
   text-decoration: none;
-  box-shadow: none;
-  transition: box-shadow 0.2s, transform 0.2s;
 }
-.footer-powered:hover {
-  box-shadow: 0 4px 16px rgba(0,0,0,0.22);
-  transform: translateY(-1px);
-}
-.footer-powered-bird {
-  height: 36px;
-  width: auto;
-}
+.footer-powered:hover { color: rgba(245,240,232,0.7); }
 
 @media (max-width: 560px) {
   .footer-ctas { flex-direction: column; align-items: center; }

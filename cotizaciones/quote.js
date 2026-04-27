@@ -393,6 +393,11 @@ function renderFooter(q) {
       <div class="quote-footer-brand">
         <img src="../images/logo-icono.svg" alt="Coordenada Viajes" style="height:80px;width:auto;">
         <span class="quote-footer-contact">Coordenada Viajes · Ciudad de México</span>
+        <div class="quote-footer-powered">
+          <span>Powered by</span>
+          <img src="../images/eureka-websites/eureka-bird.png" alt="Eureka Websites" class="footer-powered-bird">
+          <span>Eureka Websites</span>
+        </div>
       </div>
     </div>`;
 }

@@ -390,6 +390,10 @@ h1, h2, h3, h4 {
 /* ══════════════════════════════════════════════════════════════
    TRIP CARD — SHARED
 ══════════════════════════════════════════════════════════════ */
+.trip-card--detailed {
+  grid-column: 1 / -1;
+}
+
 .trip-card {
   background: var(--white);
   border: 1px solid var(--border);
@@ -409,7 +413,7 @@ h1, h2, h3, h4 {
 .trip-photo-wrap {
   position: relative;
   width: 100%;
-  padding-top: 72%;
+  padding-top: 62%;
   background: var(--green);
   overflow: hidden;
   flex-shrink: 0;
@@ -731,6 +735,23 @@ h1, h2, h3, h4 {
   text-transform: uppercase;
   color: var(--gold);
   opacity: 0.5;
+}
+
+.footer-powered {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 28px;
+  font-size: 0.7rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: rgba(245,240,232,0.4);
+}
+.footer-powered-bird {
+  height: 28px;
+  width: auto;
+  opacity: 0.75;
 }
 
 @media (max-width: 560px) {

@@ -153,6 +153,31 @@
         notes: 'Apto para todos los niveles físicos. Llevar documento de identidad (requerido para seguro de viaje), ropa cómoda, bloqueador solar y una chaqueta ligera. Llegar puntual — los asientos en el bus se asignan por orden de llegada. No se permiten mascotas. Niños de 0 a 3 años sin alimentos incluidos.',
         price_per_person: 826.25,  // $3,305 MXN ÷ 4
       },
+      {
+        name:          'Islas del Rosario: Tour Eco en Barco — 5 Paradas, Almuerzo y Snorkel',
+        duration:      '8 horas · Día completo · Cartagena, 20 o 21 de mayo',
+        description:   'Un día completo explorando las cristalinas Islas del Rosario desde Cartagena. El tour Eco incluye 2 paradas panorámicas desde el barco (Fuerte de San Fernando de Bocachica y la antigua mansión de Pablo Escobar) y 3 paradas en isla: Isla Marina con acceso a aguas cristalinas y camastros, Isla Grande para snorkel en hábitat de peces y almuerzo (pescado, pollo o opción vegetariana incluida), e Islas del Rosario para relajarse con camastros y sombrillas. Transporte en lancha colectiva.',
+        photos:        [],
+        pickup_points: [],
+        schedule:      '8:00 am – 4:30 pm',
+        meeting_point: 'Monumento Santander, Centro, Cartagena. No incluye recogida en hotel — llegar por cuenta propia al punto de encuentro.',
+        includes: [
+          'Transporte en lancha colectiva (ida y vuelta)',
+          'Guía bilingüe',
+          'Almuerzo (pescado, pollo o vegetariano)',
+          'Snorkel con máscara y tubo en hábitat de peces',
+          'Acceso a camastros y sombrillas en islas',
+          'Impuesto portuario turístico',
+        ],
+        not_includes: [
+          'Traslado al punto de encuentro',
+          'Cobro en muelle al llegar (~$627 MXN por grupo, pago en sitio)',
+          'Bebidas y gastos personales',
+          'Propinas',
+        ],
+        notes: 'Llevar traje de baño obligatorio, bloqueador solar, documento de identidad y efectivo para el cobro en muelle. No recomendado para mujeres embarazadas, personas con lesiones espinales o problemas cardiovasculares. El itinerario puede modificarse por condiciones climáticas.',
+        price_per_person: 1506.25,  // $6,025 MXN ÷ 4
+      },
     ],
 
     /* ── Vuelos (no aplica) ──────────────────────────────── */
@@ -164,17 +189,18 @@
     /* ── Crucero (no aplica) ─────────────────────────────── */
     cruise: null,
 
-    /* ── Desglose de precios — se completará cuando tengamos el tour de Cartagena ── */
+    /* ── Desglose de precios ─────────────────────────────── */
     pricing: {
       line_items: [
-        { description: 'Tour Bogotá — Zipaquirá & Guatavita (4 personas)', qty: 4, amount: 4435 },
-        { description: 'Tour Medellín — Guatapé completo (4 personas)',    qty: 4, amount: 3305 },
-        { description: 'Tour Cartagena — por confirmar',                   qty: 4, amount: null },
+        { description: 'Tour Bogotá — Zipaquirá & Guatavita (4 personas)',          qty: 4, amount: 4435 },
+        { description: 'Tour Medellín — Guatapé: Peñol, barco, desayuno y almuerzo (4 personas)', qty: 4, amount: 3305 },
+        { description: 'Tour Cartagena — Islas del Rosario Eco Tour (4 personas)',  qty: 4, amount: 6025 },
+        { description: 'Cobro en muelle Cartagena (pago en sitio)',                 qty: 4, amount: 627  },
       ],
-      subtotal: 7740,
+      subtotal: 13765,
       extras: [],
-      total: 7740,
-      note: 'Precios en MXN para el grupo completo (4 personas). Total parcial — pendiente tour de Cartagena. Las entradas a atracciones no incluidas se pagan directamente en taquilla.',
+      total: 13765,
+      note: 'Precios en MXN para el grupo completo (4 personas). Las entradas a atracciones no incluidas se pagan directamente en taquilla. El cobro en muelle de Cartagena se paga en sitio el día del tour.',
     },
 
     /* ── Condiciones ─────────────────────────────────────── */

@@ -329,6 +329,15 @@ function renderPayment(q) {
   const section = document.getElementById('payment-section');
   if (!section || !q.payment) { if (section) section.style.display = 'none'; return; }
   const p = q.payment;
+  const stripeBlock = p.stripe_url ? `
+    <div class="payment-or">
+      <span>o paga con tarjeta</span>
+    </div>
+    <a class="payment-stripe-btn" href="${esc(p.stripe_url)}" target="_blank" rel="noopener noreferrer">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+      Pagar con tarjeta (Stripe)
+    </a>` : '';
+
   section.innerHTML = `
     <div class="container">
       <hr class="section-divider">
@@ -339,6 +348,7 @@ function renderPayment(q) {
         <div class="payment-row"><span>CLABE</span><strong class="payment-clabe">${esc(p.clabe)}</strong></div>
         <div class="payment-row"><span>Titular</span><strong>${esc(p.name)}</strong></div>
         ${p.note ? `<p class="payment-note">${esc(p.note)}</p>` : ''}
+        ${stripeBlock}
       </div>
     </div>`;
 }

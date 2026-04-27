@@ -663,6 +663,40 @@ h1, h2, h3, h4, h5 {
   font-style: italic;
 }
 
+.payment-or {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 20px 0 16px;
+  color: var(--muted);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.payment-or::before,
+.payment-or::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+.payment-stripe-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--green);
+  color: var(--cream);
+  padding: 12px 24px;
+  border-radius: var(--radius);
+  font-size: 0.9rem;
+  letter-spacing: 0.04em;
+  transition: background 0.2s;
+  width: 100%;
+  justify-content: center;
+}
+.payment-stripe-btn:hover { background: var(--dark-green); }
+
 /* ── Print / PDF button ──────────────────────────────────── */
 .btn-print {
   display: inline-flex;

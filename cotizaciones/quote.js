@@ -156,8 +156,7 @@ function renderTours(q) {
 
   section.innerHTML = `
     <div class="container">
-      <p class="section-label">Tours recomendados</p>
-      <h2>Experiencias seleccionadas</h2>
+      <h2>Tours recomendados</h2>
       ${cards}
     </div>`;
 }

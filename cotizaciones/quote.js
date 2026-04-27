@@ -381,7 +381,7 @@ function renderFooter(q) {
         </p>
       </div>
       <div class="quote-footer-brand">
-        <img src="../images/logo-icono.jpeg" alt="Coordenada Viajes" style="height:64px;width:auto;">
+        <img src="../images/logo-icono.svg" alt="Coordenada Viajes" style="height:64px;width:auto;">
         <span class="quote-footer-contact">Coordenada Viajes · Ciudad de México</span>
       </div>
     </div>`;

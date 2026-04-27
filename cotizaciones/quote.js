@@ -325,6 +325,25 @@ function renderPricing(q) {
     </div>`;
 }
 
+/* ── Payment ─────────────────────────────────────────────── */
+function renderPayment(q) {
+  const section = document.getElementById('payment-section');
+  if (!section || !q.payment) { if (section) section.style.display = 'none'; return; }
+  const p = q.payment;
+  section.innerHTML = `
+    <div class="container">
+      <hr class="section-divider">
+      <p class="section-label">Datos de pago</p>
+      <h2 style="font-size:1.7rem;color:var(--green);margin-bottom:20px;">Cómo reservar</h2>
+      <div class="payment-card">
+        <div class="payment-row"><span>Banco</span><strong>${esc(p.bank)}</strong></div>
+        <div class="payment-row"><span>CLABE</span><strong class="payment-clabe">${esc(p.clabe)}</strong></div>
+        <div class="payment-row"><span>Titular</span><strong>${esc(p.name)}</strong></div>
+        ${p.note ? `<p class="payment-note">${esc(p.note)}</p>` : ''}
+      </div>
+    </div>`;
+}
+
 /* ── CTA band ────────────────────────────────────────────── */
 function renderCTA(q) {
   const el = document.getElementById('quote-cta');
@@ -407,6 +426,7 @@ function renderQuote() {
   renderHotels(QUOTE);
   renderCruise(QUOTE);
   renderPricing(QUOTE);
+  renderPayment(QUOTE);
   renderCTA(QUOTE);
   renderFooter(QUOTE);
   initCarousels();

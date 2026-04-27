@@ -614,6 +614,41 @@ h1, h2, h3, h4, h5 {
 }
 .btn-cta:hover { background: var(--dark-green); }
 
+/* ── Payment card ────────────────────────────────────────── */
+.payment-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px 28px;
+  max-width: 480px;
+}
+
+.payment-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.92rem;
+}
+.payment-row:last-of-type { border-bottom: none; }
+.payment-row span { color: var(--muted); }
+.payment-row strong { color: var(--text); }
+
+.payment-clabe {
+  font-family: var(--sans);
+  letter-spacing: 0.08em;
+  font-size: 1rem;
+  color: var(--green) !important;
+}
+
+.payment-note {
+  margin-top: 14px;
+  font-size: 0.82rem;
+  color: var(--muted);
+  font-style: italic;
+}
+
 /* ── Print / PDF button ──────────────────────────────────── */
 .btn-print {
   display: inline-flex;

@@ -53,11 +53,13 @@ h1, h2, h3, h4, h5 {
 
 /* ── Top bar ─────────────────────────────────────────────── */
 .quote-topbar {
-  background: var(--dark-green);
+  background: var(--cream);
+  border-bottom: 1px solid var(--border);
   padding: 16px 32px;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  position: relative;
   gap: 16px;
 }
 
@@ -65,13 +67,13 @@ h1, h2, h3, h4, h5 {
   font-family: var(--serif);
   font-size: 1.15rem;
   letter-spacing: 0.08em;
-  color: var(--cream);
+  color: var(--green);
   text-transform: uppercase;
 }
 
 .quote-topbar-back {
   font-size: 0.78rem;
-  color: var(--gold);
+  color: var(--green);
   letter-spacing: 0.05em;
   text-transform: uppercase;
   display: flex;
@@ -79,7 +81,7 @@ h1, h2, h3, h4, h5 {
   gap: 6px;
   transition: opacity 0.2s;
 }
-.quote-topbar-back:hover { opacity: 0.75; }
+.quote-topbar-back:hover { opacity: 0.6; }
 
 .quote-topbar-brand {
   font-family: var(--serif);
@@ -87,9 +89,12 @@ h1, h2, h3, h4, h5 {
   font-weight: 500;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--cream);
-  flex: 1;
-  text-align: center;
+  color: var(--green);
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  pointer-events: none;
 }
 
 /* ── Hero header ─────────────────────────────────────────── */
@@ -703,20 +708,19 @@ h1, h2, h3, h4, h5 {
   align-items: center;
   gap: 8px;
   background: transparent;
-  color: var(--cream);
-  border: 1px solid rgba(245,240,232,0.4);
+  color: var(--green);
+  border: 1px solid var(--green);
   font-size: 0.75rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   padding: 9px 20px;
   border-radius: var(--radius);
-  transition: border-color 0.2s, background 0.2s;
+  transition: border-color 0.2s, background 0.2s, color 0.2s;
   cursor: pointer;
 }
 .btn-print:hover {
-  border-color: var(--gold);
-  background: rgba(201,168,76,0.1);
-  color: var(--gold);
+  background: var(--green);
+  color: var(--cream);
 }
 .btn-print svg { flex-shrink: 0; }
 

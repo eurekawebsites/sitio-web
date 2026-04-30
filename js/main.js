@@ -96,13 +96,14 @@ function initTripCarousels() {
     const total = imgs.length;
     let timer;
 
-    // Set each image to the exact container width so translateX in px is reliable
+    // Set each image + track to exact container width so translateX in px is reliable
     function setWidths() {
       const w = c.offsetWidth;
       imgs.forEach(img => { img.style.width = w + 'px'; });
+      track.style.width = (w * total) + 'px';
     }
     setWidths();
-    window.addEventListener('resize', setWidths);
+    window.addEventListener('resize', () => { setWidths(); goTo(+c.dataset.cur); });
 
     function goTo(idx) {
       c.dataset.cur = idx;

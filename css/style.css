@@ -363,7 +363,7 @@ h1, h2, h3, h4 {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 28px;
-  align-items: start;
+  align-items: stretch;
 }
 
 @media (max-width: 780px) {
@@ -432,11 +432,12 @@ h1, h2, h3, h4 {
   display: flex;
   flex-wrap: nowrap;
   transition: transform 0.55s ease-in-out;
+  /* width is set dynamically in JS based on number of slides */
 }
 
 .tc-track img {
   flex-shrink: 0;
-  width: 100%;          /* set to carousel container width via JS */
+  /* width is set dynamically in JS to match container */
   height: 100%;
   object-fit: cover;
   object-position: center top;

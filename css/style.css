@@ -430,15 +430,16 @@ h1, h2, h3, h4 {
   position: absolute;
   inset: 0;
   display: flex;
-  transition: transform 0.45s cubic-bezier(0.4,0,0.2,1);
+  width: 100%;
+  transition: transform 0.5s ease-in-out;
 }
 
 .tc-track img {
   flex-shrink: 0;
   width: 100%;
   height: 100%;
-  object-fit: contain;
-  position: relative;
+  object-fit: cover;
+  object-position: center;
 }
 
 .tc-btn {

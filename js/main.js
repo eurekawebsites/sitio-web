@@ -98,8 +98,8 @@ function initTripCarousels() {
     function setWidths() {
       const w = c.offsetWidth;
       if (!w) return;
+      imgs.forEach(img => { img.style.width = w + 'px'; });
       track.style.width = (w * total) + 'px';
-      imgs.forEach(img => { img.style.width = w + 'px'; img.style.height = c.offsetHeight + 'px'; });
     }
     requestAnimationFrame(() => { setWidths(); goTo(0); });
     window.addEventListener('resize', () => { setWidths(); goTo(+c.dataset.cur); });

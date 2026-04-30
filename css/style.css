@@ -409,7 +409,7 @@ h1, h2, h3, h4 {
 .trip-photo-wrap {
   position: relative;
   width: 100%;
-  padding-top: 120%;
+  padding-top: 125%;
   background: var(--green);
   overflow: hidden;
   flex-shrink: 0;

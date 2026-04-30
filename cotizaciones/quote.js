@@ -209,6 +209,7 @@ function hotelCardHTML(h) {
         ${h.nights    ? `<span>${esc(h.nights)} noches</span>`       : ''}
         ${h.room_type ? `<span>${esc(h.room_type)}</span>`           : ''}
       </div>
+      ${h.price != null ? `<p class="hotel-card-price">${fmt(h.price, 'USD')}</p>` : ''}
       ${h.notes ? `<p class="hotel-card-note">${esc(h.notes)}</p>` : ''}
     </div>`;
 }

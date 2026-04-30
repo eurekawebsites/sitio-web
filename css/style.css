@@ -427,21 +427,19 @@ h1, h2, h3, h4 {
 /* ── Trip card carousel ──────────────────────────────────── */
 .trip-carousel { overflow: hidden; }
 
-.tc-track {
+.tc-slide {
   position: absolute;
-  top: 0; left: 0; bottom: 0;
-  display: flex;
-  flex-wrap: nowrap;
-  transition: transform 0.55s ease-in-out;
-}
-
-.tc-track img {
-  flex-shrink: 0;
+  inset: 0;
   width: 100%;
-  min-width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: center center;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.tc-slide.active {
+  opacity: 1;
 }
 
 .tc-btn {

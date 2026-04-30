@@ -62,16 +62,15 @@ function photoWrap(trip) {
                  : trip.photo ? [trip.photo] : [];
 
   if (photos.length > 1) {
-    const id = 'tc-' + trip.id;
-    const imgs = photos.map(src =>
-      `<img src="${esc(src)}" alt="${esc(trip.name)}" loading="lazy">`
+    const slides = photos.map((src, i) =>
+      `<img src="${esc(src)}" alt="${esc(trip.name)}" loading="lazy" class="tc-slide${i===0?' active':''}">`
     ).join('');
     const dots = photos.map((_, i) =>
       `<button class="tc-dot${i===0?' active':''}" data-i="${i}"></button>`
     ).join('');
     return `
-      <div class="trip-photo-wrap trip-carousel" id="${esc(id)}" data-cur="0">
-        <div class="tc-track">${imgs}</div>
+      <div class="trip-photo-wrap trip-carousel">
+        ${slides}
         <button class="tc-btn tc-prev">&#8249;</button>
         <button class="tc-btn tc-next">&#8250;</button>
         <div class="tc-dots">${dots}</div>
@@ -90,30 +89,22 @@ function photoWrap(trip) {
 
 function initTripCarousels() {
   document.querySelectorAll('.trip-carousel').forEach(c => {
-    const track = c.querySelector('.tc-track');
-    const imgs  = track.querySelectorAll('img');
-    const dots  = c.querySelectorAll('.tc-dot');
+    const imgs = c.querySelectorAll('.tc-slide');
+    const dots = c.querySelectorAll('.tc-dot');
     const total = imgs.length;
-
-    function setWidths() {
-      const w = c.offsetWidth;
-      if (!w) return;
-      imgs.forEach(img => { img.style.width = w + 'px'; });
-      track.style.width = (w * total) + 'px';
-    }
-    requestAnimationFrame(() => { setWidths(); goTo(0); });
-    window.addEventListener('resize', () => { setWidths(); goTo(+c.dataset.cur); });
+    let cur = 0;
 
     function goTo(idx) {
-      c.dataset.cur = idx;
-      track.style.transform = `translateX(-${idx * c.offsetWidth}px)`;
-      dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+      imgs[cur].classList.remove('active');
+      dots[cur].classList.remove('active');
+      cur = (idx + total) % total;
+      imgs[cur].classList.add('active');
+      dots[cur].classList.add('active');
     }
-    function next() { goTo((+c.dataset.cur + 1) % total); }
 
-    c.querySelector('.tc-prev').addEventListener('click', () => goTo((+c.dataset.cur - 1 + total) % total));
-    c.querySelector('.tc-next').addEventListener('click', () => next());
-    dots.forEach(d => d.addEventListener('click', () => goTo(+d.dataset.i)));
+    c.querySelector('.tc-prev').addEventListener('click', () => goTo(cur - 1));
+    c.querySelector('.tc-next').addEventListener('click', () => goTo(cur + 1));
+    dots.forEach((d, i) => d.addEventListener('click', () => goTo(i)));
   });
 }
 

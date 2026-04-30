@@ -94,7 +94,6 @@ function initTripCarousels() {
     const imgs  = track.querySelectorAll('img');
     const dots  = c.querySelectorAll('.tc-dot');
     const total = imgs.length;
-    let timer;
 
     // Set each image width equal to the carousel container width
     function setWidths() {
@@ -114,15 +113,9 @@ function initTripCarousels() {
     }
     function next() { goTo((+c.dataset.cur + 1) % total); }
 
-    function startAuto() { timer = setInterval(next, 5000); }
-    function stopAuto()  { clearInterval(timer); }
-
-    c.querySelector('.tc-prev').addEventListener('click', () => { stopAuto(); goTo((+c.dataset.cur - 1 + total) % total); startAuto(); });
-    c.querySelector('.tc-next').addEventListener('click', () => { stopAuto(); next(); startAuto(); });
-    dots.forEach(d => d.addEventListener('click', () => { stopAuto(); goTo(+d.dataset.i); startAuto(); }));
-    c.addEventListener('mouseenter', stopAuto);
-    c.addEventListener('mouseleave', startAuto);
-    startAuto();
+    c.querySelector('.tc-prev').addEventListener('click', () => goTo((+c.dataset.cur - 1 + total) % total));
+    c.querySelector('.tc-next').addEventListener('click', () => next());
+    dots.forEach(d => d.addEventListener('click', () => goTo(+d.dataset.i)));
   });
 }
 

@@ -95,20 +95,18 @@ function initTripCarousels() {
     const dots  = c.querySelectorAll('.tc-dot');
     const total = imgs.length;
 
-    // Set each image width equal to the carousel container width
     function setWidths() {
       const w = c.offsetWidth;
       if (!w) return;
       track.style.width = (w * total) + 'px';
-      imgs.forEach(img => { img.style.width = w + 'px'; });
+      imgs.forEach(img => { img.style.width = w + 'px'; img.style.height = c.offsetHeight + 'px'; });
     }
     requestAnimationFrame(() => { setWidths(); goTo(0); });
     window.addEventListener('resize', () => { setWidths(); goTo(+c.dataset.cur); });
 
     function goTo(idx) {
       c.dataset.cur = idx;
-      const w = c.offsetWidth;
-      track.style.transform = `translateX(-${idx * w}px)`;
+      track.style.transform = `translateX(-${idx * c.offsetWidth}px)`;
       dots.forEach((d, i) => d.classList.toggle('active', i === idx));
     }
     function next() { goTo((+c.dataset.cur + 1) % total); }

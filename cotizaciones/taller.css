@@ -1,0 +1,212 @@
+/* ══════════════════════════════════════════════════════════════
+   COORDENADA VIAJES — taller.css
+   Workshop package cards. Extends quote.css.
+══════════════════════════════════════════════════════════════ */
+
+.taller-section {
+  padding: 0 24px 60px;
+}
+
+/* ── Package card ────────────────────────────────────────── */
+.taller-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  margin-bottom: 48px;
+}
+
+.taller-card-photo {
+  width: 100%;
+  height: 320px;
+  object-fit: cover;
+  display: block;
+}
+
+.taller-card .carousel-track img {
+  max-height: 360px;
+  object-fit: cover;
+}
+
+.taller-card-body {
+  padding: 28px 32px 32px;
+}
+
+/* ── Card header ─────────────────────────────────────────── */
+.taller-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 24px;
+  margin-bottom: 28px;
+  flex-wrap: wrap;
+}
+
+.taller-card-title {
+  font-family: var(--serif);
+  font-size: 2rem;
+  color: var(--green);
+  margin-bottom: 4px;
+  font-weight: 400;
+}
+
+.taller-card-tagline {
+  font-family: var(--serif);
+  font-style: italic;
+  color: var(--muted);
+  font-size: 1rem;
+}
+
+.taller-dates-badge {
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.taller-dates-badge span {
+  font-size: 0.8rem;
+  color: var(--muted);
+  letter-spacing: 0.04em;
+}
+
+.taller-dates-badge span:first-child {
+  font-family: var(--serif);
+  font-size: 1rem;
+  color: var(--text);
+}
+
+/* ── Info blocks ─────────────────────────────────────────── */
+.taller-block {
+  margin-bottom: 24px;
+}
+
+.taller-block > label {
+  display: block;
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 10px;
+}
+
+/* ── Flights ─────────────────────────────────────────────── */
+.taller-flight-row {
+  background: var(--light-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px 18px;
+  margin-bottom: 8px;
+}
+
+.taller-flight-route {
+  font-family: var(--serif);
+  font-size: 1.15rem;
+  color: var(--green);
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.taller-flight-meta {
+  font-size: 0.82rem;
+  color: var(--muted);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 18px;
+}
+
+/* ── Hotel ───────────────────────────────────────────────── */
+.taller-hotel {
+  background: var(--light-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px 18px;
+}
+
+.taller-hotel-name {
+  font-family: var(--serif);
+  font-size: 1.15rem;
+  color: var(--green);
+  display: block;
+  margin-bottom: 6px;
+}
+
+.taller-hotel-meta {
+  font-size: 0.82rem;
+  color: var(--muted);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 18px;
+}
+
+.taller-hotel-note {
+  font-size: 0.82rem;
+  color: var(--muted);
+  font-style: italic;
+  margin-top: 8px;
+}
+
+/* ── Includes ────────────────────────────────────────────── */
+.taller-includes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.taller-includes li {
+  background: var(--light-bg);
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  padding: 3px 10px;
+  font-size: 0.82rem;
+  color: var(--text);
+}
+
+/* ── Price block ─────────────────────────────────────────── */
+.taller-price-block {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding-top: 22px;
+  margin-top: 8px;
+  border-top: 1px solid var(--border);
+}
+
+.taller-price-total {
+  font-family: var(--serif);
+  font-size: 2.2rem;
+  color: var(--green);
+}
+
+.taller-price-sub {
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.taller-price-coming {
+  align-items: center;
+}
+
+.taller-price-coming span {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1.1rem;
+  color: var(--muted);
+}
+
+/* ── Mobile ──────────────────────────────────────────────── */
+@media (max-width: 600px) {
+  .taller-card-body { padding: 20px 18px 24px; }
+  .taller-card-header { flex-direction: column; }
+  .taller-dates-badge { text-align: left; }
+  .taller-price-block { flex-direction: column; gap: 4px; }
+}
+
+/* ── Print ───────────────────────────────────────────────── */
+@media print {
+  .taller-card { break-inside: avoid; page-break-inside: avoid; }
+}

@@ -75,8 +75,8 @@
     type:         'full',
     destination:  'Washington D.C.',
     tagline:      'Ciudad de México · Washington Dulles',
-    dates:        '6 – 8 de mayo, 2026',
-    pax:          1,
+    dates:        '',
+    pax:          null,
     currency:     'USD',
 
     valid_until:  '3 de mayo, 2026',
@@ -88,7 +88,7 @@
       email: '',
     },
 
-    intro: 'Estimada Sra. del Valle, con mucho gusto le presentamos esta propuesta de viaje a Washington D.C. Hemos preparado dos opciones según la duración de su estadía: el Paquete A cubre del 6 al 7 de mayo (1 noche, solo hospedaje) y el Paquete B del 6 al 8 de mayo (2 noches, vuelos directos desde Ciudad de México incluidos). Para el Paquete B le ofrecemos dos opciones de hotel. Quedamos a sus órdenes para resolver cualquier duda o ajustar la propuesta.',
+    intro: 'Estimada Sra. del Valle, con mucho gusto le presentamos esta propuesta de viaje a Washington D.C. Le compartimos dos opciones: el Paquete A incluye vuelos directos desde Ciudad de México más 2 noches de hospedaje del 6 al 8 de mayo, con dos alternativas de hotel a elegir. La opción de 1 noche (6–7 de mayo) está disponible solo como hospedaje, ya que los vuelos sin escala no se encuentran disponibles para esas fechas. Quedamos a sus órdenes para cualquier duda.',
 
     /* ── Tours ───────────────────────────────────────────── */
     tours: [],
@@ -120,26 +120,9 @@
 
     hotel_packages: [
 
-      // ── PAQUETE A — 6–7 mayo (1 noche, solo hotel) ──────
+      // ── PAQUETE A — 6–8 mayo (2 noches, vuelos + hotel) ─
       {
-        label: 'Paquete A — 6 al 7 de mayo (1 noche · solo hospedaje)',
-        options: [
-          {
-            name:      'Hilton Washington DC Capitol Hill',
-            city:      'Washington D.C.',
-            check_in:  '6 de mayo, 2026',
-            check_out: '7 de mayo, 2026',
-            nights:    1,
-            room_type: 'Cama King',
-            photo:     'hotel3-dc.jpg',
-            notes:     'Solo hospedaje — vuelos no disponibles sin escala para estas fechas.',
-          },
-        ],
-      },
-
-      // ── PAQUETE B — 6–8 mayo (2 noches, vuelos + hotel) ─
-      {
-        label: 'Paquete B — 6 al 8 de mayo (2 noches · vuelos directos incluidos)',
+        label: 'Paquete A — 6 al 8 de mayo · Vuelos directos + hospedaje (2 noches)',
         options: [
           {
             name:      'Global Luxury Suites at Capitol Hill',
@@ -161,34 +144,32 @@
           },
         ],
       },
+
+      // ── 1 noche — 6–7 mayo (solo hospedaje) ─────────────
+      {
+        label: '1 noche · 6 al 7 de mayo — Solo hospedaje',
+        options: [
+          {
+            name:      'Hilton Washington DC Capitol Hill',
+            city:      'Washington D.C.',
+            check_in:  '6 de mayo, 2026',
+            check_out: '7 de mayo, 2026',
+            nights:    1,
+            room_type: 'Cama King',
+            photo:     'hotel3-dc.jpg',
+            notes:     'Vuelos sin escala no disponibles para estas fechas.',
+          },
+        ],
+      },
     ],
 
     /* ── Crucero (no aplica) ─────────────────────────────── */
     cruise: null,
 
-    /* ── Desglose de precios ─────────────────────────────── */
-    pricing: {
-      line_items: [
-        // Paquete A — solo hospedaje
-        { description: 'Paquete A — Hilton Washington DC Capitol Hill (1 noche)', amount: 614.72 },
+    /* ── Precios (sin desglose, se muestran en las tarjetas de hotel) */
+    pricing: null,
 
-        // Paquete B — vuelos directos + hotel (a elegir)
-        { description: 'Paquete B — Vuelos directos + Global Luxury Suites at Capitol Hill (2 noches)', amount: 1748.69 },
-        { description: 'Paquete B — Vuelos directos + Hilton Arlington Rosslyn The Key (2 noches)',     amount: 1807.15 },
-      ],
-      subtotal: null,
-      extras: [],
-      total: 1807.15,  // precio más alto como referencia
-      note: 'Precios en USD por persona. Paquete A incluye solo hospedaje (vuelos sin escala no disponibles para 6–7 mayo). Paquete B incluye vuelos directos MEX–IAD–MEX y hotel. El total final depende del paquete y hotel elegidos.',
-    },
-
-    payment: {
-      bank:       'BBVA',
-      clabe:      '012180015593495708',
-      name:       'Aster Íñigo González',
-      note:       'Transferencia bancaria. Favor de enviar comprobante por WhatsApp al confirmar.',
-      stripe_url: '',
-    },
+    payment: null,
 
     /* ── Condiciones ─────────────────────────────────────── */
     terms: [

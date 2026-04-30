@@ -53,8 +53,8 @@ function renderHero(q) {
       <p class="quote-hero-sub">${esc(q.tagline || '')}</p>
       <div class="quote-meta-grid">
         <span>Cliente<strong>${esc(q.client.name)}</strong></span>
-        <span>Viajeros<strong>${esc(q.pax)} personas</strong></span>
-        <span>Fechas<strong>${esc(q.dates)}</strong></span>
+        ${q.pax ? `<span>Viajeros<strong>${esc(q.pax)} personas</strong></span>` : ''}
+        ${q.dates ? `<span>Fechas<strong>${esc(q.dates)}</strong></span>` : ''}
         <span>Cotización<strong>#${esc(q.ref)}</strong></span>
         <span>Válida hasta<strong>${esc(q.valid_until)}</strong></span>
         ${q.agent ? `<span>Tu agente<strong>${q.agent_url ? `<a href="${esc(q.agent_url)}" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline;text-underline-offset:3px;">${esc(q.agent)}</a>` : esc(q.agent)}</strong></span>` : ''}
@@ -297,7 +297,7 @@ function renderCruise(q) {
 /* ── Pricing summary ─────────────────────────────────────── */
 function renderPricing(q) {
   const section = document.getElementById('pricing-section');
-  if (!section) return;
+  if (!section || !q.pricing) { if (section) section.style.display = 'none'; return; }
 
   const cur = q.currency || 'MXN';
 

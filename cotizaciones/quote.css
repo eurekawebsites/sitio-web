@@ -556,11 +556,74 @@ h1, h2, h3, h4, h5 {
   gap: 4px 20px;
 }
 
+.hotel-card-photo {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  display: block;
+  margin-bottom: 14px;
+}
+
 .hotel-name {
   font-family: var(--serif);
   font-size: 1.2rem;
   color: var(--green);
   margin-bottom: 4px;
+}
+
+.hotel-card-note {
+  font-size: 0.83rem;
+  color: var(--muted);
+  margin-top: 8px;
+}
+
+/* ── Hotel grouped packages (side-by-side options) ───────── */
+.hotel-group {
+  margin-bottom: 36px;
+}
+
+.hotel-group-title {
+  font-family: var(--serif);
+  font-size: 1.25rem;
+  color: var(--green);
+  border-left: 3px solid var(--gold);
+  padding-left: 12px;
+  margin-bottom: 16px;
+}
+
+.hotel-options-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+@media (max-width: 600px) {
+  .hotel-options-row { grid-template-columns: 1fr; }
+}
+
+.hotel-option {
+  display: flex;
+  flex-direction: column;
+}
+
+.hotel-option-label {
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gold);
+  background: var(--dark-green);
+  padding: 5px 12px;
+  display: inline-block;
+  align-self: flex-start;
+  margin-bottom: -1px;
+  position: relative;
+  z-index: 1;
+}
+
+.hotel-option .hotel-card {
+  flex: 1;
+  margin-bottom: 0;
+  border-top: none;
 }
 
 /* ── Footer / validity ───────────────────────────────────── */

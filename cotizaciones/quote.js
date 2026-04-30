@@ -12,9 +12,9 @@ const WA_NUMBER = '525657917967';
 function fmt(amount, currency) {
   currency = currency || 'MXN';
   const number = new Intl.NumberFormat('es-MX', {
-    style: 'currency', currency, maximumFractionDigits: 0
+    style: 'currency', currency, minimumFractionDigits: 2, maximumFractionDigits: 2
   }).format(amount);
-  return number + ' MXN';
+  return number + ' ' + currency;
 }
 
 /* ── Escape HTML ─────────────────────────────────────────── */
@@ -193,33 +193,59 @@ function renderFlights(q) {
 }
 
 /* ── Hotels ──────────────────────────────────────────────── */
+function hotelCardHTML(h) {
+  const photo = h.photo
+    ? `<img src="${esc(h.photo)}" alt="${esc(h.name)}" class="hotel-card-photo" loading="lazy">`
+    : '';
+  return `
+    <div class="hotel-card">
+      ${photo}
+      <p class="hotel-name">${esc(h.name)}</p>
+      <div class="hotel-meta">
+        ${h.category  ? `<span>${esc(h.category)}</span>`            : ''}
+        ${h.city      ? `<span>${esc(h.city)}</span>`                : ''}
+        ${h.check_in  ? `<span>Check-in: ${esc(h.check_in)}</span>`  : ''}
+        ${h.check_out ? `<span>Check-out: ${esc(h.check_out)}</span>`: ''}
+        ${h.nights    ? `<span>${esc(h.nights)} noches</span>`       : ''}
+        ${h.room_type ? `<span>${esc(h.room_type)}</span>`           : ''}
+      </div>
+      ${h.notes ? `<p class="hotel-card-note">${esc(h.notes)}</p>` : ''}
+    </div>`;
+}
+
 function renderHotels(q) {
   const section = document.getElementById('hotels-section');
+
+  // packages[] mode — grouped side-by-side options per traveller
+  if (q.hotel_packages && q.hotel_packages.length) {
+    const groups = q.hotel_packages.map(pkg => {
+      const optionCards = (pkg.options || []).map((h, i) => `
+        <div class="hotel-option">
+          <div class="hotel-option-label">Opción ${i + 1}</div>
+          ${hotelCardHTML(h)}
+        </div>`).join('');
+      return `
+        <div class="hotel-group">
+          <h3 class="hotel-group-title">${esc(pkg.label)}</h3>
+          <div class="hotel-options-row">${optionCards}</div>
+        </div>`;
+    }).join('');
+
+    section.innerHTML = `
+      <div class="container">
+        <p class="section-label">Hospedaje</p>
+        <h2>Hoteles seleccionados</h2>
+        ${groups}
+      </div>`;
+    return;
+  }
+
+  // flat hotels[] mode — legacy / simple list
   if (!section || !q.hotels || !q.hotels.length) {
     if (section) section.style.display = 'none';
     return;
   }
-
-  const cards = q.hotels.map(h => {
-    const photo = h.photo
-      ? `<img src="${esc(h.photo)}" alt="${esc(h.name)}" style="width:100%;height:160px;object-fit:cover;margin-bottom:14px;">`
-      : '';
-    return `
-      <div class="hotel-card">
-        ${photo}
-        <p class="hotel-name">${esc(h.name)}</p>
-        <div class="hotel-meta">
-          ${h.category ? `<span>${esc(h.category)}</span>` : ''}
-          ${h.city ? `<span>${esc(h.city)}</span>` : ''}
-          ${h.check_in ? `<span>Check-in: ${esc(h.check_in)}</span>` : ''}
-          ${h.check_out ? `<span>Check-out: ${esc(h.check_out)}</span>` : ''}
-          ${h.nights ? `<span>${esc(h.nights)} noches</span>` : ''}
-          ${h.room_type ? `<span>${esc(h.room_type)}</span>` : ''}
-        </div>
-        ${h.notes ? `<p style="font-size:0.83rem;color:var(--muted);margin-top:8px;">${esc(h.notes)}</p>` : ''}
-      </div>`;
-  }).join('');
-
+  const cards = q.hotels.map(hotelCardHTML).join('');
   section.innerHTML = `
     <div class="container">
       <p class="section-label">Hospedaje</p>

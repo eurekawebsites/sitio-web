@@ -127,7 +127,7 @@ function renderPaquetes() {
 
   section.innerHTML = `
     <p class="section-label" style="margin-top:48px;">Destinos disponibles</p>
-    <h2 style="font-family:var(--serif);font-size:1.7rem;color:var(--green);margin-bottom:32px;">Paquetes 2026</h2>
+    <h2 style="font-family:var(--serif);font-size:1.7rem;color:var(--green);margin-bottom:32px;">Paquetes 2026–2027</h2>
     ${cards}`;
 }
 

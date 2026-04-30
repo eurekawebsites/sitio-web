@@ -96,19 +96,20 @@ function initTripCarousels() {
     const total = imgs.length;
     let timer;
 
+    // Set each image width equal to the carousel container width
     function setWidths() {
       const w = c.offsetWidth;
       if (!w) return;
-      imgs.forEach(img => { img.style.width = w + 'px'; });
       track.style.width = (w * total) + 'px';
+      imgs.forEach(img => { img.style.width = w + 'px'; });
     }
-    // Wait for layout before measuring
     requestAnimationFrame(() => { setWidths(); goTo(0); });
     window.addEventListener('resize', () => { setWidths(); goTo(+c.dataset.cur); });
 
     function goTo(idx) {
       c.dataset.cur = idx;
-      track.style.transform = `translateX(-${idx * c.offsetWidth}px)`;
+      const w = c.offsetWidth;
+      track.style.transform = `translateX(-${idx * w}px)`;
       dots.forEach((d, i) => d.classList.toggle('active', i === idx));
     }
     function next() { goTo((+c.dataset.cur + 1) % total); }

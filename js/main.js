@@ -91,18 +91,27 @@ function photoWrap(trip) {
 function initTripCarousels() {
   document.querySelectorAll('.trip-carousel').forEach(c => {
     const track = c.querySelector('.tc-track');
+    const imgs  = track.querySelectorAll('img');
     const dots  = c.querySelectorAll('.tc-dot');
-    const total = track.querySelectorAll('img').length;
+    const total = imgs.length;
     let timer;
+
+    // Set each image to the exact container width so translateX in px is reliable
+    function setWidths() {
+      const w = c.offsetWidth;
+      imgs.forEach(img => { img.style.width = w + 'px'; });
+    }
+    setWidths();
+    window.addEventListener('resize', setWidths);
 
     function goTo(idx) {
       c.dataset.cur = idx;
-      track.style.transform = `translateX(-${idx * 100}%)`;
+      track.style.transform = `translateX(-${idx * c.offsetWidth}px)`;
       dots.forEach((d, i) => d.classList.toggle('active', i === idx));
     }
     function next() { goTo((+c.dataset.cur + 1) % total); }
 
-    function startAuto() { timer = setInterval(next, 3500); }
+    function startAuto() { timer = setInterval(next, 5000); }
     function stopAuto()  { clearInterval(timer); }
 
     c.querySelector('.tc-prev').addEventListener('click', () => { stopAuto(); goTo((+c.dataset.cur - 1 + total) % total); startAuto(); });

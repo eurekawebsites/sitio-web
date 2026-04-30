@@ -428,18 +428,18 @@ h1, h2, h3, h4 {
 
 .tc-track {
   position: absolute;
-  inset: 0;
+  top: 0; left: 0; bottom: 0;
   display: flex;
-  width: 100%;
-  transition: transform 0.5s ease-in-out;
+  flex-wrap: nowrap;
+  transition: transform 0.55s ease-in-out;
 }
 
 .tc-track img {
   flex-shrink: 0;
-  width: 100%;
+  width: 100%;          /* set to carousel container width via JS */
   height: 100%;
   object-fit: cover;
-  object-position: center;
+  object-position: center top;
 }
 
 .tc-btn {

@@ -172,10 +172,10 @@
         ],
       },
 
-      /* ── 2. La Paz, Bolivia ─────────────────────────────── */
+      /* ── 2. La Paz & Salar de Uyuni, Bolivia ───────────── */
       {
         id:          'lapaz',
-        destination: 'La Paz',
+        destination: 'La Paz & Salar de Uyuni',
         tagline:     'Bolivia',
         dates:       '14 – 21 de enero, 2027',
         nights:      7,
@@ -183,7 +183,7 @@
         currency:    'MXN',
         price_per_person: null,
         price_total:      null,
-        price_note:  'Precio por confirmar — incluye vuelos y hotel. Tours en proceso de cotización.',
+        price_note:  'Vuelos + hotel: $38,900 MXN para dos · Tour Salar de Uyuni: $540 USD por persona',
 
         photos: [],  // TODO: agregar fotos
 
@@ -195,7 +195,7 @@
             time:          '1:50 pm → 2:15 am (+1)',
             airline:       'Avianca',
             flight_number: 'AV73',
-            duration:      '10h 25m · 1 escala en Bogotá (2h)',
+            duration:      '10h 25m · escala en Bogotá (2h)',
             baggage:       'Artículo personal + maleta de mano incluidos',
           },
           {
@@ -205,7 +205,7 @@
             time:          '3:20 am → 12:10 pm',
             airline:       'Avianca',
             flight_number: 'AV224',
-            duration:      '10h 50m · 1 escala en Bogotá (2h)',
+            duration:      '10h 50m · escala en Bogotá (2h)',
             baggage:       'Artículo personal + maleta de mano incluidos',
           },
         ],
@@ -214,21 +214,64 @@
           name:      'DREAM by Stannum Hotel',
           city:      'La Paz, Bolivia',
           check_in:  '15 de enero, 2027',
-          check_out: '21 de enero, 2027',
-          nights:    6,
+          check_out: '16 de enero, 2027',
+          nights:    1,
           room_type: 'Cama King',
-          notes:     'Desayuno buffet incluido · Shuttle al aeropuerto 24h disponible',
+          notes:     'Desayuno buffet incluido · Shuttle al aeropuerto 24h · Las noches del 16 al 20 de enero están cubiertas por el tour',
         },
+
+        tours: [
+          {
+            name:     'Salar de Uyuni & Laguna Roja — Tour en Bus 5 Días',
+            operator: 'Todo Turismo',
+            duration: '5 días · 16 – 20 de enero, 2027',
+            price:    '$540 USD por persona',
+            includes: [
+              'Bus La Paz → Uyuni → La Paz (Todo Turismo): Wi-Fi, baño, cobija, cena y desayuno a bordo',
+              'Tour Uyuni 3 días / 2 noches en jeep 4x4',
+              'Guía certificado en inglés',
+              'Hospedaje noche 1: Atulcha Salt Hostel (habitación compartida 6 personas)',
+              'Hospedaje noche 2: Huayllajara Hostel (habitación compartida 6 personas)',
+              'Alimentos: 2 desayunos + 3 almuerzos + 2 cenas durante el tour',
+              'Alimentos a bordo del bus: 2 desayunos + 2 cenas',
+              'Salar de Uyuni · Isla Incahuasi · Cementerio de Trenes',
+              'Reserva Eduardo Avaroa · Laguna Roja · Flamencos',
+              'Géiseres Sol de Mañana · Desierto de Dalí · Laguna Verde',
+              'Aguas termales (35°C) · Cuevas Galaxy',
+              'Cancelación gratuita disponible',
+            ],
+            not_includes: [
+              'Entrada Isla Incahuasi (30 Bs)',
+              'Entrada Reserva Eduardo Avaroa (150 Bs)',
+              'Entrada Cuevas Galaxy (15 Bs)',
+              'Aguas termales (30 Bs)',
+              'Baños en ruta (30 Bs)',
+              'Gastos personales (~150 Bs)',
+              'Bebidas',
+              'Bolsa de dormir — opcional (50 BOB)',
+              'Botas de lluvia — opcional (20 BOB)',
+            ],
+            itinerary: [
+              'Día 1 (16 ene) — 9:00 pm: Bus La Paz → Uyuni',
+              'Día 2 (17 ene) — 7:30 am llegada Uyuni · 10:30 am inicio tour: Cementerio de Trenes, Colchani, Salar de Uyuni, Isla Incahuasi',
+              'Día 3 (18 ene) — 7:00 am: Cuevas Galaxy, Desierto Chiguana, Lagunas Cañapa/Hedionda/Chiarcota, Laguna Roja, Reserva Eduardo Avaroa',
+              'Día 4 (19 ene) — 5:00 am: Géiseres Sol de Mañana, Aguas Termales, Desierto Dalí, Laguna Verde · 9:00 pm Bus Uyuni → La Paz',
+              'Día 5 (20 ene) — 6:30 am: Llegada La Paz',
+            ],
+          },
+        ],
 
         includes: [
           'Vuelos de ida y vuelta desde CDMX',
           'Escala en Bogotá (2h)',
-          '6 noches en DREAM by Stannum Hotel',
-          'Desayuno buffet incluido',
-          'Shuttle aeropuerto 24h',
-          'Cama King',
+          '1 noche en DREAM by Stannum Hotel (La Paz)',
+          'Desayuno buffet + shuttle aeropuerto 24h',
+          'Tour 5 días: Salar de Uyuni & Laguna Roja',
+          'Bus cama La Paz–Uyuni–La Paz',
+          'Guía certificado en inglés',
+          '2 noches en hostal durante el tour',
+          'Alimentos incluidos en tour y bus',
           'Artículo personal + maleta de mano',
-          'Tours por confirmar',
         ],
       },
 

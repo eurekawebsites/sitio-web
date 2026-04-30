@@ -149,6 +149,66 @@
   margin-top: 8px;
 }
 
+/* ── Tour block ──────────────────────────────────────────── */
+.taller-tour {
+  background: var(--light-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px 20px;
+}
+
+.taller-tour-header {
+  margin-bottom: 16px;
+}
+
+.taller-tour-name {
+  display: block;
+  font-family: var(--serif);
+  font-size: 1.1rem;
+  color: var(--green);
+  margin-bottom: 4px;
+}
+
+.taller-tour-meta {
+  font-size: 0.8rem;
+  color: var(--muted);
+  letter-spacing: 0.03em;
+}
+
+.taller-tour-section {
+  margin-bottom: 14px;
+}
+
+.taller-tour-section > label {
+  display: block;
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 8px;
+}
+
+.taller-itinerary {
+  list-style: none;
+  padding: 0;
+}
+
+.taller-itinerary li {
+  font-size: 0.85rem;
+  color: var(--text);
+  padding: 5px 0;
+  border-bottom: 1px solid var(--border);
+  line-height: 1.5;
+}
+
+.taller-itinerary li:last-child { border-bottom: none; }
+
+.taller-not-includes li {
+  background: #fdf6f6;
+  border-color: #e8d8d8;
+  color: var(--muted);
+}
+
 /* ── Includes ────────────────────────────────────────────── */
 .taller-includes {
   display: flex;

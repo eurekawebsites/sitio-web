@@ -85,9 +85,37 @@ function renderPaquetes() {
          </div>`
       : '';
 
+    const toursHTML = p.tours && p.tours.length
+      ? p.tours.map(t => `
+        <div class="taller-block">
+          <label>Tour incluido</label>
+          <div class="taller-tour">
+            <div class="taller-tour-header">
+              <span class="taller-tour-name">${esc(t.name)}</span>
+              <span class="taller-tour-meta">${esc(t.duration)}${t.operator ? ` · ${esc(t.operator)}` : ''}${t.price ? ` · ${esc(t.price)}` : ''}</span>
+            </div>
+            ${t.itinerary && t.itinerary.length ? `
+              <div class="taller-tour-section">
+                <label>Itinerario</label>
+                <ul class="taller-itinerary">${t.itinerary.map(d => `<li>${esc(d)}</li>`).join('')}</ul>
+              </div>` : ''}
+            ${t.includes && t.includes.length ? `
+              <div class="taller-tour-section">
+                <label>Incluye</label>
+                <ul class="taller-includes">${t.includes.map(i => `<li>${esc(i)}</li>`).join('')}</ul>
+              </div>` : ''}
+            ${t.not_includes && t.not_includes.length ? `
+              <div class="taller-tour-section">
+                <label>No incluye</label>
+                <ul class="taller-includes taller-not-includes">${t.not_includes.map(i => `<li>${esc(i)}</li>`).join('')}</ul>
+              </div>` : ''}
+          </div>
+        </div>`).join('')
+      : '';
+
     const includesHTML = p.includes && p.includes.length
       ? `<div class="taller-block">
-           <label>Incluye</label>
+           <label>Resumen del paquete</label>
            <ul class="taller-includes">
              ${p.includes.map(item => `<li>${esc(item)}</li>`).join('')}
            </ul>
@@ -119,6 +147,7 @@ function renderPaquetes() {
           </div>
           ${flightsHTML}
           ${hotelHTML}
+          ${toursHTML}
           ${includesHTML}
           ${priceHTML}
         </div>

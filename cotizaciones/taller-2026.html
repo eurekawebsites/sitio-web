@@ -172,25 +172,64 @@
         ],
       },
 
-      /* ── 2. Salar de Uyuni ──────────────────────────────── */
+      /* ── 2. La Paz, Bolivia ─────────────────────────────── */
       {
-        id:          'uyuni',
-        destination: 'Salar de Uyuni',
+        id:          'lapaz',
+        destination: 'La Paz',
         tagline:     'Bolivia',
-        dates:       'TODO: fechas',
-        nights:      null,
+        dates:       '14 – 21 de enero, 2027',
+        nights:      7,
         pax:         2,
         currency:    'MXN',
         price_per_person: null,
         price_total:      null,
+        price_note:  'Precio por confirmar — incluye vuelos y hotel. Tours en proceso de cotización.',
 
         photos: [],  // TODO: agregar fotos
 
-        flights: [],  // TODO
+        flights: [
+          {
+            origin:        'Ciudad de México (MEX)',
+            destination:   'La Paz (LPB)',
+            date:          'Jueves 14 de enero, 2027',
+            time:          '1:50 pm → 2:15 am (+1)',
+            airline:       'Avianca',
+            flight_number: 'AV73',
+            duration:      '10h 25m · 1 escala en Bogotá (2h)',
+            baggage:       'Artículo personal + maleta de mano incluidos',
+          },
+          {
+            origin:        'La Paz (LPB)',
+            destination:   'Ciudad de México (MEX)',
+            date:          'Jueves 21 de enero, 2027',
+            time:          '3:20 am → 12:10 pm',
+            airline:       'Avianca',
+            flight_number: 'AV224',
+            duration:      '10h 50m · 1 escala en Bogotá (2h)',
+            baggage:       'Artículo personal + maleta de mano incluidos',
+          },
+        ],
 
-        hotel: null,  // TODO
+        hotel: {
+          name:      'DREAM by Stannum Hotel',
+          city:      'La Paz, Bolivia',
+          check_in:  '15 de enero, 2027',
+          check_out: '21 de enero, 2027',
+          nights:    6,
+          room_type: 'Cama King',
+          notes:     'Desayuno buffet incluido · Shuttle al aeropuerto 24h disponible',
+        },
 
-        includes: [],  // TODO
+        includes: [
+          'Vuelos de ida y vuelta desde CDMX',
+          'Escala en Bogotá (2h)',
+          '6 noches en DREAM by Stannum Hotel',
+          'Desayuno buffet incluido',
+          'Shuttle aeropuerto 24h',
+          'Cama King',
+          'Artículo personal + maleta de mano',
+          'Tours por confirmar',
+        ],
       },
 
       /* ── 3. TODO: tercer destino ────────────────────────── */

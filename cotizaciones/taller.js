@@ -100,7 +100,7 @@ function renderPaquetes() {
            <div class="taller-price-sub">para 2 personas · ${fmt(p.price_per_person, p.currency)} por persona</div>
          </div>`
       : `<div class="taller-price-block taller-price-coming">
-           <span>Precio próximamente</span>
+           <span>${esc(p.price_note || 'Precio próximamente')}</span>
          </div>`;
 
     return `

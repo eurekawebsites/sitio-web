@@ -72,9 +72,7 @@ function renderPaquetes() {
       const photoHTML = h.photos && h.photos.length
         ? carouselHTML(h.photos, h.name, 'hotel-' + h.name.replace(/\s+/g, ''))
         : '';
-      const priceHTML = h.price != null
-        ? `<p class="hotel-card-price">${fmt(h.price, h.price_currency || 'USD')}</p>`
-        : '';
+      const priceHTML = '';
       return `
         <div class="taller-hotel">
           ${photoHTML}
@@ -104,6 +102,7 @@ function renderPaquetes() {
         <div class="taller-block">
           <label>Tour incluido</label>
           <div class="taller-tour">
+            ${t.photo ? `<img src="${esc(t.photo)}" alt="${esc(t.name)}" class="taller-tour-photo" loading="lazy">` : ''}
             <div class="taller-tour-header">
               <span class="taller-tour-name">${esc(t.name)}</span>
               <span class="taller-tour-meta">${esc(t.duration)}${t.operator ? ` · ${esc(t.operator)}` : ''}${t.price ? ` · ${esc(t.price)}` : ''}</span>
@@ -139,7 +138,7 @@ function renderPaquetes() {
     const priceHTML = p.price_total != null
       ? `<div class="taller-price-block">
            <div class="taller-price-total">${fmt(p.price_total, p.currency)}</div>
-           <div class="taller-price-sub">para 2 personas · ${fmt(p.price_per_person, p.currency)} por persona</div>
+           <div class="taller-price-sub">para 2 personas · ${fmt(p.price_per_person, p.currency)} por persona${p.price_note ? `<br><span style="font-style:italic;">${esc(p.price_note)}</span>` : ''}</div>
          </div>`
       : `<div class="taller-price-block taller-price-coming">
            <span>${esc(p.price_note || 'Precio próximamente')}</span>

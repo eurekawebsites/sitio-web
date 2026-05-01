@@ -26,6 +26,58 @@
     "price_note": "por persona en ocupación doble"
   },
   {
+    "id": "ixtapa-oct-2026",
+    "name": "Ixtapa Zihuatanejo",
+    "destination": "Ixtapa Zihuatanejo",
+    "route": "Guerrero, México",
+    "departure_date": "7 oct 2026",
+    "duration": "5 noches / 6 días",
+    "photos": [
+      "images/ixtapa/ixtapa-sunset.jpg",
+      "images/ixtapa/ixtapa0.jpg",
+      "images/ixtapa/cocktail.jpg"
+    ],
+    "detailed": true,
+    "active": true,
+    "sort_order": 3,
+    "includes": [
+      "Vuelo de ida y vuelta desde CDMX (nonstop)",
+      "5 noches en Emporio Ixtapa",
+      "Todo incluido",
+      "Cama King",
+      "Artículo personal + maleta de mano"
+    ],
+    "highlight_note": "Vuelo nonstop desde CDMX · Emporio Ixtapa todo incluido",
+    "price_from": "$13,250 MXN",
+    "price_note": "por persona en ocupación doble · vuelos + hotel todo incluido"
+  },
+  {
+    "id": "ixtapa-oct-2026",
+    "name": "Ixtapa Zihuatanejo",
+    "destination": "Ixtapa Zihuatanejo",
+    "route": "Guerrero, México",
+    "departure_date": "7 oct 2026",
+    "duration": "5 noches / 6 días",
+    "photos": [
+      "images/ixtapa/ixtapa-sunset.jpg",
+      "images/ixtapa/ixtapa0.jpg",
+      "images/ixtapa/cocktail.jpg"
+    ],
+    "detailed": true,
+    "active": true,
+    "sort_order": 3,
+    "includes": [
+      "Vuelo de ida y vuelta desde CDMX (nonstop)",
+      "5 noches en Emporio Ixtapa",
+      "Todo incluido",
+      "Cama King",
+      "Artículo personal + maleta de mano"
+    ],
+    "highlight_note": "Vuelo nonstop desde CDMX · Emporio Ixtapa todo incluido",
+    "price_from": "$13,250 MXN",
+    "price_note": "por persona en ocupación doble · vuelos + hotel todo incluido"
+  },
+  {
     "id": "islandia-escocia-noruega-sep-2026",
     "name": "Islandia, Escocia & Noruega en Crucero",
     "destination": "Islandia, Escocia y Noruega",

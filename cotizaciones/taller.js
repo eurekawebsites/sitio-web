@@ -69,8 +69,15 @@ function renderPaquetes() {
       : '';
 
     function hotelBlockHTML(h) {
+      const photoHTML = h.photos && h.photos.length
+        ? carouselHTML(h.photos, h.name, 'hotel-' + h.name.replace(/\s+/g, ''))
+        : '';
+      const priceHTML = h.price != null
+        ? `<p class="hotel-card-price">${fmt(h.price, h.price_currency || 'USD')}</p>`
+        : '';
       return `
         <div class="taller-hotel">
+          ${photoHTML}
           <span class="taller-hotel-name">${esc(h.name)}</span>
           <div class="taller-hotel-meta">
             ${h.city      ? `<span>${esc(h.city)}</span>`                  : ''}
@@ -80,6 +87,7 @@ function renderPaquetes() {
             ${h.check_out ? `<span>Check-out: ${esc(h.check_out)}</span>` : ''}
           </div>
           ${h.notes ? `<p class="taller-hotel-note">${esc(h.notes)}</p>` : ''}
+          ${priceHTML}
         </div>`;
     }
 

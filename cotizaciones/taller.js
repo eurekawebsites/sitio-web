@@ -68,20 +68,26 @@ function renderPaquetes() {
          </div>`
       : '';
 
-    const hotelHTML = p.hotel
+    function hotelBlockHTML(h) {
+      return `
+        <div class="taller-hotel">
+          <span class="taller-hotel-name">${esc(h.name)}</span>
+          <div class="taller-hotel-meta">
+            ${h.city      ? `<span>${esc(h.city)}</span>`                  : ''}
+            ${h.nights    ? `<span>${esc(h.nights)} noches</span>`         : ''}
+            ${h.room_type ? `<span>${esc(h.room_type)}</span>`             : ''}
+            ${h.check_in  ? `<span>Check-in: ${esc(h.check_in)}</span>`   : ''}
+            ${h.check_out ? `<span>Check-out: ${esc(h.check_out)}</span>` : ''}
+          </div>
+          ${h.notes ? `<p class="taller-hotel-note">${esc(h.notes)}</p>` : ''}
+        </div>`;
+    }
+
+    const hotels = [p.hotel, p.hotel2].filter(Boolean);
+    const hotelHTML = hotels.length
       ? `<div class="taller-block">
            <label>Hospedaje</label>
-           <div class="taller-hotel">
-             <span class="taller-hotel-name">${esc(p.hotel.name)}</span>
-             <div class="taller-hotel-meta">
-               ${p.hotel.city      ? `<span>${esc(p.hotel.city)}</span>`                    : ''}
-               ${p.hotel.nights    ? `<span>${esc(p.hotel.nights)} noches</span>`           : ''}
-               ${p.hotel.room_type ? `<span>${esc(p.hotel.room_type)}</span>`               : ''}
-               ${p.hotel.check_in  ? `<span>Check-in: ${esc(p.hotel.check_in)}</span>`     : ''}
-               ${p.hotel.check_out ? `<span>Check-out: ${esc(p.hotel.check_out)}</span>`   : ''}
-             </div>
-             ${p.hotel.notes ? `<p class="taller-hotel-note">${esc(p.hotel.notes)}</p>` : ''}
-           </div>
+           ${hotels.map(hotelBlockHTML).join('<div class="taller-hotel-divider"></div>')}
          </div>`
       : '';
 

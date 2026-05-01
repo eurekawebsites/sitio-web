@@ -149,6 +149,12 @@
   margin-top: 8px;
 }
 
+.taller-hotel-divider {
+  height: 1px;
+  background: var(--border);
+  margin: 10px 0;
+}
+
 /* ── Tour block ──────────────────────────────────────────── */
 .taller-tour {
   background: var(--light-bg);

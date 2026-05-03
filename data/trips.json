@@ -57,9 +57,9 @@
     "departure_date": "7 oct 2026",
     "duration": "5 noches / 6 días",
     "photos": [
-      "images/ixtapa/ixtapa-sunset.jpg",
-      "images/ixtapa/ixtapa0.jpg",
-      "images/ixtapa/cocktail.jpg"
+      "images/ixtapa/ixtapa-sunset.png",
+      "images/ixtapa/ixtapa0.png",
+      "images/ixtapa/cocktail.png"
     ],
     "detailed": true,
     "active": true,

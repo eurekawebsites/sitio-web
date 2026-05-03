@@ -10,7 +10,7 @@
     "photos": ["images/thailand/1.png","images/thailand/2.png","images/thailand/3.png","images/thailand/4.png","images/thailand/5.png"],
     "detailed": true,
     "active": true,
-    "sort_order": 1,
+    "sort_order": 3,
     "includes": [
       "Vuelos internacionales desde CDMX",
       "Vuelos domésticos en Tailandia",
@@ -36,7 +36,7 @@
     "photos": ["images/iceland/1.png","images/iceland/2.png","images/iceland/7.png","images/iceland/3.png","images/iceland/4.png","images/iceland/8.png","images/iceland/9.png","images/iceland/5.png","images/iceland/10.png"],
     "detailed": true,
     "active": true,
-    "sort_order": 2,
+    "sort_order": 1,
     "includes": [
       "Crucero a bordo del Norwegian Star",
       "Alimentos en restaurantes complementarios del barco",
@@ -61,9 +61,14 @@
       "images/ixtapa/ixtapa0.jpg",
       "images/ixtapa/cocktail.jpg"
     ],
+    "photo_caption": {
+      "title": "Ixtapa Zihuatanejo",
+      "subtitle": "5 noches · Todo incluido",
+      "route": "Guerrero, México"
+    },
     "detailed": true,
     "active": true,
-    "sort_order": 3,
+    "sort_order": 2,
     "includes": [
       "Vuelo de ida y vuelta desde CDMX (nonstop)",
       "5 noches en Emporio Ixtapa",

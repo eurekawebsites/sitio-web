@@ -61,6 +61,14 @@ function photoWrap(trip) {
   const photos = trip.photos && trip.photos.length ? trip.photos
                  : trip.photo ? [trip.photo] : [];
 
+  const cap = trip.photo_caption;
+  const captionHtml = cap ? `
+    <div class="tc-caption">
+      <p class="tc-caption-title">${esc(cap.title)}</p>
+      ${cap.subtitle ? `<p class="tc-caption-sub">${esc(cap.subtitle)}</p>` : ''}
+      ${cap.route ? `<p class="tc-caption-route">${esc(cap.route)}</p>` : ''}
+    </div>` : '';
+
   if (photos.length > 1) {
     const slides = photos.map((src, i) =>
       `<img src="${esc(src)}" alt="${esc(trip.name)}" loading="lazy" class="tc-slide${i===0?' active':''}">`
@@ -71,6 +79,7 @@ function photoWrap(trip) {
     return `
       <div class="trip-photo-wrap trip-carousel">
         ${slides}
+        ${captionHtml}
         <button class="tc-btn tc-prev">&#8249;</button>
         <button class="tc-btn tc-next">&#8250;</button>
         <div class="tc-dots">${dots}</div>
@@ -83,6 +92,7 @@ function photoWrap(trip) {
   return `
     <div class="trip-photo-wrap">
       ${img}
+      ${captionHtml}
       <div class="trip-date-badge">${esc(trip.departure_date)}</div>
     </div>`;
 }

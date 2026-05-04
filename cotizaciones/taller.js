@@ -137,8 +137,8 @@ function renderPaquetes() {
 
     const priceHTML = p.price_total != null
       ? `<div class="taller-price-block">
-           <div class="taller-price-total">${fmt(p.price_total, p.currency)}</div>
-           <div class="taller-price-sub">para 2 personas · ${fmt(p.price_per_person, p.currency)} por persona${p.price_note ? `<br><span style="font-style:italic;">${esc(p.price_note)}</span>` : ''}</div>
+           <div class="taller-price-total">${fmt(p.price_per_person, p.currency)} <span style="font-size:0.55em;font-weight:400;">por persona</span></div>
+           <div class="taller-price-sub">${fmt(p.price_total, p.currency)} para 2 personas${p.price_note ? `<br><span style="font-style:italic;">${esc(p.price_note)}</span>` : ''}</div>
          </div>`
       : `<div class="taller-price-block taller-price-coming">
            <span>${esc(p.price_note || 'Precio próximamente')}</span>

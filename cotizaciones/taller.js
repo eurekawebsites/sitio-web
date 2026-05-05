@@ -102,7 +102,7 @@ function renderPaquetes() {
         <div class="taller-block">
           <label>Tour incluido</label>
           <div class="taller-tour">
-            ${t.photo ? `<img src="${esc(t.photo)}" alt="${esc(t.name)}" class="taller-tour-photo" loading="lazy">` : ''}
+            ${t.photos && t.photos.length ? carouselHTML(t.photos, t.name, 'tour-' + t.name.replace(/\s+/g,'').slice(0,20)) : t.photo ? `<img src="${esc(t.photo)}" alt="${esc(t.name)}" class="taller-tour-photo" loading="lazy">` : ''}
             <div class="taller-tour-header">
               <span class="taller-tour-name">${esc(t.name)}</span>
               <span class="taller-tour-meta">${esc(t.duration)}${t.operator ? ` · ${esc(t.operator)}` : ''}${t.price ? ` · ${esc(t.price)}` : ''}</span>

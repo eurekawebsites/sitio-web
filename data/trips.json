@@ -5,7 +5,7 @@
     "destination": "Tailandia y París",
     "route": "Bangkok · Chiang Mai · Phuket · París",
     "departure_date": "2 nov 2026",
-    "duration": "15 días / 14 noches",
+    "duration": "14 noches / 15 días",
     "photo": "images/thailand/1.png",
     "photos": ["images/thailand/1.png","images/thailand/2.png","images/thailand/3.png","images/thailand/4.png","images/thailand/5.png"],
     "detailed": true,
@@ -23,7 +23,7 @@
     ],
     "highlight_note": "Escala extendida en París con cena crucero incluida",
     "price_from": "$78,205 MXN",
-    "price_note": "por persona en ocupación doble"
+    "price_note": "por persona en ocupación doble · vuelos + hoteles + tours"
   },
   {
     "id": "islandia-escocia-noruega-sep-2026",
@@ -31,7 +31,7 @@
     "destination": "Islandia, Escocia y Noruega",
     "route": "Londres · Edimburgo · Inverness · Reykjavik · Ísafjörður · Akureyri · Bergen · Måløy · Stavanger",
     "departure_date": "13 sep 2026",
-    "duration": "14 días / 13 noches",
+    "duration": "13 noches / 14 días",
     "photo": "images/iceland/1.png",
     "photos": ["images/iceland/1.png","images/iceland/2.png","images/iceland/7.png","images/iceland/3.png","images/iceland/4.png","images/iceland/8.png","images/iceland/9.png","images/iceland/5.png","images/iceland/10.png"],
     "detailed": true,
@@ -73,7 +73,7 @@
     ],
     "highlight_note": "Vuelo nonstop desde CDMX · Emporio Ixtapa todo incluido",
     "price_from": "$13,250 MXN",
-    "price_note": "por persona en ocupación doble · vuelos + hotel todo incluido"
+    "price_note": "por persona en ocupación doble · vuelo + hotel todo incluido"
   },
   {
     "id": "madrid-mar-2027",
@@ -104,7 +104,7 @@
       "Tour Hop-On Hop-Off 48 horas · 3 rutas (Big Bus Madrid)",
       "Artículo personal + maleta de mano"
     ],
-    "highlight_note": "Iberia sin escalas · Tour Hop-On Hop-Off incluido",
+    "highlight_note": "Iberia sin escalas · Tour Hop-On Hop-Off Incluido",
     "price_from": "$32,294 MXN",
     "price_note": "por persona en ocupación doble · vuelo + hotel + tour"
   },
@@ -138,7 +138,7 @@
       "Alimentos incluidos en tour y bus",
       "Artículo personal + maleta de mano"
     ],
-    "highlight_note": "Tour Salar de Uyuni 5 días incluido · Avianca vía Bogotá",
+    "highlight_note": "Tour Salar de Uyuni 5 días Incluido · Avianca vía Bogotá",
     "price_from": "$27,029 MXN",
     "price_note": "por persona en ocupación doble · vuelos + hoteles + tour"
   }

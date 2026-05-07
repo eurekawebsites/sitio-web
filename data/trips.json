@@ -76,6 +76,39 @@
     "price_note": "por persona en ocupación doble · vuelos + hotel todo incluido"
   },
   {
+    "id": "madrid-mar-2027",
+    "name": "Madrid, España",
+    "destination": "Madrid",
+    "route": "Gran Vía · Retiro · Plaza Mayor",
+    "departure_date": "22 mar 2027",
+    "duration": "7 noches / 9 días",
+    "photos": [
+      "images/madrid/1.png",
+      "images/madrid/2.png",
+      "images/madrid/3.png",
+      "images/madrid/4.png",
+      "images/madrid/5.png",
+      "images/madrid/6.png",
+      "images/madrid/7.png",
+      "images/madrid/8.png",
+      "images/madrid/9.png"
+    ],
+    "detailed": true,
+    "active": true,
+    "sort_order": 5,
+    "includes": [
+      "Vuelo de ida y vuelta desde CDMX (nonstop · Iberia)",
+      "6 noches en Ibis Styles Madrid City Las Ventas",
+      "Habitación doble · cama doble",
+      "Traslado aeropuerto–hotel y hotel–aeropuerto",
+      "Tour Hop-On Hop-Off 48 horas · 3 rutas (Big Bus Madrid)",
+      "Artículo personal + maleta de mano"
+    ],
+    "highlight_note": "Iberia sin escalas · Tour Hop-On Hop-Off incluido",
+    "price_from": "$32,294 MXN",
+    "price_note": "por persona en ocupación doble · vuelo + hotel + tour"
+  },
+  {
     "id": "bolivia-ene-2027",
     "name": "Bolivia — La Paz & Salar de Uyuni",
     "destination": "Bolivia",

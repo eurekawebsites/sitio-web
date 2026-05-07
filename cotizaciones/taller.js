@@ -100,7 +100,7 @@ function renderPaquetes() {
     const toursHTML = p.tours && p.tours.length
       ? p.tours.map(t => `
         <div class="taller-block">
-          <label>Tour incluido</label>
+          <label>${t.optional ? 'Tour opcional' : 'Tour incluido'}</label>
           <div class="taller-tour">
             ${t.photos && t.photos.length ? carouselHTML(t.photos, t.name, 'tour-' + t.name.replace(/\s+/g,'').slice(0,20)) : t.photo ? `<img src="${esc(t.photo)}" alt="${esc(t.name)}" class="taller-tour-photo" loading="lazy">` : ''}
             <div class="taller-tour-header">

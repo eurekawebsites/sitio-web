@@ -150,7 +150,7 @@ function paymentBlock(trip) {
       </div>
       <div class="trip-payment-amount">
         <span class="trip-payment-price">${fmtMxn(amountPerMonth)}</span>
-        <span class="trip-payment-mo">/mes</span>
+        <span class="trip-payment-mo">MXN/mes</span>
       </div>
       <p class="trip-payment-detail">${installments} ${monthLabel} · Total ${fmtMxn(trip.price_total_mxn)} MXN por persona</p>
       <p class="trip-payment-cta">Pagar con tarjeta &rarr;</p>

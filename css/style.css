@@ -623,6 +623,126 @@ h1, h2, h3, h4 {
   color: var(--muted);
 }
 
+/* ── Monthly payment block ── */
+.trip-payment-block {
+  border: 1px solid var(--gold);
+  border-radius: var(--radius);
+  padding: 18px 20px 16px;
+  margin-bottom: 20px;
+  background: rgba(201, 168, 76, 0.06);
+}
+
+.trip-payment-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.trip-payment-icon {
+  width: 18px;
+  height: 18px;
+  color: var(--gold);
+  flex-shrink: 0;
+}
+
+.trip-payment-label {
+  font-family: var(--sans);
+  font-size: 0.62rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.trip-payment-amount {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  margin-bottom: 4px;
+}
+
+.trip-payment-price {
+  font-family: var(--serif);
+  font-size: 1.9rem;
+  font-weight: 500;
+  color: var(--green);
+  line-height: 1;
+}
+
+.trip-payment-mo {
+  font-family: var(--sans);
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+.trip-payment-detail {
+  font-family: var(--sans);
+  font-size: 0.72rem;
+  color: var(--muted);
+  margin-bottom: 14px;
+}
+
+.trip-payment-block {
+  cursor: pointer;
+  transition: border-color var(--ease), background var(--ease), box-shadow var(--ease);
+}
+
+.trip-payment-block:hover {
+  border-color: #b8963e;
+  background: rgba(201, 168, 76, 0.12);
+  box-shadow: 0 4px 14px rgba(201, 168, 76, 0.18);
+}
+
+.trip-payment-cta {
+  font-family: var(--sans);
+  font-size: 0.7rem;
+  font-weight: bold;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-top: 10px;
+  margin-bottom: 0;
+}
+
+/* ── Payment success banner ── */
+.pago-success-banner {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--green);
+  color: var(--cream);
+  font-family: var(--sans);
+  font-size: 0.82rem;
+  letter-spacing: 0.5px;
+  padding: 14px 48px 14px 20px;
+  border-radius: var(--radius);
+  box-shadow: 0 6px 24px rgba(0,0,0,0.18);
+  z-index: 999;
+  max-width: calc(100vw - 40px);
+  white-space: nowrap;
+}
+
+.pago-success-close {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: var(--cream);
+  font-size: 1.2rem;
+  line-height: 1;
+  cursor: pointer;
+  opacity: 0.7;
+  padding: 0 4px;
+}
+.pago-success-close:hover { opacity: 1; }
+
+@media (max-width: 560px) {
+  .pago-success-banner { white-space: normal; text-align: center; }
+}
+
 /* ── Card footer (CTA) ── */
 .trip-footer {
   margin-top: auto;

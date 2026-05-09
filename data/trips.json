@@ -5,6 +5,7 @@
     "destination": "Tailandia y París",
     "route": "Bangkok · Chiang Mai · Phuket · París",
     "departure_date": "2 nov 2026",
+    "departure_date_iso": "2026-11-02",
     "duration": "14 noches / 15 días",
     "photo": "images/thailand/1.png",
     "photos": ["images/thailand/1.png","images/thailand/2.png","images/thailand/3.png","images/thailand/4.png","images/thailand/5.png"],
@@ -23,7 +24,8 @@
     ],
     "highlight_note": "Escala extendida en París con cena crucero incluida",
     "price_from": "$78,205 MXN",
-    "price_note": "por persona en ocupación doble · vuelos + hoteles + tours"
+    "price_note": "por persona en ocupación doble · vuelos + hoteles + tours",
+    "price_total_mxn": 78205
   },
   {
     "id": "islandia-escocia-noruega-sep-2026",
@@ -31,6 +33,7 @@
     "destination": "Islandia, Escocia y Noruega",
     "route": "Londres · Edimburgo · Inverness · Reykjavik · Ísafjörður · Akureyri · Bergen · Måløy · Stavanger",
     "departure_date": "13 sep 2026",
+    "departure_date_iso": "2026-09-13",
     "duration": "14 noches / 15 días",
     "photo": "images/iceland/1.png",
     "photos": ["images/iceland/1.png","images/iceland/2.png","images/iceland/7.png","images/iceland/3.png","images/iceland/4.png","images/iceland/8.png","images/iceland/9.png","images/iceland/5.png","images/iceland/10.png"],
@@ -47,7 +50,8 @@
     ],
     "highlight_note": "A bordo del Norwegian Star — 9 puertos en 3 países: Islandia, Escocia y Noruega",
     "price_from": "$72,000 MXN",
-    "price_note": "por persona en ocupación doble · solo crucero, vuelos no incluidos"
+    "price_note": "por persona en ocupación doble · solo crucero, vuelos no incluidos",
+    "price_total_mxn": 72000
   },
   {
     "id": "ixtapa-oct-2026",
@@ -55,6 +59,7 @@
     "destination": "Ixtapa Zihuatanejo",
     "route": "Guerrero, México",
     "departure_date": "7 oct 2026",
+    "departure_date_iso": "2026-10-07",
     "duration": "5 noches / 6 días",
     "photos": [
       "images/ixtapa/ixtapa-sunset.png",
@@ -73,7 +78,8 @@
     ],
     "highlight_note": "Vuelo nonstop desde CDMX · Emporio Ixtapa todo incluido",
     "price_from": "$13,250 MXN",
-    "price_note": "por persona en ocupación doble · vuelo + hotel todo incluido"
+    "price_note": "por persona en ocupación doble · vuelo + hotel todo incluido",
+    "price_total_mxn": 13250
   },
   {
     "id": "madrid-mar-2027",
@@ -81,6 +87,7 @@
     "destination": "Madrid",
     "route": "España",
     "departure_date": "22 mar 2027",
+    "departure_date_iso": "2027-03-22",
     "duration": "7 noches / 9 días",
     "photos": [
       "images/madrid/1.png",
@@ -106,7 +113,8 @@
     ],
     "highlight_note": "Iberia sin escalas · Tour Hop-On Hop-Off · Traslados",
     "price_from": "$32,294 MXN",
-    "price_note": "por persona en ocupación doble · vuelo + hotel + tour + traslados"
+    "price_note": "por persona en ocupación doble · vuelo + hotel + tour + traslados",
+    "price_total_mxn": 32294
   },
   {
     "id": "bolivia-ene-2027",
@@ -114,6 +122,7 @@
     "destination": "Bolivia",
     "route": "La Paz · Salar de Uyuni",
     "departure_date": "14 ene 2027",
+    "departure_date_iso": "2027-01-14",
     "duration": "7 noches / 8 días",
     "photos": [
       "images/bolivia/1.png",
@@ -140,6 +149,7 @@
     ],
     "highlight_note": "Tour Salar de Uyuni 5 días Incluido · Avianca vía Bogotá",
     "price_from": "$27,029 MXN",
-    "price_note": "por persona en ocupación doble · vuelos + hoteles + tour"
+    "price_note": "por persona en ocupación doble · vuelos + hoteles + tour",
+    "price_total_mxn": 27029
   }
 ]

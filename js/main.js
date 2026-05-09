@@ -4,17 +4,13 @@
    COORDENADA VIAJES — main.js
    • Mobile nav toggle
    • Load + render trips from data/trips.json
-══════════════════════════════════════════════════════════════
-
-   DATA NOTE:
-   The site reads data/trips.json (single array file).
-   The Decap CMS folder collection (admin/config.yml) creates
-   individual files in data/trips/ — one per trip.
-   Until a Netlify build step aggregates those files, manage trips
-   by editing data/trips.json directly.
+   • Monthly payment (domiciliado) via Stripe Checkout
 ══════════════════════════════════════════════════════════════ */
 
 const WHATSAPP = '525657917967';
+
+// Firebase Hosting rewrite: /api → Firebase Function
+const API_BASE = '/api';
 
 /* ── Helpers ─────────────────────────────────────────────── */
 
@@ -31,6 +27,27 @@ function waLink(destination) {
   return `https://wa.me/${WHATSAPP}?text=${text}`;
 }
 
+function fmtMxn(amount) {
+  return new Intl.NumberFormat('es-MX', { style: 'currency', currency: 'MXN', maximumFractionDigits: 0 }).format(amount);
+}
+
+/* ── Payment installment calculator ─────────────────────────
+   Counts full calendar months from today until 1 month before
+   the departure date. Minimum 1, maximum 24.
+──────────────────────────────────────────────────────────── */
+function calcInstallments(departureDateIso) {
+  const today     = new Date();
+  const departure = new Date(departureDateIso + 'T12:00:00'); // noon to avoid TZ edge cases
+  const deadline  = new Date(departure);
+  deadline.setMonth(deadline.getMonth() - 1); // 1 month before departure
+
+  const months =
+    (deadline.getFullYear() - today.getFullYear()) * 12 +
+    (deadline.getMonth() - today.getMonth());
+
+  return Math.max(1, Math.min(24, months));
+}
+
 /* ── Mobile Nav ──────────────────────────────────────────── */
 (function initNav() {
   const hamburger = document.getElementById('nav-hamburger');
@@ -44,7 +61,6 @@ function waLink(destination) {
     hamburger.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú');
   });
 
-  // Close on any link click (mobile UX)
   links.querySelectorAll('a').forEach(a => {
     a.addEventListener('click', () => {
       links.classList.remove('open');
@@ -108,8 +124,40 @@ function initTripCarousels() {
   });
 }
 
+function paymentBlock(trip) {
+  if (!trip.price_total_mxn || !trip.departure_date_iso) return '';
+
+  const installments    = trip.payment_months || calcInstallments(trip.departure_date_iso);
+  const amountPerMonth  = Math.ceil(trip.price_total_mxn / installments);
+  const monthLabel      = installments === 1 ? 'mensualidad' : 'mensualidades';
+
+  return `
+    <div class="trip-payment-block btn-pay"
+      data-trip-id="${esc(trip.id)}"
+      data-trip-name="${esc(trip.name)}"
+      data-total="${trip.price_total_mxn}"
+      data-installments="${installments}"
+      role="button"
+      tabindex="0"
+      aria-label="Pagar con tarjeta — ${fmtMxn(amountPerMonth)}/mes"
+    >
+      <div class="trip-payment-header">
+        <svg class="trip-payment-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+          <rect x="1" y="4" width="22" height="16" rx="2" ry="2"/>
+          <line x1="1" y1="10" x2="23" y2="10"/>
+        </svg>
+        <span class="trip-payment-label">Pago mensual domiciliado</span>
+      </div>
+      <div class="trip-payment-amount">
+        <span class="trip-payment-price">${fmtMxn(amountPerMonth)}</span>
+        <span class="trip-payment-mo">/mes</span>
+      </div>
+      <p class="trip-payment-detail">${installments} ${monthLabel} · Total ${fmtMxn(trip.price_total_mxn)} MXN por persona</p>
+      <p class="trip-payment-cta">Pagar con tarjeta &rarr;</p>
+    </div>`;
+}
+
 function renderDetailedCard(t) {
-  /* Includes list — handles both string[] and {item: string}[] formats */
   const includesItems = (t.includes || []).map(entry => {
     const text = typeof entry === 'string' ? entry : (entry.item || '');
     return text ? `<li class="trip-includes-item">${esc(text)}</li>` : '';
@@ -139,6 +187,7 @@ function renderDetailedCard(t) {
         ${includesBlock}
         ${highlightBlock}
         ${priceBlock}
+        ${paymentBlock(t)}
         <div class="trip-footer">
           <a href="${waLink(t.destination)}"
              target="_blank"
@@ -172,6 +221,76 @@ function renderSimpleCard(t) {
     </article>`;
 }
 
+/* ── Stripe Checkout ─────────────────────────────────────── */
+
+async function startCheckout(btn) {
+  if (btn.dataset.loading) return;
+  const tripId      = btn.dataset.tripId;
+  const tripName    = btn.dataset.tripName;
+  const totalMxn    = parseInt(btn.dataset.total, 10);
+  const installments = parseInt(btn.dataset.installments, 10);
+
+  btn.dataset.loading = '1';
+  const cta = btn.querySelector('.trip-payment-cta');
+  if (cta) cta.textContent = 'Redirigiendo…';
+
+  try {
+    const res = await fetch(API_BASE + '/checkout', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        tripId,
+        tripName,
+        totalMxn,
+        installments,
+        successUrl: window.location.origin + '/?pago=exitoso',
+        cancelUrl:  window.location.href,
+      }),
+    });
+
+    const data = await res.json();
+
+    if (!res.ok || !data.url) {
+      throw new Error(data.error || 'Error al iniciar el pago.');
+    }
+
+    window.location.href = data.url;
+  } catch (err) {
+    console.error('[checkout]', err);
+    delete btn.dataset.loading;
+    const cta = btn.querySelector('.trip-payment-cta');
+    if (cta) cta.textContent = 'Pagar con tarjeta →';
+    alert('No se pudo conectar con el servicio de pago. Intenta de nuevo o escríbenos por WhatsApp.');
+  }
+}
+
+function initPayButtons() {
+  document.querySelectorAll('.btn-pay').forEach(btn => {
+    btn.addEventListener('click', () => startCheckout(btn));
+    btn.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); startCheckout(btn); }
+    });
+  });
+}
+
+/* ── Success banner ──────────────────────────────────────── */
+function checkSuccessBanner() {
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('pago') !== 'exitoso') return;
+
+  const banner = document.createElement('div');
+  banner.className = 'pago-success-banner';
+  banner.innerHTML = `
+    <span>¡Pago registrado! Te llegará un correo de confirmación de Stripe. ✓</span>
+    <button class="pago-success-close" aria-label="Cerrar">×</button>
+  `;
+  document.body.prepend(banner);
+  banner.querySelector('.pago-success-close').addEventListener('click', () => {
+    banner.remove();
+    history.replaceState({}, '', window.location.pathname);
+  });
+}
+
 /* ── Load & render trips ─────────────────────────────────── */
 
 async function loadTrips() {
@@ -203,6 +322,7 @@ async function loadTrips() {
       .join('');
 
     initTripCarousels();
+    initPayButtons();
 
   } catch (err) {
     console.error('[Coordenada Viajes] Error loading trips:', err);
@@ -210,4 +330,5 @@ async function loadTrips() {
   }
 }
 
+checkSuccessBanner();
 loadTrips();

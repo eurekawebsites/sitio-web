@@ -9,8 +9,7 @@
 
 const WHATSAPP = '525657917967';
 
-// Firebase Hosting rewrite: /api → Firebase Function
-const API_BASE = '/api';
+const API_BASE = 'https://api-bkhoybmiga-uc.a.run.app';
 
 /* ── Helpers ─────────────────────────────────────────────── */
 

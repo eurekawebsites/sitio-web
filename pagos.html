@@ -2022,13 +2022,19 @@ function readForm() {
   };
 }
 
-async function uploadItineraryPdf(clientId) {
+function uploadItineraryPdf(clientId) {
   const input = document.getElementById('f-itineraryPdf');
-  if (!input?.files?.length) return null;
+  if (!input?.files?.length) return Promise.resolve(null);
   const file = input.files[0];
   const ref = storage.ref(`itineraries/${clientId}/${file.name}`);
-  const snapshot = await ref.put(file);
-  return await snapshot.ref.getDownloadURL();
+  return new Promise((resolve, reject) => {
+    const task = ref.put(file);
+    task.on('state_changed',
+      null,
+      (err) => reject(err),
+      () => task.snapshot.ref.getDownloadURL().then(resolve).catch(reject)
+    );
+  });
 }
 
 async function saveNewClient() {

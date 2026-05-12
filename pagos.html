@@ -1,0 +1,2350 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Coordenada Viajes — Pagos</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --green:  #4A6741;
+  --gold:   #D4AF6A;
+  --cream:  #F8F5EE;
+  --sage:   #9DB89A;
+  --dark:   #2c3e2b;
+  --text:   #2e2e2e;
+  --muted:  #888;
+  --border: #ddd6c8;
+  --white:  #ffffff;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background: var(--cream);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+h1, h2, h3, h4 { font-family: Georgia, 'Times New Roman', serif; }
+
+/* ── Header ── */
+.header {
+  background: var(--green);
+  padding: 14px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.18);
+}
+.header-brand h1 {
+  font-size: 1.35rem;
+  letter-spacing: 3px;
+  color: var(--cream);
+}
+.header-brand p {
+  font-size: 0.68rem;
+  letter-spacing: 5px;
+  color: var(--gold);
+  margin-top: 1px;
+}
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.header-user {
+  font-size: 0.78rem;
+  color: var(--gold);
+  letter-spacing: 1px;
+}
+.header-tag {
+  font-size: 0.72rem;
+  letter-spacing: 2px;
+  color: var(--gold);
+  opacity: 0.85;
+}
+
+/* ── Layout ── */
+.container {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 28px 16px 60px;
+}
+
+/* ── Buttons ── */
+.btn {
+  padding: 10px 22px;
+  border: none;
+  border-radius: 8px;
+  font-family: Arial, sans-serif;
+  font-size: 0.88rem;
+  cursor: pointer;
+  transition: opacity .18s, transform .1s, background .18s;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.btn:active { transform: scale(0.96); }
+.btn-primary  { background: var(--green); color: var(--cream); }
+.btn-primary:hover { opacity: .87; }
+.btn-gold     { background: var(--gold); color: #2a2a2a; font-weight: bold; }
+.btn-gold:hover { opacity: .87; }
+.btn-outline  { background: transparent; color: var(--green); border: 1.5px solid var(--green); }
+.btn-outline:hover { background: var(--sage); color: #fff; border-color: var(--sage); }
+.btn-danger   { background: transparent; color: #b94040; border: 1.5px solid #b94040; }
+.btn-danger:hover { background: #b94040; color: #fff; }
+.btn-ghost    { background: transparent; color: var(--muted); border: 1px solid var(--border); }
+.btn-ghost:hover { background: #f0ebe2; }
+.btn-sm { padding: 6px 14px; font-size: 0.8rem; }
+
+/* ── Login screen ── */
+.login-screen {
+  min-height: 100vh;
+  background: var(--green);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+.login-card {
+  background: var(--white);
+  border-radius: 20px;
+  padding: 44px 40px;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 32px 80px rgba(0,0,0,0.28);
+}
+.login-brand {
+  text-align: center;
+  margin-bottom: 36px;
+}
+.login-brand h1 {
+  font-size: 1.6rem;
+  letter-spacing: 4px;
+  color: var(--green);
+}
+.login-brand p {
+  font-size: 0.72rem;
+  letter-spacing: 6px;
+  color: var(--gold);
+  margin-top: 4px;
+}
+.login-brand .login-sub {
+  font-family: Arial, sans-serif;
+  font-size: 0.8rem;
+  color: var(--muted);
+  margin-top: 12px;
+  letter-spacing: 0;
+}
+.login-form { display: flex; flex-direction: column; gap: 16px; }
+.login-form label {
+  font-size: 0.77rem;
+  font-weight: bold;
+  color: var(--green);
+  display: block;
+  margin-bottom: 5px;
+}
+.login-form input {
+  width: 100%;
+  padding: 11px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-family: Arial, sans-serif;
+  outline: none;
+  transition: border-color .2s;
+  color: var(--text);
+}
+.login-form input:focus { border-color: var(--green); }
+.login-error {
+  background: #fdecea;
+  border: 1px solid #f5c2c7;
+  color: #842029;
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 0.83rem;
+  line-height: 1.5;
+  display: none;
+}
+.login-error.show { display: block; }
+
+/* ── Stats bar ── */
+.stats-bar {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-bottom: 28px;
+}
+.stat-card {
+  flex: 1;
+  min-width: 130px;
+  background: var(--green);
+  color: var(--cream);
+  border-radius: 12px;
+  padding: 18px 22px;
+  text-align: center;
+}
+.stat-card .stat-num {
+  font-family: Georgia, serif;
+  font-size: 2.2rem;
+  color: var(--gold);
+  line-height: 1;
+}
+.stat-card .stat-label {
+  font-size: 0.72rem;
+  letter-spacing: 2px;
+  margin-top: 6px;
+  opacity: .8;
+}
+
+/* ── Toolbar ── */
+.toolbar {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 22px;
+}
+.search-input {
+  flex: 1;
+  min-width: 200px;
+  padding: 10px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  font-family: Arial, sans-serif;
+  font-size: 0.9rem;
+  background: var(--white);
+  outline: none;
+  transition: border-color .2s;
+  color: var(--text);
+}
+.search-input:focus { border-color: var(--green); }
+
+/* ── Client cards ── */
+.client-list { display: flex; flex-direction: column; gap: 12px; }
+.client-card {
+  background: var(--white);
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: box-shadow .2s;
+}
+.client-card:hover { box-shadow: 0 4px 18px rgba(74,103,65,0.12); }
+.client-card-header {
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.client-avatar {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: var(--sage);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: Georgia, serif;
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+.client-card-info { flex: 1; min-width: 0; }
+.client-card-info h3 {
+  font-size: 1rem;
+  color: var(--green);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.client-card-info p {
+  font-size: 0.8rem;
+  color: var(--muted);
+  margin-top: 3px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.trip-badge {
+  background: var(--cream);
+  border: 1px solid var(--gold);
+  color: var(--green);
+  font-size: 0.72rem;
+  padding: 3px 10px;
+  border-radius: 20px;
+  white-space: nowrap;
+  flex-shrink: 0;
+  display: none;
+}
+@media (min-width: 480px) { .trip-badge { display: block; } }
+.chevron {
+  color: var(--muted);
+  font-size: 0.9rem;
+  transition: transform .2s;
+  flex-shrink: 0;
+}
+.chevron.open { transform: rotate(180deg); }
+.client-card-body {
+  display: none;
+  border-top: 1px solid var(--border);
+  background: #faf9f5;
+  padding: 22px 20px;
+}
+.client-card-body.open { display: block; }
+
+/* ── Detail grid ── */
+.detail-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  gap: 16px;
+  margin-bottom: 20px;
+}
+.detail-field label {
+  font-size: 0.68rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--muted);
+  display: block;
+  margin-bottom: 3px;
+}
+.detail-field span { font-size: 0.9rem; color: var(--text); display: block; }
+.detail-field a { color: var(--sage); font-size: 0.85rem; text-decoration: none; }
+.detail-field a:hover { color: var(--green); text-decoration: underline; }
+.detail-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
+}
+
+/* ── Empty state ── */
+.empty-state {
+  text-align: center;
+  padding: 64px 20px;
+  color: var(--muted);
+}
+.empty-state .empty-icon { font-size: 3rem; margin-bottom: 16px; opacity: .4; }
+.empty-state h3 { font-size: 1.15rem; color: var(--sage); margin-bottom: 8px; }
+.empty-state p { font-size: 0.88rem; }
+
+/* ── Modal ── */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(30,40,28,0.5);
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  backdrop-filter: blur(2px);
+}
+.modal {
+  background: var(--white);
+  border-radius: 16px;
+  width: 100%;
+  max-width: 640px;
+  max-height: 92vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 24px 64px rgba(0,0,0,0.28);
+  animation: modalIn .18s ease;
+}
+@keyframes modalIn {
+  from { opacity: 0; transform: translateY(12px) scale(0.98); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+.modal-header {
+  background: var(--green);
+  color: var(--cream);
+  padding: 18px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 16px 16px 0 0;
+  flex-shrink: 0;
+}
+.modal-header h2 { font-size: 1rem; letter-spacing: 2px; }
+.modal-close {
+  background: none;
+  border: none;
+  color: var(--cream);
+  font-size: 1.3rem;
+  cursor: pointer;
+  opacity: .75;
+  line-height: 1;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+.modal-close:hover { opacity: 1; background: rgba(255,255,255,0.15); }
+.modal-body { padding: 24px; overflow-y: auto; flex: 1; }
+.modal-footer {
+  padding: 16px 24px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  flex-shrink: 0;
+}
+
+/* ── Form ── */
+.form-section {
+  font-family: Georgia, serif;
+  font-size: 0.78rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--green);
+  margin: 0 0 12px;
+  padding-bottom: 7px;
+  border-bottom: 1px solid var(--border);
+}
+.form-section:not(:first-child) { margin-top: 22px; }
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 14px;
+  margin-bottom: 6px;
+}
+.form-group { display: flex; flex-direction: column; gap: 5px; }
+.form-group.span2 { grid-column: 1 / -1; }
+.form-group label {
+  font-size: 0.77rem;
+  font-weight: bold;
+  color: var(--green);
+}
+.form-group input,
+.form-group select {
+  padding: 9px 12px;
+  border: 1.5px solid var(--border);
+  border-radius: 7px;
+  font-family: Arial, sans-serif;
+  font-size: 0.9rem;
+  background: var(--white);
+  color: var(--text);
+  outline: none;
+  transition: border-color .2s;
+  width: 100%;
+}
+.form-group input:focus,
+.form-group select:focus { border-color: var(--green); }
+.form-group input::placeholder { color: #bbb; }
+
+/* ── Section heading ── */
+.section-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.section-heading h2 { font-size: 1rem; color: var(--green); letter-spacing: 1px; }
+.count-badge {
+  background: var(--sage);
+  color: #fff;
+  font-size: 0.72rem;
+  padding: 2px 10px;
+  border-radius: 20px;
+  margin-left: 8px;
+}
+
+/* ── Toast ── */
+.toast {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background: var(--dark);
+  color: var(--cream);
+  padding: 12px 20px;
+  border-radius: 10px;
+  font-size: 0.88rem;
+  z-index: 999;
+  box-shadow: 0 8px 28px rgba(0,0,0,0.22);
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity .25s, transform .25s;
+  pointer-events: none;
+  max-width: 320px;
+}
+.toast.show { opacity: 1; transform: translateY(0); }
+
+/* ── Concepts ── */
+.concepts-section {
+  margin-top: 20px;
+  border-top: 1px solid var(--border);
+  padding-top: 18px;
+}
+.concepts-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.concepts-section-header h4 {
+  font-family: Georgia, serif;
+  font-size: 0.82rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--green);
+}
+.concept-card {
+  background: var(--white);
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  margin-bottom: 12px;
+  overflow: hidden;
+}
+.concept-card-header {
+  padding: 11px 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #f5f3ee;
+  flex-wrap: wrap;
+}
+.concept-name {
+  font-family: Georgia, serif;
+  font-size: 0.95rem;
+  color: var(--green);
+  flex: 1;
+  min-width: 100px;
+}
+.badge-currency {
+  font-size: 0.7rem;
+  font-weight: bold;
+  padding: 2px 9px;
+  border-radius: 20px;
+  letter-spacing: 1px;
+}
+.badge-usd { background: #e8f4e8; color: var(--green); border: 1px solid var(--sage); }
+.badge-mxn { background: #fef6e4; color: #7a5c1e; border: 1px solid var(--gold); }
+.concept-total { font-size: 0.88rem; color: var(--text); white-space: nowrap; }
+.concept-meta  { font-size: 0.76rem; color: var(--muted); white-space: nowrap; }
+
+/* ── Payment table ── */
+.concept-table-wrap { overflow-x: auto; padding: 0 16px 14px; }
+table.payment-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.8rem;
+  min-width: 420px;
+}
+table.payment-table th {
+  text-align: left;
+  padding: 7px 8px;
+  font-size: 0.66rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--muted);
+  border-bottom: 1.5px solid var(--border);
+  white-space: nowrap;
+}
+table.payment-table td {
+  padding: 7px 8px;
+  border-bottom: 1px solid #f0ece4;
+  vertical-align: middle;
+}
+table.payment-table tr:last-child td { border-bottom: none; }
+table.payment-table tr.row-paid { background: #f7fdf5; }
+.badge-paid    { background: #d4edda; color: #276541; padding: 2px 9px; border-radius: 20px; font-size: 0.72rem; white-space: nowrap; }
+.badge-pending { background: #fff3cd; color: #856404; padding: 2px 9px; border-radius: 20px; font-size: 0.72rem; white-space: nowrap; }
+.btn-pay {
+  background: var(--green);
+  color: var(--cream);
+  border: none;
+  border-radius: 5px;
+  padding: 4px 10px;
+  font-size: 0.75rem;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: opacity .15s;
+}
+.btn-pay:hover { opacity: .8; }
+
+/* ── Rate box ── */
+.rate-box {
+  background: #fef6e4;
+  border: 1.5px solid var(--gold);
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 0.85rem;
+  color: #6b4c00;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  line-height: 1.5;
+}
+
+/* ── Concept footer ── */
+.concept-footer {
+  padding: 10px 16px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  background: #faf9f5;
+  flex-wrap: wrap;
+}
+
+/* ── Client portal ── */
+.portal-hero {
+  text-align: center;
+  padding: 36px 0 28px;
+}
+.portal-avatar {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: var(--sage);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: Georgia, serif;
+  font-size: 1.8rem;
+  margin: 0 auto 16px;
+}
+.portal-summary {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 22px;
+  background: var(--white);
+}
+.portal-summary-cell {
+  text-align: center;
+  padding: 18px 10px;
+  border-right: 1px solid var(--border);
+}
+.portal-summary-cell:last-child { border-right: none; }
+.portal-summary-num {
+  font-family: Georgia, serif;
+  font-size: 1.8rem;
+  line-height: 1;
+}
+.portal-summary-label {
+  font-size: 0.66rem;
+  color: var(--muted);
+  letter-spacing: 1px;
+  margin-top: 4px;
+}
+
+/* ── Loading overlay ── */
+.loading-overlay {
+  position: fixed; inset: 0;
+  background: rgba(248,245,238,0.94);
+  z-index: 2000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+.spinner {
+  width: 44px; height: 44px;
+  border: 4px solid var(--border);
+  border-top-color: var(--green);
+  border-radius: 50%;
+  animation: spin .75s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── Admin tabs ── */
+.admin-tabs {
+  display: flex;
+  gap: 0;
+  border-bottom: 2px solid var(--border);
+  margin-bottom: 28px;
+}
+.admin-tab {
+  padding: 10px 26px;
+  font-family: Georgia, serif;
+  font-size: 0.88rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--muted);
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+  cursor: pointer;
+  transition: color .15s, border-color .15s;
+  white-space: nowrap;
+}
+.admin-tab:hover { color: var(--green); }
+.admin-tab.active { color: var(--green); border-bottom-color: var(--green); font-weight: bold; }
+
+/* ── CRM table ── */
+.crm-table-wrap { overflow-x: auto; }
+table.crm-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.82rem;
+  background: var(--white);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 1px 8px rgba(74,103,65,.07);
+  table-layout: fixed;
+}
+table.crm-table th {
+  text-align: left;
+  padding: 10px 10px;
+  font-size: 0.63rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--muted);
+  background: #f5f3ee;
+  border-bottom: 1.5px solid var(--border);
+  white-space: nowrap;
+  overflow: hidden;
+}
+table.crm-table td {
+  padding: 11px 10px;
+  border-bottom: 1px solid #f0ece4;
+  vertical-align: middle;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+table.crm-table tr:last-child td { border-bottom: none; }
+table.crm-table tr:hover td { background: #faf9f5; }
+.crm-avatar {
+  width: 30px; height: 30px;
+  border-radius: 50%;
+  background: var(--sage);
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: Georgia, serif;
+  font-size: .75rem;
+  flex-shrink: 0;
+  vertical-align: middle;
+  margin-right: 6px;
+}
+.crm-name { font-weight: bold; color: var(--green); }
+.crm-sub  { font-size: .72rem; color: var(--muted); margin-top: 1px; overflow: hidden; text-overflow: ellipsis; }
+.crm-expiry-warn { color: #b94040; font-weight: bold; }
+
+/* ── Responsive ── */
+@media (max-width: 480px) {
+  .header-brand h1 { font-size: 1.1rem; }
+  .stat-card .stat-num { font-size: 1.7rem; }
+  .form-grid { grid-template-columns: 1fr; }
+  .modal-footer { justify-content: stretch; }
+  .modal-footer .btn { flex: 1; justify-content: center; }
+  .detail-grid { grid-template-columns: 1fr 1fr; }
+  .login-card { padding: 32px 24px; }
+}
+@media (max-width: 360px) {
+  .detail-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<div id="app"></div>
+<div class="toast" id="toast"></div>
+
+<!-- Firebase SDK (compat version — no bundler needed) -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-storage-compat.js"></script>
+
+<script>
+'use strict';
+
+// ═══════════════════════════════════════════
+//  FIREBASE CONFIG
+// ═══════════════════════════════════════════
+const firebaseConfig = {
+  apiKey:            "AIzaSyBqMYye79XSnm8IZxz5IQgvAYOetYMLN0s",
+  authDomain:        "coordenada-viajes.firebaseapp.com",
+  projectId:         "coordenada-viajes",
+  storageBucket:     "coordenada-viajes.firebasestorage.app",
+  messagingSenderId: "1035030921103",
+  appId:             "1:1035030921103:web:8c43c185fa3256814d15fa",
+  measurementId:     "G-MDE547V4EN"
+};
+
+firebase.initializeApp(firebaseConfig);
+const auth    = firebase.auth();
+const db      = firebase.firestore();
+const storage = firebase.storage();
+
+// ═══════════════════════════════════════════
+//  ADMIN EMAIL — only this user sees all clients
+// ═══════════════════════════════════════════
+const ADMIN_EMAIL = 'aster@eurekawebsites.tech';
+
+// ═══════════════════════════════════════════
+//  STATE
+// ═══════════════════════════════════════════
+const state = {
+  user:             null,
+  isAdmin:          false,
+  clients:          [],
+  myClientDoc:      null,   // for non-admin: their own client record
+  search:           '',
+  expandedCards:    new Set(),
+  modal:            null,
+  editTargetId:     null,
+  deleteTargetId:   null,
+  conceptClientId:  null,
+  conceptId:        null,
+  paymentIdx:       null,
+  saving:           false,
+  adminTab:         'pagos',  // 'pagos' | 'clientes'
+};
+
+// ═══════════════════════════════════════════
+//  UTILITIES
+// ═══════════════════════════════════════════
+function uid() {
+  return Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+}
+
+function esc(s) {
+  return String(s ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function initials(name) {
+  return (name || '').trim().split(/\s+/).slice(0,2).map(w => w[0]?.toUpperCase() || '').join('');
+}
+
+function fmtDate(iso) {
+  if (!iso) return '—';
+  const months = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
+  const date = new Date(iso);
+  return `${date.getUTCDate()} ${months[date.getUTCMonth()]} ${date.getUTCFullYear()}`;
+}
+
+function fmtMXN(n) {
+  if (n == null || n === '') return '—';
+  return '$' + Number(n).toLocaleString('es-MX', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+}
+
+function fmtUSD(n) {
+  if (n == null || n === '') return '—';
+  return 'USD ' + Number(n).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+}
+
+function generateSchedule({ totalAmount, numPayments, dueDay, startMonth, startYear }) {
+  const perPayment = totalAmount / numPayments;
+  const payments = [];
+  let yr = startYear, mo = startMonth;
+  for (let i = 0; i < numPayments; i++) {
+    const maxDay = new Date(yr, mo, 0).getDate();
+    const d = Math.min(dueDay, maxDay);
+    const dateStr = `${yr}-${String(mo).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+    payments.push({
+      num: i + 1, dueDate: dateStr, paid: false, paidDate: null,
+      amountDue: perPayment, amountPaidUSD: null, exchangeRate: null, amountPaidMXN: null,
+    });
+    mo++; if (mo > 12) { mo = 1; yr++; }
+  }
+  return payments;
+}
+
+// ═══════════════════════════════════════════
+//  FX RATE
+// ═══════════════════════════════════════════
+let _fxRate = null, _fxFetchedAt = 0;
+const FX_TTL = 30 * 60 * 1000;
+
+async function fetchFXRate() {
+  const now = Date.now();
+  if (_fxRate && (now - _fxFetchedAt) < FX_TTL) return _fxRate;
+  try {
+    const res  = await fetch('https://open.er-api.com/v6/latest/USD');
+    const json = await res.json();
+    _fxRate = json.rates?.MXN || null;
+    _fxFetchedAt = now;
+    return _fxRate;
+  } catch(e) { return _fxRate; }
+}
+
+function updateFXDisplay(usdAmount) {
+  fetchFXRate().then(rate => {
+    const el = document.getElementById('fx-display');
+    if (!el) return;
+    if (!rate) { el.innerHTML = '<span style="color:var(--muted)">Tipo de cambio no disponible</span>'; return; }
+    const mxn = usdAmount * rate;
+    el.innerHTML = `Si pagas hoy <strong>${fmtUSD(usdAmount)}</strong> = <strong style="color:var(--green)">${fmtMXN(mxn)}</strong> <span style="font-size:.75rem;color:var(--muted)">(1 USD = ${rate.toFixed(2)} MXN)</span>`;
+    const ri = document.getElementById('fx-rate-value');
+    const mi = document.getElementById('fx-mxn-value');
+    if (ri) ri.value = rate;
+    if (mi) mi.value = mxn.toFixed(2);
+  });
+}
+
+function scheduleRateUpdates() {
+  setTimeout(() => {
+    document.querySelectorAll('[data-usd-amount]').forEach(el => {
+      const amt = parseFloat(el.getAttribute('data-usd-amount'));
+      if (!amt) return;
+      fetchFXRate().then(rate => {
+        if (!el.isConnected || !rate) return;
+        const mxn = amt * rate;
+        el.innerHTML = `Si pagas hoy <strong>${fmtUSD(amt)}</strong> = <strong style="color:var(--green)">${fmtMXN(mxn)}</strong> <span style="font-size:.75rem;color:var(--muted)">(1 USD = ${rate.toFixed(2)} MXN)</span>`;
+      });
+    });
+  }, 80);
+}
+
+// ═══════════════════════════════════════════
+//  LOADING
+// ═══════════════════════════════════════════
+function setLoading(on, msg = 'Guardando…') {
+  let el = document.getElementById('loading-overlay');
+  if (on) {
+    if (!el) {
+      el = document.createElement('div');
+      el.id = 'loading-overlay';
+      el.className = 'loading-overlay';
+      document.body.appendChild(el);
+    }
+    el.innerHTML = `<div class="spinner"></div><p style="color:var(--green);font-family:Georgia,serif;font-size:.95rem">${msg}</p>`;
+    el.style.display = 'flex';
+  } else {
+    if (el) el.style.display = 'none';
+  }
+}
+
+// ═══════════════════════════════════════════
+//  TOAST
+// ═══════════════════════════════════════════
+let _toastTimer;
+function showToast(msg) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  clearTimeout(_toastTimer);
+  _toastTimer = setTimeout(() => el.classList.remove('show'), 3000);
+}
+
+// ═══════════════════════════════════════════
+//  FIRESTORE HELPERS
+// ═══════════════════════════════════════════
+async function loadAllClients() {
+  const snap = await db.collection('clients').orderBy('createdAt', 'desc').get();
+  return snap.docs.map(d => ({ id: d.id, ...d.data() }));
+}
+
+async function loadClientByEmail(email) {
+  const snap = await db.collection('clients').where('email', '==', email).limit(1).get();
+  if (snap.empty) return null;
+  const doc = snap.docs[0];
+  return { id: doc.id, ...doc.data() };
+}
+
+// ═══════════════════════════════════════════
+//  AUTH
+// ═══════════════════════════════════════════
+auth.onAuthStateChanged(async user => {
+  if (!user) {
+    state.user    = null;
+    state.isAdmin = false;
+    renderLoginScreen();
+    return;
+  }
+  state.user    = user;
+  state.isAdmin = user.email === ADMIN_EMAIL;
+
+  setLoading(true, 'Cargando…');
+  try {
+    if (state.isAdmin) {
+      state.clients = await loadAllClients();
+      renderAdminView();
+    } else {
+      state.myClientDoc = await loadClientByEmail(user.email);
+      renderClientPortal();
+    }
+  } catch(e) {
+    showToast('Error al cargar datos: ' + e.message);
+  } finally {
+    setLoading(false);
+  }
+});
+
+function doLogin() {
+  const email = document.getElementById('login-email')?.value.trim();
+  const pass  = document.getElementById('login-pass')?.value;
+  const errEl = document.getElementById('login-error');
+  errEl.classList.remove('show');
+
+  if (!email || !pass) {
+    errEl.textContent = 'Ingresa tu correo y contraseña.';
+    errEl.classList.add('show');
+    return;
+  }
+
+  const btn = document.getElementById('login-btn');
+  btn.disabled = true;
+  btn.textContent = 'Entrando…';
+
+  auth.signInWithEmailAndPassword(email, pass)
+    .catch(e => {
+      btn.disabled = false;
+      btn.textContent = 'Entrar';
+      let msg = 'Correo o contraseña incorrectos.';
+      if (e.code === 'auth/too-many-requests') msg = 'Demasiados intentos. Intenta más tarde.';
+      errEl.textContent = msg;
+      errEl.classList.add('show');
+    });
+}
+
+function doLogout() {
+  auth.signOut();
+}
+
+// ═══════════════════════════════════════════
+//  RENDER — LOGIN
+// ═══════════════════════════════════════════
+function renderLoginScreen() {
+  document.getElementById('app').innerHTML = `
+    <div class="login-screen">
+      <div class="login-card">
+        <a href="/" class="login-brand" style="text-decoration:none;display:block">
+          <h1>COORDENADA</h1>
+          <p>VIAJES</p>
+          <p class="login-sub">Portal de pagos</p>
+        </a>
+        <div class="login-form">
+          <div id="login-error" class="login-error"></div>
+          <div>
+            <label for="login-email">Correo electrónico</label>
+            <input type="email" id="login-email" placeholder="tu@correo.com" autocomplete="email">
+          </div>
+          <div>
+            <label for="login-pass">Contraseña</label>
+            <input type="password" id="login-pass" placeholder="••••••••" autocomplete="current-password"
+              onkeydown="if(event.key==='Enter') doLogin()">
+          </div>
+          <button class="btn btn-gold" id="login-btn" onclick="doLogin()" style="width:100%;justify-content:center;padding:13px">
+            Entrar
+          </button>
+        </div>
+      </div>
+    </div>`;
+  setTimeout(() => document.getElementById('login-email')?.focus(), 50);
+}
+
+// ═══════════════════════════════════════════
+//  RENDER — ADMIN
+// ═══════════════════════════════════════════
+function renderAdminView() {
+  const filtered = filterClients();
+  const totalConcepts = state.clients.reduce((s, c) => s + (c.concepts || []).length, 0);
+
+  document.getElementById('app').innerHTML = `
+    <div class="header">
+      <a href="/" class="header-brand" style="text-decoration:none"><h1>COORDENADA</h1><p>VIAJES</p></a>
+      <div class="header-right">
+        <span class="header-user">${esc(state.user.email)}</span>
+        <button class="btn btn-ghost btn-sm" onclick="doLogout()">Salir</button>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="stats-bar">
+        <div class="stat-card">
+          <div class="stat-num">${state.clients.length}</div>
+          <div class="stat-label">CLIENTES</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">${totalConcepts}</div>
+          <div class="stat-label">CONCEPTOS</div>
+        </div>
+      </div>
+
+      <div class="admin-tabs">
+        <button class="admin-tab ${state.adminTab === 'pagos' ? 'active' : ''}" onclick="switchTab('pagos')">Pagos</button>
+        <button class="admin-tab ${state.adminTab === 'clientes' ? 'active' : ''}" onclick="switchTab('clientes')">Clientes</button>
+      </div>
+
+      ${state.adminTab === 'pagos' ? renderPagosTab(filtered) : renderClientesTab(filtered)}
+    </div>
+
+    ${renderModals()}`;
+
+  if (state.search) {
+    const si = document.getElementById('search-input');
+    if (si) { si.focus(); si.setSelectionRange(si.value.length, si.value.length); }
+  }
+  scheduleRateUpdates();
+}
+
+function switchTab(tab) {
+  state.adminTab = tab;
+  state.search = '';
+  renderAdminView();
+}
+
+function renderPagosTab(filtered) {
+  return `
+    <div class="toolbar">
+      <input type="text" id="search-input" class="search-input"
+        placeholder="Buscar por nombre o viaje…"
+        value="${esc(state.search)}"
+        oninput="handleSearch(this.value)" autocomplete="off">
+      <button class="btn btn-gold" onclick="openModal('add-client')">+ Nuevo cliente</button>
+    </div>
+    <div class="section-heading">
+      <h2>Pagos <span class="count-badge">${filtered.length}</span></h2>
+    </div>
+    <div class="client-list" id="client-list">
+      ${filtered.length === 0 ? renderEmptyState() : filtered.map(renderClientCard).join('')}
+    </div>`;
+}
+
+function renderClientesTab(filtered) {
+  const today = new Date();
+  const in90  = new Date(today); in90.setDate(today.getDate() + 90);
+
+  const rows = filtered.map(c => {
+    const conceptCount = (c.concepts || []).length;
+    const totalPmts    = (c.concepts || []).reduce((s, con) => s + (con.payments || []).length, 0);
+    const paidPmts     = (c.concepts || []).reduce((s, con) => s + (con.payments || []).filter(p => p.paid).length, 0);
+    const pendingPmts  = totalPmts - paidPmts;
+
+    let expiryCell = '—';
+    if (c.passportExpiry) {
+      const exp = new Date(c.passportExpiry + 'T00:00:00');
+      const warn = exp <= in90;
+      expiryCell = `<span class="${warn ? 'crm-expiry-warn' : ''}">${fmtDate(c.passportExpiry)}${warn ? ' ⚠' : ''}</span>`;
+    }
+
+    const waLink = c.whatsapp
+      ? `<a href="https://wa.me/${c.whatsapp.replace(/\D/g,'')}" target="_blank" rel="noopener" style="color:var(--sage);text-decoration:none">${esc(c.whatsapp)}</a>`
+      : '—';
+
+    return `
+      <tr>
+        <td>
+          <span class="crm-avatar">${esc(initials(c.fullName))}</span>
+          <span class="crm-name">${esc(c.fullName || '—')}</span>
+          <div class="crm-sub" style="margin-left:42px">${esc(c.email || '—')}</div>
+        </td>
+        <td>${esc(c.nationality || '—')}</td>
+        <td>${esc(c.tripName || '—')}</td>
+        <td style="white-space:nowrap">${waLink}</td>
+        <td style="white-space:nowrap">${expiryCell}</td>
+        <td style="text-align:center">${conceptCount}</td>
+        <td style="text-align:center">
+          <span style="color:#276541;font-weight:bold">${paidPmts}</span>
+          <span style="color:var(--muted)"> / ${totalPmts}</span>
+        </td>
+        <td style="white-space:nowrap">
+          <button class="btn btn-outline btn-sm" style="padding:4px 10px;font-size:.75rem" onclick="openEditModal('${c.id}')">Editar</button>
+          <button class="btn btn-danger btn-sm" style="padding:4px 10px;font-size:.75rem;margin-left:4px" onclick="openDeleteModal('${c.id}')">Elim.</button>
+        </td>
+      </tr>`;
+  }).join('');
+
+  return `
+    <div class="toolbar">
+      <input type="text" id="search-input" class="search-input"
+        placeholder="Buscar por nombre, viaje o email…"
+        value="${esc(state.search)}"
+        oninput="handleSearch(this.value)" autocomplete="off">
+      <button class="btn btn-gold" onclick="openModal('add-client')">+ Nuevo cliente</button>
+    </div>
+    <div class="section-heading">
+      <h2>Clientes <span class="count-badge">${filtered.length}</span></h2>
+    </div>
+    ${filtered.length === 0 ? renderEmptyState() : `
+    <table class="crm-table">
+      <colgroup>
+        <col style="width:22%">
+        <col style="width:10%">
+        <col style="width:15%">
+        <col style="width:13%">
+        <col style="width:12%">
+        <col style="width:7%">
+        <col style="width:8%">
+        <col style="width:13%">
+      </colgroup>
+      <thead>
+        <tr>
+          <th>Nombre / Email</th>
+          <th>Nacionalidad</th>
+          <th>Viaje</th>
+          <th>WhatsApp</th>
+          <th>Venc. Pasaporte</th>
+          <th style="text-align:center">Conceptos</th>
+          <th style="text-align:center">Pagos</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>${rows}</tbody>
+    </table>`}`;
+}
+
+function filterClients() {
+  if (!state.search.trim()) return state.clients;
+  const q = state.search.toLowerCase();
+  return state.clients.filter(c =>
+    (c.fullName || '').toLowerCase().includes(q) ||
+    (c.tripName || '').toLowerCase().includes(q) ||
+    (c.email || '').toLowerCase().includes(q)
+  );
+}
+
+function renderClientCard(c) {
+  const open = state.expandedCards.has(c.id);
+  const conceptCount = (c.concepts || []).length;
+  return `
+    <div class="client-card" id="card-${c.id}">
+      <div class="client-card-header" onclick="toggleCard('${c.id}')">
+        <div class="client-avatar">${esc(initials(c.fullName))}</div>
+        <div class="client-card-info">
+          <h3>${esc(c.fullName)}</h3>
+          <p>${esc(c.tripName || '—')} · ${esc(c.email || '—')}</p>
+        </div>
+        <div class="trip-badge">${esc(c.nationality || '—')}</div>
+        <div class="chevron ${open ? 'open' : ''}">▾</div>
+      </div>
+      <div class="client-card-body ${open ? 'open' : ''}">
+        <div class="detail-grid">
+          <div class="detail-field"><label>Nombre completo</label><span>${esc(c.fullName || '—')}</span></div>
+          <div class="detail-field"><label>Fecha de nacimiento</label><span>${fmtDate(c.dateOfBirth)}</span></div>
+          <div class="detail-field"><label>Nacionalidad</label><span>${esc(c.nationality || '—')}</span></div>
+          <div class="detail-field"><label>Pasaporte</label><span>${esc(c.passportNumber || '—')}</span></div>
+          <div class="detail-field"><label>Vencimiento pasaporte</label><span>${fmtDate(c.passportExpiry)}</span></div>
+          <div class="detail-field"><label>WhatsApp</label><span>${esc(c.whatsapp || '—')}</span></div>
+          <div class="detail-field"><label>Email / Login</label><span>${esc(c.email || '—')}</span></div>
+          <div class="detail-field"><label>Viaje</label><span>${esc(c.tripName || '—')}</span></div>
+          <div class="detail-field"><label>Conceptos</label><span>${conceptCount === 0 ? 'Sin conceptos' : conceptCount + ' concepto' + (conceptCount !== 1 ? 's' : '')}</span></div>
+          <div class="detail-field"><label>Itinerario digital</label><span>${c.itineraryUrl
+            ? `<a href="${esc(c.itineraryUrl)}" target="_blank" rel="noopener">Ver itinerario ↗</a>`
+            : '<span style="color:var(--muted);font-style:italic">Sin link</span>'
+          }</span></div>
+          <div class="detail-field"><label>Itinerario PDF</label><span>${c.itineraryPdfUrl
+            ? `<a href="${esc(c.itineraryPdfUrl)}" target="_blank" rel="noopener">Descargar PDF ↗</a>`
+            : '<span style="color:var(--muted);font-style:italic">Sin PDF</span>'
+          }</span></div>
+        </div>
+        <div class="detail-actions">
+          <button class="btn btn-outline btn-sm" onclick="openEditModal('${c.id}'); event.stopPropagation()">Editar datos</button>
+          <button class="btn btn-primary btn-sm" onclick="openConceptModal('${c.id}'); event.stopPropagation()">+ Concepto</button>
+          <button class="btn btn-danger btn-sm" onclick="openDeleteModal('${c.id}'); event.stopPropagation()">Eliminar</button>
+        </div>
+        ${renderConceptsSection(c)}
+      </div>
+    </div>`;
+}
+
+function renderEmptyState() {
+  if (state.search.trim()) return `
+    <div class="empty-state">
+      <div class="empty-icon">🔍</div>
+      <h3>Sin resultados</h3>
+      <p>No se encontró ningún cliente con "<strong>${esc(state.search)}</strong>"</p>
+    </div>`;
+  return `
+    <div class="empty-state">
+      <div class="empty-icon">✈️</div>
+      <h3>Sin clientes aún</h3>
+      <p>Usa el botón <strong>+ Nuevo cliente</strong> para agregar tu primer cliente.</p>
+    </div>`;
+}
+
+// ═══════════════════════════════════════════
+//  MONTHLY TOTAL HELPER
+// ═══════════════════════════════════════════
+function renderMonthlyTotal(concepts) {
+  if (!concepts || concepts.length < 2) return '';
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  let mxn = 0, usd = 0;
+  for (const con of concepts) {
+    for (const p of (con.payments || [])) {
+      if (p.paid) continue;
+      // include if due date is today or in the past (overdue), or in the current calendar month
+      const due = new Date(p.dueDate + 'T00:00:00');
+      const isOverdueOrThisMonth = due <= today ||
+        (due.getFullYear() === today.getFullYear() && due.getMonth() === today.getMonth());
+      if (!isOverdueOrThisMonth) continue;
+      if (con.currency === 'USD') usd += p.amountDue;
+      else mxn += p.amountDue;
+    }
+  }
+  if (mxn === 0 && usd === 0) return '';
+  const parts = [];
+  if (mxn > 0) parts.push(`<strong style="color:var(--green)">${fmtMXN(mxn)}</strong> <span style="font-size:.75rem">MXN</span>`);
+  if (usd > 0) parts.push(`<strong style="color:var(--green)">${fmtUSD(usd)}</strong> <span style="font-size:.75rem">USD</span>`);
+  return `
+    <div style="background:#f0f7ee;border:1.5px solid var(--sage);border-radius:10px;padding:14px 18px;margin-bottom:16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+      <span style="font-size:.7rem;letter-spacing:2px;text-transform:uppercase;color:var(--green);white-space:nowrap">Total a transferir (este mes + vencidos)</span>
+      <span style="display:flex;gap:16px;align-items:center;flex-wrap:wrap">${parts.join('<span style="color:var(--muted);margin:0 4px">+</span>')}</span>
+    </div>`;
+}
+
+// ═══════════════════════════════════════════
+//  RENDER — CONCEPTS (admin)
+// ═══════════════════════════════════════════
+function renderConceptsSection(c) {
+  const concepts = c.concepts || [];
+  return `
+    <div class="concepts-section">
+      <div class="concepts-section-header">
+        <h4>Conceptos de pago${concepts.length ? ` <span class="count-badge">${concepts.length}</span>` : ''}</h4>
+      </div>
+      ${concepts.length === 0
+        ? `<p style="color:var(--muted);font-size:.85rem;font-style:italic;padding-bottom:4px">Sin conceptos. Usa "+ Concepto" para agregar.</p>`
+        : renderMonthlyTotal(concepts) + concepts.map(con => renderConceptCard(c, con)).join('')}
+    </div>`;
+}
+
+function renderConceptCard(c, con) {
+  const isUSD    = con.currency === 'USD';
+  const payments = con.payments || [];
+  const paidCount = payments.filter(p => p.paid).length;
+  const perPmt = con.numPayments ? con.totalAmount / con.numPayments : 0;
+
+  return `
+    <div class="concept-card">
+      <div class="concept-card-header">
+        <span class="concept-name">${esc(con.name)}</span>
+        <span class="badge-currency ${isUSD ? 'badge-usd' : 'badge-mxn'}">${con.currency}</span>
+        <span class="concept-total">${isUSD ? fmtUSD(con.totalAmount) : fmtMXN(con.totalAmount)}</span>
+        <span class="concept-meta">${paidCount}/${payments.length} pagos</span>
+      </div>
+      ${isUSD ? `<div class="rate-box" style="margin:10px 14px 0" data-usd-amount="${perPmt.toFixed(4)}">Cargando tipo de cambio…</div>` : ''}
+      <div class="concept-table-wrap">
+        <table class="payment-table">
+          <thead>
+            <tr>
+              <th>#</th><th>Fecha límite</th><th>Estado</th><th>Fecha de Pago</th>
+              <th>Monto ${con.currency}</th>
+              ${isUSD ? '<th>MXN pagado</th><th>T/C</th>' : ''}
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            ${payments.map((p, i) => `
+              <tr class="${p.paid ? 'row-paid' : ''}">
+                <td style="font-weight:bold;color:var(--muted)">${p.num}</td>
+                <td>${fmtDate(p.dueDate)}</td>
+                <td><span class="${p.paid ? 'badge-paid' : 'badge-pending'}">${p.paid ? 'Pagado' : 'Pendiente'}</span></td>
+                <td>${p.paidDate ? fmtDate(p.paidDate) : '—'}</td>
+                <td>${isUSD ? fmtUSD(p.amountDue) : fmtMXN(p.amountDue)}</td>
+                ${isUSD ? `
+                  <td>${p.amountPaidMXN != null ? fmtMXN(p.amountPaidMXN) : '—'}</td>
+                  <td style="color:var(--muted);font-size:.76rem">${p.exchangeRate ? p.exchangeRate.toFixed(2) : '—'}</td>
+                ` : ''}
+                <td>${!p.paid
+                  ? `<button class="btn-pay" onclick="openMarkPaidModal('${c.id}','${con.id}',${i})">Marcar pagado</button>`
+                  : `<span style="color:#276541;font-size:.9rem">✓</span>`
+                }</td>
+              </tr>`).join('')}
+          </tbody>
+        </table>
+      </div>
+      <div class="concept-footer">
+        <button class="btn btn-outline btn-sm" onclick="openEditConceptModal('${c.id}','${con.id}')">Editar concepto</button>
+        <button class="btn btn-danger btn-sm" onclick="openDeleteConceptModal('${c.id}','${con.id}')">Eliminar concepto</button>
+      </div>
+    </div>`;
+}
+
+// ═══════════════════════════════════════════
+//  RENDER — CLIENT PORTAL
+// ═══════════════════════════════════════════
+function renderClientPortal() {
+  const c = state.myClientDoc;
+  const firstName = state.user.email;
+
+  if (!c) {
+    document.getElementById('app').innerHTML = `
+      <div class="header">
+        <a href="/" class="header-brand" style="text-decoration:none"><h1>COORDENADA</h1><p>VIAJES</p></a>
+        <div class="header-right">
+          <button class="btn btn-ghost btn-sm" onclick="doLogout()">Salir</button>
+        </div>
+      </div>
+      <div class="container" style="max-width:720px;padding-top:60px;text-align:center">
+        <div style="font-size:3rem;margin-bottom:16px;opacity:.4">✈️</div>
+        <h2 style="color:var(--sage)">Tu plan de pagos estará listo pronto</h2>
+        <p style="color:var(--muted);margin-top:10px;font-size:.9rem">
+          Tu agente aún no ha vinculado tu cuenta. Escríbenos por WhatsApp.
+        </p>
+        <a href="https://wa.me/5215657917967" target="_blank" rel="noopener"
+          style="display:inline-flex;align-items:center;gap:10px;background:#25D366;color:#fff;
+          text-decoration:none;padding:13px 28px;border-radius:50px;margin-top:24px;
+          font-weight:bold;font-size:.95rem;box-shadow:0 4px 16px rgba(37,211,102,.35)">
+          Contactar por WhatsApp
+        </a>
+      </div>`;
+    return;
+  }
+
+  const concepts   = c.concepts || [];
+  const name1      = (c.fullName || '').trim().split(' ')[0] || firstName;
+
+  // Totals across all concepts
+  const totalPayments = concepts.reduce((s, con) => s + (con.payments || []).length, 0);
+  const paidTotal     = concepts.reduce((s, con) => s + (con.payments || []).filter(p => p.paid).length, 0);
+  const pendingTotal  = totalPayments - paidTotal;
+  const monthsLeft    = pendingTotal; // one payment = one month in most cases
+
+  document.getElementById('app').innerHTML = `
+    <div class="header">
+      <a href="/" class="header-brand" style="text-decoration:none"><h1>COORDENADA</h1><p>VIAJES</p></a>
+      <div class="header-right">
+        <button class="btn btn-ghost btn-sm" onclick="doLogout()">Salir</button>
+      </div>
+    </div>
+    <div class="container" style="max-width:720px">
+
+      <div class="portal-hero">
+        <div class="portal-avatar">${esc(initials(c.fullName))}</div>
+        <h2 style="font-size:1.5rem;color:var(--green)">Hola, ${esc(name1)}</h2>
+        ${c.tripName ? `<p style="color:var(--muted);margin-top:6px;font-size:.95rem">${esc(c.tripName)}</p>` : ''}
+      </div>
+
+      <!-- Summary bar -->
+      <div class="portal-summary">
+        <div class="portal-summary-cell">
+          <div class="portal-summary-num" style="color:var(--green)">${totalPayments}</div>
+          <div class="portal-summary-label">TOTAL PAGOS</div>
+        </div>
+        <div class="portal-summary-cell">
+          <div class="portal-summary-num" style="color:#276541">${paidTotal}</div>
+          <div class="portal-summary-label">REALIZADOS</div>
+        </div>
+        <div class="portal-summary-cell">
+          <div class="portal-summary-num" style="color:#856404">${pendingTotal}</div>
+          <div class="portal-summary-label">PENDIENTES</div>
+        </div>
+        <div class="portal-summary-cell">
+          <div class="portal-summary-num" style="color:var(--green)">${monthsLeft}</div>
+          <div class="portal-summary-label">MESES RESTANTES</div>
+        </div>
+      </div>
+
+      <!-- Monthly total -->
+      ${renderMonthlyTotal(concepts)}
+
+      <!-- Concept cards -->
+      ${concepts.length === 0
+        ? `<div style="background:#fff;border:1.5px solid var(--border);border-radius:12px;padding:36px 28px;text-align:center;margin-bottom:24px">
+             <p style="color:var(--sage);font-size:.9rem">Tu plan de pagos aparecerá aquí pronto.</p>
+           </div>`
+        : concepts.map(con => renderPortalConceptCard(con)).join('')}
+
+      <!-- Itinerary -->
+      ${(c.itineraryUrl || c.itineraryPdfUrl) ? `
+      <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:22px">
+        ${c.itineraryUrl ? `<a href="${esc(c.itineraryUrl)}" target="_blank" rel="noopener"
+          style="display:inline-flex;align-items:center;gap:10px;background:var(--green);color:var(--cream);
+          text-decoration:none;padding:13px 28px;border-radius:50px;font-family:Georgia,serif;
+          font-size:.95rem;letter-spacing:1px;box-shadow:0 4px 16px rgba(74,103,65,.28)">
+          📄 Itinerario de viaje
+        </a>` : ''}
+        ${c.itineraryPdfUrl ? `<a href="${esc(c.itineraryPdfUrl)}" target="_blank" rel="noopener"
+          style="display:inline-flex;align-items:center;gap:10px;background:var(--gold);color:#2a2a2a;
+          text-decoration:none;padding:13px 28px;border-radius:50px;font-family:Georgia,serif;
+          font-size:.95rem;letter-spacing:1px;box-shadow:0 4px 16px rgba(212,175,106,.35)">
+          📄 Itinerario PDF
+        </a>` : ''}
+      </div>` : ''}
+
+      <!-- Bank transfer info -->
+      <div style="border:2px solid var(--gold);border-radius:14px;padding:24px 28px;margin-bottom:22px;background:#fffdf7">
+        <p style="font-family:Georgia,serif;font-size:.75rem;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:16px">Datos para transferencia</p>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:16px">
+          ${[['Banco','BBVA'],['CLABE','012180015593495708'],['Titular','Aster Iñigo Gonzalez']].map(([label,val]) => `
+            <div>
+              <div style="font-size:.68rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:4px">${label}</div>
+              <div style="font-size:.95rem;font-weight:bold;color:var(--green);word-break:break-all">${val}</div>
+            </div>`).join('')}
+        </div>
+      </div>
+
+      <!-- WhatsApp -->
+      <div style="text-align:center;padding-bottom:48px">
+        <a href="https://wa.me/5215657917967" target="_blank" rel="noopener"
+          style="display:inline-flex;align-items:center;gap:10px;background:#25D366;color:#fff;
+          text-decoration:none;padding:13px 28px;border-radius:50px;font-weight:bold;
+          font-size:.95rem;box-shadow:0 4px 16px rgba(37,211,102,.35)">
+          💬 Contactar por WhatsApp
+        </a>
+      </div>
+    </div>`;
+
+  scheduleRateUpdates();
+}
+
+function renderPortalConceptCard(con) {
+  const isUSD     = con.currency === 'USD';
+  const payments  = con.payments || [];
+  const paidCount = payments.filter(p => p.paid).length;
+  const remaining = payments.length - paidCount;
+  const nextUnpaid = payments.find(p => !p.paid);
+  const perPmt    = con.numPayments ? con.totalAmount / con.numPayments : 0;
+  const progress  = payments.length > 0 ? Math.round((paidCount / payments.length) * 100) : 0;
+
+  return `
+    <div style="background:#fff;border:1.5px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:22px">
+      <div style="background:var(--green);padding:14px 20px;display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+        <span style="font-family:Georgia,serif;font-size:1rem;color:var(--cream);flex:1">${esc(con.name)}</span>
+        <span class="badge-currency ${isUSD ? 'badge-usd' : 'badge-mxn'}">${con.currency}</span>
+        <span style="font-size:.9rem;color:var(--gold)">${isUSD ? fmtUSD(con.totalAmount) : fmtMXN(con.totalAmount)}</span>
+      </div>
+
+      <!-- Progress bar -->
+      <div style="padding:14px 20px 0">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+          <span style="font-size:.75rem;color:var(--muted);letter-spacing:1px">PROGRESO</span>
+          <span style="font-size:.82rem;font-weight:bold;color:var(--green)">${progress}%</span>
+        </div>
+        <div style="background:#eee;border-radius:20px;height:8px;overflow:hidden">
+          <div style="background:var(--green);height:100%;width:${progress}%;border-radius:20px;transition:width .4s"></div>
+        </div>
+      </div>
+
+      ${isUSD ? `<div class="rate-box" data-usd-amount="${perPmt.toFixed(4)}" style="margin:12px 16px 0">Cargando tipo de cambio…</div>` : ''}
+
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-bottom:1px solid var(--border);margin-top:14px">
+        ${[
+          ['Total pagos', payments.length, 'var(--green)'],
+          ['Realizados',  paidCount,        '#276541'],
+          ['Pendientes',  remaining,         '#856404'],
+        ].map(([label, val, color]) => `
+          <div style="text-align:center;padding:12px 8px;border-right:1px solid var(--border)">
+            <div style="font-family:Georgia,serif;font-size:1.4rem;color:${color}">${val}</div>
+            <div style="font-size:.64rem;color:var(--muted);letter-spacing:1px;margin-top:2px">${label.toUpperCase()}</div>
+          </div>`).join('')}
+        <div style="text-align:center;padding:12px 8px">
+          ${nextUnpaid ? `
+            <div style="font-family:Georgia,serif;font-size:.82rem;color:var(--green);line-height:1.3">${fmtDate(nextUnpaid.dueDate)}</div>
+            <div style="font-size:.64rem;color:var(--muted);letter-spacing:1px;margin-top:2px">PRÓXIMO PAGO</div>
+          ` : `
+            <div style="font-family:Georgia,serif;font-size:1rem;color:#276541">✓</div>
+            <div style="font-size:.64rem;color:var(--muted);letter-spacing:1px;margin-top:2px">COMPLETADO</div>
+          `}
+        </div>
+      </div>
+
+      <div style="overflow-x:auto;padding:0 16px 16px">
+        <table class="payment-table" style="min-width:${isUSD ? '500px' : '340px'}">
+          <thead>
+            <tr>
+              <th>#</th><th>Fecha límite</th><th>Estado</th><th>Fecha de Pago</th>
+              <th>Monto ${con.currency}</th>
+              ${isUSD ? '<th>MXN pagado</th>' : ''}
+            </tr>
+          </thead>
+          <tbody>
+            ${payments.map(p => `
+              <tr class="${p.paid ? 'row-paid' : ''}">
+                <td style="font-weight:bold;color:var(--muted)">${p.num}</td>
+                <td>${fmtDate(p.dueDate)}</td>
+                <td><span class="${p.paid ? 'badge-paid' : 'badge-pending'}">${p.paid ? 'Pagado' : 'Pendiente'}</span></td>
+                <td>${p.paidDate ? fmtDate(p.paidDate) : '—'}</td>
+                <td>${isUSD ? fmtUSD(p.amountDue) : fmtMXN(p.amountDue)}</td>
+                ${isUSD ? `<td>${p.amountPaidMXN != null ? fmtMXN(p.amountPaidMXN) : (p.paid ? '—' : '')}</td>` : ''}
+              </tr>`).join('')}
+          </tbody>
+        </table>
+      </div>
+    </div>`;
+}
+
+// ═══════════════════════════════════════════
+//  ACTIONS — SEARCH & CARDS
+// ═══════════════════════════════════════════
+function handleSearch(val) { state.search = val; renderAdminView(); }
+
+function toggleCard(id) {
+  if (state.expandedCards.has(id)) state.expandedCards.delete(id);
+  else state.expandedCards.add(id);
+  renderAdminView();
+}
+
+// ═══════════════════════════════════════════
+//  ACTIONS — MODALS
+// ═══════════════════════════════════════════
+function openModal(type) {
+  state.saving = false;
+  state.modal = type;
+  renderAdminView();
+  setTimeout(() => document.getElementById('f-fullName')?.focus(), 50);
+}
+
+function openEditModal(id) {
+  state.saving = false;
+  state.editTargetId = id;
+  state.modal = 'edit-client';
+  renderAdminView();
+  setTimeout(() => document.getElementById('f-fullName')?.focus(), 50);
+}
+
+function openDeleteModal(id) {
+  state.deleteTargetId = id;
+  state.modal = 'delete-client';
+  renderAdminView();
+}
+
+function closeModal() {
+  state.modal = null;
+  state.editTargetId = null;
+  state.deleteTargetId = null;
+  state.conceptClientId = null;
+  state.conceptId = null;
+  state.paymentIdx = null;
+  renderAdminView();
+}
+
+function handleBackdropClick(e) {
+  if (e.target === e.currentTarget) closeModal();
+}
+
+// ═══════════════════════════════════════════
+//  RENDER — MODALS
+// ═══════════════════════════════════════════
+function renderModals() {
+  if (state.modal === 'add-client')     return renderClientFormModal(null);
+  if (state.modal === 'edit-client') {
+    const c = state.clients.find(x => x.id === state.editTargetId);
+    return c ? renderClientFormModal(c) : '';
+  }
+  if (state.modal === 'delete-client')  return renderDeleteModal();
+  if (state.modal === 'add-concept')    return renderConceptModal(state.conceptClientId);
+  if (state.modal === 'edit-concept')   return renderEditConceptModal();
+  if (state.modal === 'delete-concept') return renderDeleteConceptModal();
+  if (state.modal === 'mark-paid')      return renderMarkPaidModal();
+  return '';
+}
+
+function renderClientFormModal(c) {
+  const editing = !!c;
+  const v = c || {};
+  return `
+    <div class="modal-backdrop" onclick="handleBackdropClick(event)">
+      <div class="modal">
+        <div class="modal-header">
+          <h2>${editing ? 'EDITAR CLIENTE' : 'NUEVO CLIENTE'}</h2>
+          <button class="modal-close" onclick="closeModal()">✕</button>
+        </div>
+        <div class="modal-body">
+          <p class="form-section">Datos personales</p>
+          <div class="form-grid">
+            <div class="form-group span2">
+              <label for="f-fullName">Nombre completo (como en pasaporte)</label>
+              <input type="text" id="f-fullName" placeholder="Ej. Ana García López" value="${esc(v.fullName || '')}" autocomplete="name">
+            </div>
+            <div class="form-group">
+              <label for="f-dateOfBirth">Fecha de nacimiento</label>
+              <input type="date" id="f-dateOfBirth" value="${esc(v.dateOfBirth || '')}">
+            </div>
+            <div class="form-group">
+              <label for="f-nationality">Nacionalidad</label>
+              <input type="text" id="f-nationality" placeholder="Ej. Mexicana" value="${esc(v.nationality || '')}">
+            </div>
+            <div class="form-group">
+              <label for="f-passportNumber">Pasaporte <span style="font-weight:normal;color:var(--muted)">(opcional)</span></label>
+              <input type="text" id="f-passportNumber" placeholder="Ej. G12345678" value="${esc(v.passportNumber || '')}" style="text-transform:uppercase">
+            </div>
+            <div class="form-group">
+              <label for="f-passportExpiry">Vencimiento pasaporte <span style="font-weight:normal;color:var(--muted)">(opcional)</span></label>
+              <input type="date" id="f-passportExpiry" value="${esc(v.passportExpiry || '')}">
+            </div>
+          </div>
+          <p class="form-section">Contacto</p>
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="f-whatsapp">WhatsApp (con código de país)</label>
+              <input type="tel" id="f-whatsapp" placeholder="Ej. 5215612345678" value="${esc(v.whatsapp || '')}">
+            </div>
+            <div class="form-group">
+              <label for="f-email">Correo / Login del cliente</label>
+              <input type="email" id="f-email" placeholder="Ej. ana@gmail.com" value="${esc(v.email || '')}" autocomplete="email"
+                ${editing ? 'readonly style="background:#f5f5f5;cursor:not-allowed"' : ''}>
+              ${editing ? `<span style="font-size:.75rem;color:var(--muted)">El email no se puede cambiar (es el login del cliente).</span>` : ''}
+            </div>
+          </div>
+          ${!editing ? `
+          <p class="form-section">Contraseña inicial</p>
+          <div class="form-grid">
+            <div class="form-group span2">
+              <label for="f-password">Contraseña para el cliente</label>
+              <input type="text" id="f-password" placeholder="Ej. Cancun2026" autocomplete="off">
+              <span style="font-size:.75rem;color:var(--muted)">El cliente usará este correo y esta contraseña para entrar al portal. Puedes cambiarla después desde Firebase Console.</span>
+            </div>
+          </div>` : ''}
+          <p class="form-section">Viaje</p>
+          <div class="form-grid">
+            <div class="form-group span2">
+              <label for="f-tripName">Nombre del viaje</label>
+              <input type="text" id="f-tripName" placeholder="Ej. Europa Clásica 2026" value="${esc(v.tripName || '')}">
+            </div>
+            <div class="form-group span2">
+              <label for="f-itineraryUrl">Link del itinerario digital <span style="font-weight:normal;color:var(--muted)">(opcional)</span></label>
+              <input type="url" id="f-itineraryUrl" placeholder="Ej. https://docs.google.com/..." value="${esc(v.itineraryUrl || '')}">
+            </div>
+            <div class="form-group span2">
+              <label>Itinerario PDF <span style="font-weight:normal;color:var(--muted)">(opcional)</span></label>
+              ${v.itineraryPdfUrl ? `<div style="margin-bottom:8px;font-size:.8rem;color:var(--green);display:flex;align-items:center;gap:8px">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px;flex-shrink:0"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                <a href="${esc(v.itineraryPdfUrl)}" target="_blank" rel="noopener" style="color:var(--green)">PDF actual ↗</a>
+                <span style="color:var(--muted)">— sube uno nuevo para reemplazarlo</span>
+              </div>` : ''}
+              <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+                <label style="display:inline-flex;align-items:center;gap:7px;padding:7px 14px;border:1.5px solid var(--border);border-radius:7px;cursor:pointer;font-size:.8rem;color:var(--green);background:#faf9f5;font-weight:normal">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                  Subir PDF
+                  <input type="file" id="f-itineraryPdf" accept="application/pdf" style="display:none" onchange="document.getElementById('f-pdf-name').textContent = this.files[0]?.name || ''">
+                </label>
+                <span id="f-pdf-name" style="font-size:.78rem;color:var(--muted)"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-ghost" onclick="closeModal()">Cancelar</button>
+          <button class="btn btn-gold" onclick="${editing ? `saveEditClient('${c.id}')` : 'saveNewClient()'}">
+            ${editing ? 'Guardar cambios' : 'Agregar cliente'}
+          </button>
+        </div>
+      </div>
+    </div>`;
+}
+
+function renderDeleteModal() {
+  const c = state.clients.find(x => x.id === state.deleteTargetId);
+  if (!c) return '';
+  return `
+    <div class="modal-backdrop" onclick="handleBackdropClick(event)">
+      <div class="modal" style="max-width:420px">
+        <div class="modal-header"><h2>ELIMINAR CLIENTE</h2><button class="modal-close" onclick="closeModal()">✕</button></div>
+        <div class="modal-body">
+          <p style="margin-bottom:10px">¿Eliminar a <strong>${esc(c.fullName)}</strong>?</p>
+          <p style="color:var(--muted);font-size:.85rem;line-height:1.5">
+            Se eliminarán todos sus datos y conceptos de pago de forma permanente. Esta acción no se puede deshacer.<br><br>
+            <strong>Nota:</strong> El acceso al portal se desactivará pero la cuenta de Firebase Auth se debe eliminar manualmente desde la consola si deseas.
+          </p>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-ghost" onclick="closeModal()">Cancelar</button>
+          <button class="btn btn-danger" onclick="deleteClient('${c.id}')">Sí, eliminar</button>
+        </div>
+      </div>
+    </div>`;
+}
+
+function renderConceptModal(clientId) {
+  const client = state.clients.find(c => c.id === clientId);
+  if (!client) return '';
+  const MONTHS = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+  const now = new Date();
+  const thisMonth = now.getMonth() + 1;
+  const thisYear  = now.getFullYear();
+  return `
+    <div class="modal-backdrop" onclick="handleBackdropClick(event)">
+      <div class="modal">
+        <div class="modal-header"><h2>NUEVO CONCEPTO</h2><button class="modal-close" onclick="closeModal()">✕</button></div>
+        <div class="modal-body">
+          <p style="font-size:.82rem;color:var(--muted);margin-bottom:16px">
+            Cliente: <strong style="color:var(--green)">${esc(client.fullName)}</strong>
+          </p>
+          <p class="form-section">Tipo y moneda</p>
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="f-concept-type">Tipo de concepto</label>
+              <select id="f-concept-type" onchange="toggleCustomConceptField(this.value)">
+                <option value="">Seleccionar…</option>
+                <option value="Hotel">Hotel</option>
+                <option value="Vuelo">Vuelo</option>
+                <option value="Van / Transporte">Van / Transporte</option>
+                <option value="Tour">Tour</option>
+                <option value="otro">Otro (personalizado)</option>
+              </select>
+            </div>
+            <div class="form-group" id="custom-concept-wrap" style="display:none">
+              <label for="f-concept-custom">Nombre del concepto</label>
+              <input type="text" id="f-concept-custom" placeholder="Ej. Seguro de viaje">
+            </div>
+            <div class="form-group">
+              <label for="f-concept-currency">Moneda</label>
+              <select id="f-concept-currency">
+                <option value="MXN">MXN — Pesos mexicanos</option>
+                <option value="USD">USD — Dólares</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="f-concept-total">Monto total</label>
+              <input type="number" id="f-concept-total" placeholder="0.00" min="0" step="0.01">
+            </div>
+          </div>
+          <p class="form-section">Plan de pagos</p>
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="f-concept-numpay">Número de pagos mensuales</label>
+              <input type="number" id="f-concept-numpay" placeholder="Ej. 6" min="1" max="60" value="1">
+            </div>
+            <div class="form-group">
+              <label for="f-concept-dueday">Día de cobro (1–28)</label>
+              <input type="number" id="f-concept-dueday" placeholder="Ej. 15" min="1" max="28" value="15">
+            </div>
+            <div class="form-group">
+              <label for="f-concept-startmonth">Mes de inicio</label>
+              <select id="f-concept-startmonth">
+                ${MONTHS.map((m, i) => `<option value="${i+1}" ${i+1 === thisMonth ? 'selected' : ''}>${m}</option>`).join('')}
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="f-concept-startyear">Año de inicio</label>
+              <input type="number" id="f-concept-startyear" value="${thisYear}" min="2020" max="2040">
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-ghost" onclick="closeModal()">Cancelar</button>
+          <button class="btn btn-gold" onclick="saveNewConcept('${clientId}')">Agregar concepto</button>
+        </div>
+      </div>
+    </div>`;
+}
+
+function renderEditConceptModal() {
+  const client  = state.clients.find(c => c.id === state.conceptClientId);
+  const concept = (client?.concepts || []).find(c => c.id === state.conceptId);
+  if (!client || !concept) return '';
+  const MONTHS = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+  const isCustom = !['Hotel','Vuelo','Van / Transporte','Tour'].includes(concept.name);
+  return `
+    <div class="modal-backdrop" onclick="handleBackdropClick(event)">
+      <div class="modal">
+        <div class="modal-header"><h2>EDITAR CONCEPTO</h2><button class="modal-close" onclick="closeModal()">✕</button></div>
+        <div class="modal-body">
+          <p style="font-size:.82rem;color:var(--muted);margin-bottom:16px">
+            Cliente: <strong style="color:var(--green)">${esc(client.fullName)}</strong>
+          </p>
+          <p class="form-section">Tipo y moneda</p>
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="f-concept-type">Tipo de concepto</label>
+              <select id="f-concept-type" onchange="toggleCustomConceptField(this.value)">
+                <option value="">Seleccionar…</option>
+                <option value="Hotel" ${concept.name === 'Hotel' ? 'selected' : ''}>Hotel</option>
+                <option value="Vuelo" ${concept.name === 'Vuelo' ? 'selected' : ''}>Vuelo</option>
+                <option value="Van / Transporte" ${concept.name === 'Van / Transporte' ? 'selected' : ''}>Van / Transporte</option>
+                <option value="Tour" ${concept.name === 'Tour' ? 'selected' : ''}>Tour</option>
+                <option value="otro" ${isCustom ? 'selected' : ''}>Otro (personalizado)</option>
+              </select>
+            </div>
+            <div class="form-group" id="custom-concept-wrap" style="display:${isCustom ? 'flex' : 'none'}">
+              <label for="f-concept-custom">Nombre del concepto</label>
+              <input type="text" id="f-concept-custom" placeholder="Ej. Seguro de viaje" value="${esc(isCustom ? concept.name : '')}">
+            </div>
+            <div class="form-group">
+              <label for="f-concept-currency">Moneda</label>
+              <select id="f-concept-currency">
+                <option value="MXN" ${concept.currency === 'MXN' ? 'selected' : ''}>MXN — Pesos mexicanos</option>
+                <option value="USD" ${concept.currency === 'USD' ? 'selected' : ''}>USD — Dólares</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="f-concept-total">Monto total</label>
+              <input type="number" id="f-concept-total" placeholder="0.00" min="0" step="0.01" value="${esc(concept.totalAmount)}">
+            </div>
+          </div>
+          <p class="form-section">Plan de pagos</p>
+          <p style="font-size:.8rem;color:var(--muted);margin-bottom:12px;line-height:1.5">
+            Cambiar el número de pagos, día o fecha <strong>regenerará el calendario de pagos</strong> y se perderán los registros de pagos ya marcados.
+          </p>
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="f-concept-numpay">Número de pagos mensuales</label>
+              <input type="number" id="f-concept-numpay" placeholder="Ej. 6" min="1" max="60" value="${esc(concept.numPayments)}">
+            </div>
+            <div class="form-group">
+              <label for="f-concept-dueday">Día de cobro (1–28)</label>
+              <input type="number" id="f-concept-dueday" placeholder="Ej. 15" min="1" max="28" value="${esc(concept.dueDay)}">
+            </div>
+            <div class="form-group">
+              <label for="f-concept-startmonth">Mes de inicio</label>
+              <select id="f-concept-startmonth">
+                ${MONTHS.map((m, i) => `<option value="${i+1}" ${i+1 === concept.startMonth ? 'selected' : ''}>${m}</option>`).join('')}
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="f-concept-startyear">Año de inicio</label>
+              <input type="number" id="f-concept-startyear" value="${esc(concept.startYear)}" min="2020" max="2040">
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-ghost" onclick="closeModal()">Cancelar</button>
+          <button class="btn btn-gold" onclick="saveEditConcept('${state.conceptClientId}','${state.conceptId}')">Guardar cambios</button>
+        </div>
+      </div>
+    </div>`;
+}
+
+function renderDeleteConceptModal() {
+  const client  = state.clients.find(c => c.id === state.conceptClientId);
+  const concept = (client?.concepts || []).find(c => c.id === state.conceptId);
+  if (!concept) return '';
+  return `
+    <div class="modal-backdrop" onclick="handleBackdropClick(event)">
+      <div class="modal" style="max-width:420px">
+        <div class="modal-header"><h2>ELIMINAR CONCEPTO</h2><button class="modal-close" onclick="closeModal()">✕</button></div>
+        <div class="modal-body">
+          <p style="margin-bottom:10px">¿Eliminar el concepto <strong>${esc(concept.name)}</strong>?</p>
+          <p style="color:var(--muted);font-size:.85rem;line-height:1.5">Se eliminarán todos los pagos registrados. Esta acción no se puede deshacer.</p>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-ghost" onclick="closeModal()">Cancelar</button>
+          <button class="btn btn-danger" onclick="deleteConceptConfirm('${state.conceptClientId}','${state.conceptId}')">Sí, eliminar</button>
+        </div>
+      </div>
+    </div>`;
+}
+
+function renderMarkPaidModal() {
+  const client  = state.clients.find(c => c.id === state.conceptClientId);
+  const concept = (client?.concepts || []).find(c => c.id === state.conceptId);
+  if (!concept || concept.payments[state.paymentIdx] == null) return '';
+  const payment = concept.payments[state.paymentIdx];
+  const isUSD   = concept.currency === 'USD';
+  return `
+    <div class="modal-backdrop" onclick="handleBackdropClick(event)">
+      <div class="modal" style="max-width:440px">
+        <div class="modal-header"><h2>REGISTRAR PAGO</h2><button class="modal-close" onclick="closeModal()">✕</button></div>
+        <div class="modal-body">
+          <p style="font-size:.9rem;margin-bottom:4px"><strong>${esc(concept.name)}</strong> — Pago #${payment.num}</p>
+          <p style="color:var(--muted);font-size:.82rem;margin-bottom:18px">Fecha límite: ${fmtDate(payment.dueDate)}</p>
+          ${isUSD ? `
+            <div class="rate-box" id="fx-display" style="margin-bottom:14px">Cargando tipo de cambio…</div>
+            <input type="hidden" id="fx-rate-value" value="">
+            <input type="hidden" id="fx-mxn-value" value="">
+          ` : `
+            <div style="background:#f5f9f4;border:1.5px solid var(--sage);border-radius:8px;padding:13px 16px;margin-bottom:16px;font-size:.9rem;color:var(--green)">
+              Monto a registrar: <strong>${fmtMXN(payment.amountDue)}</strong>
+            </div>`}
+          <button type="button" onclick="fillFullAmount(${payment.amountDue}, '${concept.currency}')"
+            style="width:100%;margin-top:12px;padding:11px;border:1.5px solid var(--green);border-radius:8px;background:#f0f7ee;color:var(--green);font-size:.88rem;font-weight:bold;cursor:pointer;letter-spacing:.5px">
+            Usar monto completo (${isUSD ? fmtUSD(payment.amountDue) : fmtMXN(payment.amountDue)})
+          </button>
+
+          <div style="margin-top:10px;background:#f5f9f4;border:1.5px solid var(--border);border-radius:8px;padding:13px 16px">
+            <label style="display:flex;align-items:center;gap:10px;cursor:pointer;font-size:.88rem;color:var(--text);font-weight:normal">
+              <input type="checkbox" id="manualOverride" onchange="toggleManualOverride()" style="width:16px;height:16px;flex-shrink:0;cursor:pointer;accent-color:var(--green)">
+              <span>Registrar fecha y monto manualmente</span>
+            </label>
+            <p style="color:var(--muted);font-size:.78rem;line-height:1.5;margin-top:6px;padding-left:26px">
+              Si no activas esta opción, se registrará la fecha de hoy automáticamente.
+            </p>
+          </div>
+          <div id="manualFields" style="display:none">
+            <div class="form-grid" style="margin-top:12px">
+              <div class="form-group">
+                <label for="manualDate">Fecha de pago</label>
+                <input type="date" id="manualDate">
+              </div>
+              <div class="form-group">
+                <label for="manualMXN">Monto pagado (MXN)</label>
+                <input type="number" id="manualMXN" placeholder="Ej. 2000" min="0" step="0.01">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-ghost" onclick="closeModal()">Cancelar</button>
+          <button class="btn btn-gold" onclick="confirmMarkPaid('${state.conceptClientId}','${state.conceptId}',${state.paymentIdx})">
+            Confirmar pago
+          </button>
+        </div>
+      </div>
+    </div>`;
+}
+
+function toggleManualOverride() {
+  document.getElementById('manualFields').style.display =
+    document.getElementById('manualOverride').checked ? 'block' : 'none';
+}
+
+function fillFullAmount(amountDue, currency) {
+  // show the manual fields so the amount gets saved
+  const cb = document.getElementById('manualOverride');
+  if (cb && !cb.checked) { cb.checked = true; toggleManualOverride(); }
+  if (currency === 'USD') {
+    fetchFXRate().then(rate => {
+      const mxn = rate ? (amountDue * rate).toFixed(2) : amountDue.toFixed(2);
+      const el = document.getElementById('manualMXN');
+      if (el) el.value = mxn;
+    });
+  } else {
+    const el = document.getElementById('manualMXN');
+    if (el) el.value = amountDue.toFixed(2);
+  }
+}
+
+// ═══════════════════════════════════════════
+//  ACTIONS — CRUD (Firestore)
+// ═══════════════════════════════════════════
+function readForm() {
+  return {
+    fullName:       (document.getElementById('f-fullName')?.value       || '').trim(),
+    dateOfBirth:     document.getElementById('f-dateOfBirth')?.value     || '',
+    nationality:    (document.getElementById('f-nationality')?.value    || '').trim(),
+    passportNumber: (document.getElementById('f-passportNumber')?.value || '').trim().toUpperCase(),
+    passportExpiry:  document.getElementById('f-passportExpiry')?.value  || '',
+    whatsapp:       (document.getElementById('f-whatsapp')?.value       || '').trim(),
+    email:          (document.getElementById('f-email')?.value          || '').trim().toLowerCase(),
+    tripName:       (document.getElementById('f-tripName')?.value       || '').trim(),
+    itineraryUrl:    (document.getElementById('f-itineraryUrl')?.value   || '').trim(),
+    itineraryPdfUrl: null, // filled after upload if a file was selected
+  };
+}
+
+async function uploadItineraryPdf(clientId) {
+  const input = document.getElementById('f-itineraryPdf');
+  if (!input?.files?.length) return null;
+  const file = input.files[0];
+  const ref = storage.ref(`itineraries/${clientId}/${file.name}`);
+  const snapshot = await ref.put(file);
+  return await snapshot.ref.getDownloadURL();
+}
+
+async function saveNewClient() {
+  if (state.saving) return;
+  const data = readForm();
+  const password = (document.getElementById('f-password')?.value || '').trim();
+
+  if (!data.fullName) { showToast('El nombre es obligatorio'); document.getElementById('f-fullName')?.focus(); return; }
+  if (!data.email)    { showToast('El correo es obligatorio'); document.getElementById('f-email')?.focus(); return; }
+  if (!password || password.length < 6) { showToast('La contraseña debe tener al menos 6 caracteres'); document.getElementById('f-password')?.focus(); return; }
+
+  state.saving = true;
+  setLoading(true, 'Creando cliente…');
+  try {
+    // Create Firebase Auth user via Admin SDK is not available client-side.
+    // We use createUserWithEmailAndPassword with a secondary app instance
+    // so the admin stays logged in.
+    const secondaryApp = firebase.initializeApp(firebaseConfig, 'secondary_' + uid());
+    const secondaryAuth = secondaryApp.auth();
+    const cred = await secondaryAuth.createUserWithEmailAndPassword(data.email, password);
+    const uid_new = cred.user.uid;
+    await secondaryAuth.signOut();
+    await secondaryApp.delete();
+
+    const client = {
+      ...data,
+      authUid:   uid_new,
+      concepts:  [],
+      createdAt: new Date().toISOString(),
+    };
+
+    const docRef = await db.collection('clients').add(client);
+    client.id = docRef.id;
+    // upload PDF after we have the doc ID
+    const pdfUrl = await uploadItineraryPdf(docRef.id);
+    if (pdfUrl) {
+      client.itineraryPdfUrl = pdfUrl;
+      await docRef.update({ itineraryPdfUrl: pdfUrl });
+    }
+    state.clients.unshift(client);
+    state.expandedCards.add(client.id);
+    closeModal();
+    showToast('Cliente agregado: ' + client.fullName);
+  } catch(e) {
+    let msg = 'Error al crear: ' + e.message;
+    if (e.code === 'auth/email-already-in-use') msg = 'Ese correo ya tiene una cuenta registrada.';
+    if (e.code === 'auth/invalid-email')        msg = 'El correo no es válido.';
+    showToast(msg);
+  } finally {
+    state.saving = false;
+    setLoading(false);
+  }
+}
+
+async function saveEditClient(clientId) {
+  if (state.saving) return;
+  const data = readForm();
+  if (!data.fullName) { showToast('El nombre es obligatorio'); return; }
+
+  const idx = state.clients.findIndex(c => c.id === clientId);
+  if (idx === -1) return;
+
+  const updated = { ...state.clients[idx], ...data };
+  // email is readonly in edit, restore original
+  updated.email = state.clients[idx].email;
+
+  state.saving = true;
+  setLoading(true, 'Guardando cambios…');
+  try {
+    const pdfUrl = await uploadItineraryPdf(clientId);
+    if (pdfUrl) updated.itineraryPdfUrl = pdfUrl;
+    await db.collection('clients').doc(clientId).set(updated);
+    state.clients[idx] = updated;
+    closeModal();
+    showToast('Cambios guardados');
+  } catch(e) {
+    showToast('Error al guardar: ' + e.message);
+  } finally {
+    state.saving = false;
+    setLoading(false);
+  }
+}
+
+async function deleteClient(id) {
+  if (state.saving) return;
+  state.saving = true;
+  setLoading(true, 'Eliminando cliente…');
+  try {
+    await db.collection('clients').doc(id).delete();
+    state.clients = state.clients.filter(c => c.id !== id);
+    state.expandedCards.delete(id);
+    closeModal();
+    showToast('Cliente eliminado (elimina la cuenta de Auth en Firebase Console si deseas)');
+  } catch(e) {
+    showToast('Error al eliminar: ' + e.message);
+  } finally {
+    state.saving = false;
+    setLoading(false);
+  }
+}
+
+// ── Concepts ──
+function openConceptModal(clientId) {
+  state.conceptClientId = clientId;
+  state.modal = 'add-concept';
+  renderAdminView();
+}
+
+function openDeleteConceptModal(clientId, conceptId) {
+  state.conceptClientId = clientId;
+  state.conceptId = conceptId;
+  state.modal = 'delete-concept';
+  renderAdminView();
+}
+
+function openEditConceptModal(clientId, conceptId) {
+  state.conceptClientId = clientId;
+  state.conceptId = conceptId;
+  state.modal = 'edit-concept';
+  renderAdminView();
+}
+
+function openMarkPaidModal(clientId, conceptId, paymentIdx) {
+  state.conceptClientId = clientId;
+  state.conceptId = conceptId;
+  state.paymentIdx = paymentIdx;
+  state.modal = 'mark-paid';
+  renderAdminView();
+  const client  = state.clients.find(c => c.id === clientId);
+  const concept = (client?.concepts || []).find(c => c.id === conceptId);
+  if (concept?.currency === 'USD') {
+    const amt = concept.payments[paymentIdx]?.amountDue || 0;
+    setTimeout(() => updateFXDisplay(amt), 60);
+  }
+}
+
+function toggleCustomConceptField(val) {
+  const wrap = document.getElementById('custom-concept-wrap');
+  if (wrap) wrap.style.display = val === 'otro' ? 'flex' : 'none';
+}
+
+async function saveNewConcept(clientId) {
+  if (state.saving) return;
+  const typeVal    = document.getElementById('f-concept-type')?.value    || '';
+  const customName = (document.getElementById('f-concept-custom')?.value || '').trim();
+  const name       = typeVal === 'otro' ? customName : typeVal;
+  const currency   = document.getElementById('f-concept-currency')?.value || '';
+  const totalAmt   = parseFloat(document.getElementById('f-concept-total')?.value   || '0');
+  const numPay     = parseInt(document.getElementById('f-concept-numpay')?.value    || '0');
+  const dueDay     = parseInt(document.getElementById('f-concept-dueday')?.value    || '0');
+  const startMonth = parseInt(document.getElementById('f-concept-startmonth')?.value || '0');
+  const startYear  = parseInt(document.getElementById('f-concept-startyear')?.value  || '0');
+
+  if (!typeVal)                              { showToast('Selecciona el tipo de concepto'); return; }
+  if (typeVal === 'otro' && !customName)     { showToast('Escribe el nombre del concepto'); return; }
+  if (!totalAmt || totalAmt <= 0)            { showToast('Ingresa el monto total'); return; }
+  if (!numPay || numPay < 1 || numPay > 60) { showToast('Número de pagos debe ser entre 1 y 60'); return; }
+  if (!dueDay || dueDay < 1 || dueDay > 28) { showToast('El día de cobro debe ser entre 1 y 28'); return; }
+
+  const concept = {
+    id: uid(), name, currency, totalAmount: totalAmt, numPayments: numPay, dueDay, startMonth, startYear,
+    payments:  generateSchedule({ totalAmount: totalAmt, numPayments: numPay, dueDay, startMonth, startYear }),
+    createdAt: new Date().toISOString(),
+  };
+
+  const client = state.clients.find(c => c.id === clientId);
+  if (!client) return;
+
+  state.saving = true;
+  setLoading(true, 'Guardando concepto…');
+  try {
+    const updatedConcepts = [...(client.concepts || []), concept];
+    await db.collection('clients').doc(clientId).update({ concepts: updatedConcepts });
+    client.concepts = updatedConcepts;
+    closeModal();
+    showToast('Concepto agregado: ' + concept.name);
+  } catch(e) {
+    showToast('Error al guardar: ' + e.message);
+  } finally {
+    state.saving = false;
+    setLoading(false);
+  }
+}
+
+async function saveEditConcept(clientId, conceptId) {
+  if (state.saving) return;
+  const typeVal    = document.getElementById('f-concept-type')?.value    || '';
+  const customName = (document.getElementById('f-concept-custom')?.value || '').trim();
+  const name       = typeVal === 'otro' ? customName : typeVal;
+  const currency   = document.getElementById('f-concept-currency')?.value || '';
+  const totalAmt   = parseFloat(document.getElementById('f-concept-total')?.value   || '0');
+  const numPay     = parseInt(document.getElementById('f-concept-numpay')?.value    || '0');
+  const dueDay     = parseInt(document.getElementById('f-concept-dueday')?.value    || '0');
+  const startMonth = parseInt(document.getElementById('f-concept-startmonth')?.value || '0');
+  const startYear  = parseInt(document.getElementById('f-concept-startyear')?.value  || '0');
+
+  if (!typeVal)                              { showToast('Selecciona el tipo de concepto'); return; }
+  if (typeVal === 'otro' && !customName)     { showToast('Escribe el nombre del concepto'); return; }
+  if (!totalAmt || totalAmt <= 0)            { showToast('Ingresa el monto total'); return; }
+  if (!numPay || numPay < 1 || numPay > 60) { showToast('Número de pagos debe ser entre 1 y 60'); return; }
+  if (!dueDay || dueDay < 1 || dueDay > 28) { showToast('El día de cobro debe ser entre 1 y 28'); return; }
+
+  const client = state.clients.find(c => c.id === clientId);
+  if (!client) return;
+  const conIdx = (client.concepts || []).findIndex(c => c.id === conceptId);
+  if (conIdx === -1) return;
+
+  const oldConcept = client.concepts[conIdx];
+  const scheduleChanged = numPay !== oldConcept.numPayments || dueDay !== oldConcept.dueDay ||
+    startMonth !== oldConcept.startMonth || startYear !== oldConcept.startYear || totalAmt !== oldConcept.totalAmount;
+
+  const updatedConcept = {
+    ...oldConcept,
+    name, currency, totalAmount: totalAmt, numPayments: numPay, dueDay, startMonth, startYear,
+    payments: scheduleChanged
+      ? generateSchedule({ totalAmount: totalAmt, numPayments: numPay, dueDay, startMonth, startYear })
+      : oldConcept.payments,
+  };
+
+  state.saving = true;
+  setLoading(true, 'Guardando concepto…');
+  try {
+    const updatedConcepts = [...client.concepts];
+    updatedConcepts[conIdx] = updatedConcept;
+    await db.collection('clients').doc(clientId).update({ concepts: updatedConcepts });
+    client.concepts = updatedConcepts;
+    closeModal();
+    showToast('Concepto actualizado' + (scheduleChanged ? ' (calendario regenerado)' : ''));
+  } catch(e) {
+    showToast('Error al guardar: ' + e.message);
+  } finally {
+    state.saving = false;
+    setLoading(false);
+  }
+}
+
+async function deleteConceptConfirm(clientId, conceptId) {
+  if (state.saving) return;
+  const client = state.clients.find(c => c.id === clientId);
+  if (!client) return;
+
+  state.saving = true;
+  setLoading(true, 'Eliminando concepto…');
+  try {
+    const updatedConcepts = (client.concepts || []).filter(c => c.id !== conceptId);
+    await db.collection('clients').doc(clientId).update({ concepts: updatedConcepts });
+    client.concepts = updatedConcepts;
+    closeModal();
+    showToast('Concepto eliminado');
+  } catch(e) {
+    showToast('Error al eliminar: ' + e.message);
+  } finally {
+    state.saving = false;
+    setLoading(false);
+  }
+}
+
+async function confirmMarkPaid(clientId, conceptId, paymentIdx) {
+  if (state.saving) return;
+  const client  = state.clients.find(c => c.id === clientId);
+  const concept = (client?.concepts || []).find(c => c.id === conceptId);
+  if (!client || !concept || concept.payments[paymentIdx] == null) return;
+
+  const payment  = concept.payments[paymentIdx];
+  const isUSD    = concept.currency === 'USD';
+  const isManual = document.getElementById('manualOverride')?.checked;
+
+  let paidDate, amountPaidUSD = null, exchangeRate = null, amountPaidMXN = null;
+
+  if (isManual) {
+    paidDate      = document.getElementById('manualDate').value;
+    amountPaidMXN = parseFloat(document.getElementById('manualMXN').value) || null;
+  } else {
+    paidDate = new Date().toISOString().slice(0, 10);
+  }
+
+  if (isUSD && !isManual) {
+    const rateInput = document.getElementById('fx-rate-value');
+    let rate = rateInput ? parseFloat(rateInput.value) : 0;
+    if (!rate) rate = await fetchFXRate();
+    if (!rate) { showToast('Error: no se pudo obtener el tipo de cambio'); return; }
+    amountPaidUSD = payment.amountDue;
+    exchangeRate  = rate;
+    amountPaidMXN = payment.amountDue * rate;
+  }
+
+  state.saving = true;
+  setLoading(true, 'Registrando pago…');
+  try {
+    payment.paid          = true;
+    payment.paidDate      = paidDate;
+    payment.amountPaidUSD = amountPaidUSD;
+    payment.exchangeRate  = exchangeRate;
+    payment.amountPaidMXN = amountPaidMXN;
+
+    await db.collection('clients').doc(clientId).update({ concepts: client.concepts });
+    closeModal();
+    showToast('Pago #' + payment.num + ' registrado');
+  } catch(e) {
+    // revert on failure
+    payment.paid = false; payment.paidDate = null;
+    showToast('Error al registrar: ' + e.message);
+  } finally {
+    state.saving = false;
+    setLoading(false);
+  }
+}
+
+// ═══════════════════════════════════════════
+//  KEYBOARD
+// ═══════════════════════════════════════════
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && state.modal) closeModal();
+});
+
+// Auth state listener handles initial render — no separate init() needed.
+</script>
+</body>
+</html>

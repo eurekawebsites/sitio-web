@@ -152,6 +152,8 @@
       display: flex;
       flex-direction: column;
       gap: 2px;
+      flex: 1;
+      min-width: 0;
     }
 
     .contact-btn-type {
@@ -292,9 +294,78 @@
         </span>
       </a>
 
+      <!-- CLABE (tap to copy) -->
+      <button class="contact-btn contact-btn--clabe" onclick="copyClabe(this)" type="button" style="justify-content:flex-start;text-align:left">
+        <svg class="contact-btn-icon" viewBox="0 0 24 24" fill="none" stroke="#2D5016" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+          <rect x="3" y="10" width="18" height="11" rx="1"/>
+          <polyline points="3 10 12 3 21 10"/>
+          <line x1="8" y1="14" x2="8" y2="21"/>
+          <line x1="12" y1="14" x2="12" y2="21"/>
+          <line x1="16" y1="14" x2="16" y2="21"/>
+        </svg>
+        <span class="contact-btn-label">
+          <span class="contact-btn-type">CLABE interbancaria BBVA</span>
+          <span class="contact-btn-value" id="clabe-value">012180015019864949</span>
+        </span>
+      </button>
+
+      <!-- Save contact button -->
+      <button class="contact-btn contact-btn--save" onclick="saveContact()" type="button" style="background: var(--gold); border-color: var(--gold); color: var(--green); justify-content: center; font-weight: bold; letter-spacing: 1px; font-size: 0.8rem; text-transform: uppercase;">
+        <svg class="contact-btn-icon" viewBox="0 0 24 24" fill="none" stroke="#2D5016" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+          <path d="M17 21H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7l5 5v11a2 2 0 0 1-2 2z"/>
+          <polyline points="17 21 17 13 7 13 7 21"/>
+          <polyline points="7 3 7 8 15 8"/>
+        </svg>
+        Guardar contacto
+      </button>
+
     </div>
 
   </div>
+
+  <script>
+    function copyClabe(btn) {
+      navigator.clipboard.writeText('012180015019864949').then(function() {
+        var val = btn.querySelector('#clabe-value');
+        var original = val.textContent;
+        val.textContent = '¡Copiado!';
+        setTimeout(function() { val.textContent = original; }, 2000);
+      }).catch(function() {
+        var range = document.createRange();
+        range.selectNode(btn.querySelector('#clabe-value'));
+        window.getSelection().removeAllRanges();
+        window.getSelection().addRange(range);
+      });
+    }
+
+    function saveContact() {
+      var vcard = [
+        'BEGIN:VCARD',
+        'VERSION:3.0',
+        'FN:Martha Domínguez',
+        'N:Domínguez;Martha;;;',
+        'ORG:Coordenada Viajes',
+        'TITLE:Asesora de Viajes',
+        'TEL;TYPE=CELL,VOICE:+525657917967',
+        'URL:https://coordenadaviajes.com',
+        'X-SOCIALPROFILE;type=instagram:https://www.instagram.com/coordenada.viajes/',
+        'NOTE:CLABE: 012180015019864949',
+        'END:VCARD'
+      ].join('\r\n');
+
+      var blob = new Blob([vcard], { type: 'text/vcard' });
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement('a');
+      a.href = url;
+      a.download = 'Martha-Dominguez-Coordenada.vcf';
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+  </script>
+
+  <footer style="text-align:center;padding:20px 0 12px">
+    <a href="https://www.eurekawebsites.tech/" target="_blank" rel="noopener noreferrer" style="font-size:0.65rem;letter-spacing:1.5px;text-transform:uppercase;color:rgba(0,0,0,0.5);text-decoration:none;transition:color 0.2s" onmouseover="this.style.color='rgba(0,0,0,0.85)'" onmouseout="this.style.color='rgba(0,0,0,0.5)'">POWERED BY EUREKA WEBSITES</a>
+  </footer>
 
 </body>
 </html>

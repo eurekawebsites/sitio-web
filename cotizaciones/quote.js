@@ -337,12 +337,26 @@ function renderPricing(q) {
         <p class="price-col-label">vuelo + hotel · 4 noches</p>
       </div>`).join('');
 
-    const extrasRows = (q.pricing.extras || []).map(e => `
-      <tr>
-        <td>${esc(e.description)}</td>
-        <td>—</td>
-        <td class="col-amount">${fmt(e.amount, cur)}</td>
-      </tr>`).join('');
+    const tickets = q.pricing.tickets;
+    const extras  = q.pricing.extras || [];
+
+    const ticketsRow = tickets ? `
+      <table class="pricing-table" style="margin-top:32px;">
+        <thead><tr><th>Boletos evento</th><th>Cant.</th><th style="text-align:right">Importe</th></tr></thead>
+        <tbody>
+          <tr><td>${esc(tickets.description)}</td><td>—</td><td class="col-amount">${fmt(tickets.amount, cur)}</td></tr>
+        </tbody>
+      </table>
+      ${paymentBlock(tickets.description, tickets.amount, q.departure_date_iso)}` : '';
+
+    const extrasBlock = extras.length ? `
+      <table class="pricing-table" style="margin-top:32px;">
+        <thead><tr><th>Extras opcionales</th><th>Cant.</th><th style="text-align:right">Importe</th></tr></thead>
+        <tbody>
+          ${extras.map(e => `<tr><td>${esc(e.description)}</td><td>—</td><td class="col-amount">${fmt(e.amount, cur)}</td></tr>`).join('')}
+        </tbody>
+      </table>
+      ${extras.map(e => paymentBlock(e.description, e.amount, q.departure_date_iso)).join('')}` : '';
 
     section.innerHTML = `
       <div class="container">
@@ -350,11 +364,8 @@ function renderPricing(q) {
         <p class="section-label">Resumen económico</p>
         <h2>Compara las opciones</h2>
         <div class="price-cols">${cols}</div>
-        ${extrasRows ? `
-        <table class="pricing-table" style="margin-top:24px;">
-          <thead><tr><th>Extras opcionales</th><th>Cant.</th><th style="text-align:right">Importe</th></tr></thead>
-          <tbody>${extrasRows}</tbody>
-        </table>` : ''}
+        ${ticketsRow}
+        ${extrasBlock}
         ${note}
       </div>`;
     return;

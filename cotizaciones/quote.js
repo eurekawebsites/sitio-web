@@ -265,28 +265,17 @@ function renderHotels(q) {
     if (section) section.style.display = 'none';
     return;
   }
-  if (q.departure_date_iso) {
-    // Side-by-side comparison columns with payment block per hotel
-    const cols = q.hotels.map((h, i) => `
-      <div class="hotel-col">
-        ${hotelCardHTML(h, i)}
-        ${h.price ? paymentBlock(h.name, h.price, q.departure_date_iso) : ''}
-      </div>`).join('');
-    section.innerHTML = `
-      <div class="container">
-        <p class="section-label">Hospedaje · elige tu opción</p>
-        <h2>Compara y elige tu hotel</h2>
-        <div class="hotel-cols">${cols}</div>
-      </div>`;
-  } else {
-    const cards = q.hotels.map((h, i) => hotelCardHTML(h, i)).join('');
-    section.innerHTML = `
-      <div class="container">
-        <p class="section-label">Hospedaje</p>
-        <h2>Hoteles seleccionados</h2>
-        ${cards}
-      </div>`;
-  }
+  const cards = q.hotels.map((h, i) => `
+    <div>
+      ${hotelCardHTML(h, i)}
+      ${(q.departure_date_iso && h.price) ? paymentBlock(h.name, h.price, q.departure_date_iso) : ''}
+    </div>`).join('');
+  section.innerHTML = `
+    <div class="container">
+      <p class="section-label">Hospedaje · elige tu opción</p>
+      <h2>Hoteles seleccionados</h2>
+      ${cards}
+    </div>`;
 }
 
 /* ── Cruise ──────────────────────────────────────────────── */
@@ -335,7 +324,43 @@ function renderPricing(q) {
   if (!section || !q.pricing) { if (section) section.style.display = 'none'; return; }
 
   const cur = q.currency || 'MXN';
+  const note = q.pricing.note ? `<p class="pricing-note">${esc(q.pricing.note)}</p>` : '';
 
+  // Hotel comparison columns mode
+  const hotelsWithPrice = (q.hotels || []).filter(h => h.price != null && h.price > 0);
+  if (hotelsWithPrice.length) {
+    const cols = hotelsWithPrice.map(h => `
+      <div class="price-col">
+        <p class="price-col-name">${esc(h.name)}</p>
+        <p class="price-col-room">${esc(h.room_type || '')}</p>
+        <p class="price-col-amount">${fmt(h.price, cur)}</p>
+        <p class="price-col-label">vuelo + hotel · 4 noches</p>
+      </div>`).join('');
+
+    const extrasRows = (q.pricing.extras || []).map(e => `
+      <tr>
+        <td>${esc(e.description)}</td>
+        <td>—</td>
+        <td class="col-amount">${fmt(e.amount, cur)}</td>
+      </tr>`).join('');
+
+    section.innerHTML = `
+      <div class="container">
+        <hr class="section-divider">
+        <p class="section-label">Resumen económico</p>
+        <h2>Compara las opciones</h2>
+        <div class="price-cols">${cols}</div>
+        ${extrasRows ? `
+        <table class="pricing-table" style="margin-top:24px;">
+          <thead><tr><th>Extras opcionales</th><th>Cant.</th><th style="text-align:right">Importe</th></tr></thead>
+          <tbody>${extrasRows}</tbody>
+        </table>` : ''}
+        ${note}
+      </div>`;
+    return;
+  }
+
+  // Standard table mode
   const rows = (q.pricing.line_items || []).map(item => `
     <tr>
       <td>${esc(item.description)}</td>
@@ -343,7 +368,7 @@ function renderPricing(q) {
       <td class="col-amount">${item.amount != null ? fmt(item.amount, cur) : '—'}</td>
     </tr>`).join('');
 
-  const subtotal = q.pricing.subtotal != null
+  const subtotal = q.pricing.subtotal
     ? `<tr class="row-subtotal">
          <td colspan="2">Subtotal</td>
          <td class="col-amount">${fmt(q.pricing.subtotal, cur)}</td>
@@ -356,9 +381,6 @@ function renderPricing(q) {
       <td class="col-amount">${fmt(e.amount, cur)}</td>
     </tr>`).join('');
 
-  const note = q.pricing.note
-    ? `<p class="pricing-note">${esc(q.pricing.note)}</p>` : '';
-
   section.innerHTML = `
     <div class="container">
       <hr class="section-divider">
@@ -366,11 +388,7 @@ function renderPricing(q) {
       <h2>Desglose de costos</h2>
       <table class="pricing-table">
         <thead>
-          <tr>
-            <th>Concepto</th>
-            <th>Cant.</th>
-            <th style="text-align:right">Importe</th>
-          </tr>
+          <tr><th>Concepto</th><th>Cant.</th><th style="text-align:right">Importe</th></tr>
         </thead>
         <tbody>
           ${rows}

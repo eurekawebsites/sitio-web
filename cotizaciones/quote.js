@@ -347,7 +347,7 @@ function renderPricing(q) {
           <tr><td>${esc(tickets.description)}</td><td>—</td><td class="col-amount">${fmt(tickets.amount, cur)}</td></tr>
         </tbody>
       </table>
-      ${paymentBlock(tickets.description, tickets.amount, q.departure_date_iso)}` : '';
+      ${onetimeBlock(tickets.description, tickets.amount)}` : '';
 
     const extrasBlock = extras.length ? `
       <table class="pricing-table" style="margin-top:32px;">
@@ -356,7 +356,7 @@ function renderPricing(q) {
           ${extras.map(e => `<tr><td>${esc(e.description)}</td><td>—</td><td class="col-amount">${fmt(e.amount, cur)}</td></tr>`).join('')}
         </tbody>
       </table>
-      ${extras.map(e => paymentBlock(e.description, e.amount, q.departure_date_iso)).join('')}` : '';
+      ${extras.map(e => onetimeBlock(e.description, e.amount)).join('')}` : '';
 
     section.innerHTML = `
       <div class="container">
@@ -429,6 +429,31 @@ function calcInstallments(departureDateIso) {
 
 function fmtMxn(n) {
   return '$' + n.toLocaleString('es-MX', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+}
+
+function onetimeBlock(label, totalMxn) {
+  const tripId = 'quote-onetime-' + label.toLowerCase().replace(/\s+/g, '-').slice(0, 30);
+  return `
+    <div class="trip-payment-block btn-pay"
+      data-trip-id="${esc(tripId)}"
+      data-trip-name="${esc(label)}"
+      data-total="${totalMxn}"
+      data-installments="1"
+      role="button" tabindex="0"
+    >
+      <div class="trip-payment-header">
+        <svg class="trip-payment-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+          <rect x="1" y="4" width="22" height="16" rx="2" ry="2"/>
+          <line x1="1" y1="10" x2="23" y2="10"/>
+        </svg>
+        <span class="trip-payment-label">Pago único con tarjeta</span>
+      </div>
+      <div class="trip-payment-amount">
+        <span class="trip-payment-price">${fmtMxn(totalMxn)}</span>
+        <span class="trip-payment-mo">MXN</span>
+      </div>
+      <p class="trip-payment-cta">Pagar con tarjeta &rarr;</p>
+    </div>`;
 }
 
 function paymentBlock(label, totalMxn, departureDateIso) {

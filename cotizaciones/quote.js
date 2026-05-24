@@ -340,6 +340,9 @@ function renderPricing(q) {
     const tickets = q.pricing.tickets;
     const extras  = q.pricing.extras || [];
 
+    const ticketsNote = q.pricing.tickets_note ? `<p class="pricing-note">${esc(q.pricing.tickets_note)}</p>` : '';
+    const extrasNote  = q.pricing.extras_note  ? `<p class="pricing-note">${esc(q.pricing.extras_note)}</p>`  : '';
+
     const ticketsRow = tickets ? `
       <table class="pricing-table" style="margin-top:32px;">
         <thead><tr><th>Boletos evento</th><th>Cant.</th><th style="text-align:right">Importe</th></tr></thead>
@@ -347,7 +350,8 @@ function renderPricing(q) {
           <tr><td>${esc(tickets.description)}</td><td>—</td><td class="col-amount">${fmt(tickets.amount, cur)}</td></tr>
         </tbody>
       </table>
-      ${onetimeBlock(tickets.description, tickets.amount)}` : '';
+      ${onetimeBlock(tickets.description, tickets.amount)}
+      ${ticketsNote}` : '';
 
     const extrasBlock = extras.length ? `
       <table class="pricing-table" style="margin-top:32px;">
@@ -356,7 +360,8 @@ function renderPricing(q) {
           ${extras.map(e => `<tr><td>${esc(e.description)}</td><td>—</td><td class="col-amount">${fmt(e.amount, cur)}</td></tr>`).join('')}
         </tbody>
       </table>
-      ${extras.map(e => onetimeBlock(e.description, e.amount)).join('')}` : '';
+      ${extras.map(e => onetimeBlock(e.description, e.amount)).join('')}
+      ${extrasNote}` : '';
 
     section.innerHTML = `
       <div class="container">

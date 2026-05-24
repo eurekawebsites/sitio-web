@@ -949,15 +949,19 @@ h1, h2, h3, h4, h5 {
 .btn-print svg { flex-shrink: 0; }
 
 /* ── Mobile ──────────────────────────────────────────────── */
-@media (max-width: 500px) {
-  .btn-print span { display: none; }
-  .btn-print { padding: 8px 10px; }
+@media (max-width: 600px) {
+  .hotel-card-photo,
+  .hotel-card-photo.carousel,
+  .hotel-card-photo.carousel img {
+    height: 240px;
+  }
+  .trip-payment-price { font-size: 1.5rem; }
+  .pricing-table th, .pricing-table td { padding: 9px 8px; font-size: 0.85rem; }
 }
 
 /* ── Print ───────────────────────────────────────────────── */
 @media print {
   .quote-topbar-back,
-  .btn-print,
   .quote-cta { display: none; }
 
   body { background: white; font-size: 12pt; }

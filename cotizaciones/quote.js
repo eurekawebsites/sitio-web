@@ -260,18 +260,33 @@ function renderHotels(q) {
     return;
   }
 
-  // flat hotels[] mode — legacy / simple list
+  // flat hotels[] mode — columns if departure_date_iso set, otherwise legacy list
   if (!section || !q.hotels || !q.hotels.length) {
     if (section) section.style.display = 'none';
     return;
   }
-  const cards = q.hotels.map((h, i) => hotelCardHTML(h, i)).join('');
-  section.innerHTML = `
-    <div class="container">
-      <p class="section-label">Hospedaje</p>
-      <h2>Hoteles seleccionados</h2>
-      ${cards}
-    </div>`;
+  if (q.departure_date_iso) {
+    // Side-by-side comparison columns with payment block per hotel
+    const cols = q.hotels.map((h, i) => `
+      <div class="hotel-col">
+        ${hotelCardHTML(h, i)}
+        ${h.price ? paymentBlock(h.name, h.price, q.departure_date_iso) : ''}
+      </div>`).join('');
+    section.innerHTML = `
+      <div class="container">
+        <p class="section-label">Hospedaje · elige tu opción</p>
+        <h2>Compara y elige tu hotel</h2>
+        <div class="hotel-cols">${cols}</div>
+      </div>`;
+  } else {
+    const cards = q.hotels.map((h, i) => hotelCardHTML(h, i)).join('');
+    section.innerHTML = `
+      <div class="container">
+        <p class="section-label">Hospedaje</p>
+        <h2>Hoteles seleccionados</h2>
+        ${cards}
+      </div>`;
+  }
 }
 
 /* ── Cruise ──────────────────────────────────────────────── */
@@ -423,15 +438,33 @@ function renderPayment(q) {
   if (!section || !q.payment) { if (section) section.style.display = 'none'; return; }
   const p = q.payment;
 
-  // Build per-hotel payment blocks if hotels have prices and quote has departure
+  // Upfront payment buttons for extras (traslado, tickets, etc.)
   let stripeBlocks = '';
-  if (q.hotels && q.hotels.length && q.departure_date_iso) {
-    const hotelsWithPrice = q.hotels.filter(h => h.price != null && h.price > 0);
-    if (hotelsWithPrice.length) {
-      stripeBlocks = `
-        <div class="payment-or"><span>o paga con tarjeta · elige tu opción</span></div>
-        ${hotelsWithPrice.map(h => paymentBlock(h.name, h.price, q.departure_date_iso)).join('')}`;
-    }
+  const extras = (q.pricing && q.pricing.extras) || [];
+  if (extras.length) {
+    stripeBlocks = `
+      <div class="payment-or"><span>extras opcionales · pago único con tarjeta</span></div>
+      ${extras.map(e => `
+        <div class="trip-payment-block btn-pay"
+          data-trip-id="quote-extra-${esc(e.description.toLowerCase().replace(/\s+/g,'-').slice(0,30))}"
+          data-trip-name="${esc(e.description)}"
+          data-total="${e.amount}"
+          data-installments="1"
+          role="button" tabindex="0"
+        >
+          <div class="trip-payment-header">
+            <svg class="trip-payment-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+              <rect x="1" y="4" width="22" height="16" rx="2" ry="2"/>
+              <line x1="1" y1="10" x2="23" y2="10"/>
+            </svg>
+            <span class="trip-payment-label">Pago único · ${esc(e.description)}</span>
+          </div>
+          <div class="trip-payment-amount">
+            <span class="trip-payment-price">${fmtMxn(e.amount)}</span>
+            <span class="trip-payment-mo">MXN</span>
+          </div>
+          <p class="trip-payment-cta">Pagar con tarjeta &rarr;</p>
+        </div>`).join('')}`;
   } else if (p.stripe_url) {
     stripeBlocks = `
       <div class="payment-or"><span>o paga con tarjeta</span></div>

@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cotización Los Ángeles 2026 — Coordenada Viajes</title>
+  <meta name="description" content="Cotización Los Ángeles octubre 2026 para Nury Ortega Fernández — vuelo + hotel 4 noches.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="quote.css">
+</head>
+<body>
+
+  <!-- ── Top bar ─────────────────────────────────────────── -->
+  <div class="quote-topbar">
+    <a href="../index.html"><img src="../images/logo-icono-dark.svg" alt="Coordenada Viajes" style="height:96px;width:auto;display:block;"></a>
+    <span class="quote-topbar-brand">COORDENADA VIAJES</span>
+    <div style="display:flex;align-items:center;gap:20px;">
+      <button class="btn-print" onclick="window.print()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/>
+        </svg>
+        Imprimir / PDF
+      </button>
+      <a class="quote-topbar-back" href="../index.html">← Sitio principal</a>
+    </div>
+  </div>
+
+  <!-- ── Hero ───────────────────────────────────────────── -->
+  <section class="quote-hero" id="quote-hero"></section>
+
+  <!-- ── Intro ──────────────────────────────────────────── -->
+  <div id="quote-intro"></div>
+
+  <!-- ── Tours (no aplica) ──────────────────────────────── -->
+  <section class="tours-section" id="tours-section"></section>
+
+  <!-- ── Flights ────────────────────────────────────────── -->
+  <section class="flights-section" id="flights-section"></section>
+
+  <!-- ── Hotels ────────────────────────────────────────── -->
+  <section class="hotels-section" id="hotels-section"></section>
+
+  <!-- ── Cruise (no aplica) ────────────────────────────── -->
+  <section class="cruise-section" id="cruise-section"></section>
+
+  <!-- ── Pricing ────────────────────────────────────────── -->
+  <section id="pricing-section"></section>
+
+  <!-- ── Payment ────────────────────────────────────────── -->
+  <section id="payment-section"></section>
+
+  <!-- ── CTA ────────────────────────────────────────────── -->
+  <div class="quote-cta" id="quote-cta"></div>
+
+  <!-- ── Footer ─────────────────────────────────────────── -->
+  <footer class="quote-footer">
+    <div id="quote-footer-content"></div>
+  </footer>
+
+
+  <!-- ════════════════════════════════════════════════════════
+       QUOTE DATA
+  ════════════════════════════════════════════════════════════ -->
+  <script>
+  const QUOTE = {
+
+    /* ── Identificación ──────────────────────────────────── */
+    ref:         'CVJ-LA-2026-001',
+    type:        'full',
+    destination: 'Los Ángeles',
+    tagline:     'Ciudad de México → Los Ángeles, California',
+    dates:       '6 – 10 de octubre, 2026',
+    pax:         3,
+    currency:    'MXN',
+
+    valid_until: '15 de junio, 2026',
+    agent:       'Aster Volta',
+    agent_url:   '../tarjeta.html',
+
+    client: {
+      name:  'Nury Ortega Fernández',
+      email: '',
+    },
+
+    intro: 'Estimada Sra. Ortega Fernández, con mucho gusto le presentamos esta propuesta de viaje a Los Ángeles para 2 adultos y 1 niña de 3 años. El paquete incluye vuelo de ida y vuelta desde Ciudad de México y 4 noches de hospedaje en Anaheim, a pasos de Disney California Adventure — donde tendrán la oportunidad de vivir el Oogie Boogie Bash el jueves 8 de octubre. A continuación encontrará opciones de hotel para elegir la que mejor se adapte a sus necesidades y presupuesto. Los boletos para el evento de Halloween se cotizan por separado. Quedamos a sus órdenes para cualquier duda o ajuste.',
+
+    /* ── Tours (no aplica) ───────────────────────────────── */
+    tours: [],
+
+    /* ── Vuelos ──────────────────────────────────────────── */
+    flights: [
+      {
+        origin:        'Ciudad de México (MEX)',
+        destination:   'Los Ángeles (LAX)',
+        date:          'Martes 6 de octubre, 2026',
+        time:          '7:10 am → 10:15 am',
+        airline:       'Delta',
+        flight_number: '',
+        duration:      '4h 5m, nonstop',
+        baggage:       'Artículo personal + maleta de mano (10 kg) incluidos',
+      },
+      {
+        origin:        'Los Ángeles (LAX)',
+        destination:   'Ciudad de México (MEX)',
+        date:          'Sábado 10 de octubre, 2026',
+        time:          '6:28 pm → 11:20 pm',
+        airline:       'Delta',
+        flight_number: '',
+        duration:      '3h 52m, nonstop',
+        baggage:       'Artículo personal + maleta de mano (10 kg) incluidos',
+      },
+    ],
+
+    /* ── Hoteles — elegir UNA opción ─────────────────────── */
+    hotels: [
+      {
+        name:      'Howard Johnson by Wyndham Anaheim Hotel & Water Playground',
+        category:  'Opción 1 · vuelo + hotel · 4 noches',
+        city:      'Anaheim, California · ~8 min caminando a Disney California Adventure',
+        check_in:  '6 de octubre, 2026',
+        check_out: '10 de octubre, 2026',
+        nights:    4,
+        room_type: '1 cama Queen + litera Twin',
+        notes:     'Hotel familiar frente al Disneyland Resort. Cuenta con Castaway Cove, el parque acuático pirata con toboganes, fuente de 200 galones, 13 surtidores, piscina de chapoteo para bebés y jacuzzi. Habitaciones renovadas con smart TV (Netflix), minibar, microondas, cafetera Keurig y WiFi gratuito. Muchas habitaciones con balcón con vista a la piscina. Tienda de conveniencia en el hotel.',
+        photos:    [
+          'https://images.trvl-media.com/lodging/1000000/20000/19700/19662/3e2e2a1b.jpg',
+          '../../LA/Howard Johnson.avif',
+        ],
+        price:     51498,
+      },
+      {
+        name:      'Desert Palms Hotel & Suites',
+        category:  'Opción 2 · vuelo + hotel · 4 noches · desayuno incluido',
+        city:      'Anaheim, California · a pasos de Disney California Adventure',
+        check_in:  '6 de octubre, 2026',
+        check_out: '10 de octubre, 2026',
+        nights:    4,
+        room_type: '2 camas Queen Deluxe',
+        notes:     'Hotel de suites a pasos del parque. Desayuno buffet caliente gratuito cada mañana incluido en el precio. Suites diseñadas para familias con minibar, microondas y WiFi. Piscina exterior climatizada de agua salada, jacuzzi, gimnasio y actividades familiares. Oasis Food Hall en el hotel con opciones de comida mexicana, china, hamburguesas y más.',
+        photos:    [
+          'https://images.trvl-media.com/lodging/2000000/1580000/1571100/1571078/8d56be2c.jpg',
+          '../../LA/Desert Palms.avif',
+        ],
+        price:     53054,
+      },
+      {
+        name:      'Grand Legacy At the Park',
+        category:  'Opción 3 · vuelo + hotel · 4 noches',
+        city:      'Anaheim, California · menos de 5 min caminando a Disney California Adventure',
+        check_in:  '6 de octubre, 2026',
+        check_out: '10 de octubre, 2026',
+        nights:    4,
+        room_type: '2 camas Queen',
+        notes:     'Hotel oficial Good Neighbor de Disneyland® Resort, directamente frente a la entrada principal. Habitaciones Luxury View con vista a los fuegos artificiales de Disneyland. Piscina exterior climatizada con zona de chapoteo para niños y jacuzzi. Restaurante FIFTH Rooftop & Bar con vista panorámica a los fuegos artificiales. Cafetera, microondas y minibar en todas las habitaciones.',
+        photos:    [
+          'https://images.trvl-media.com/lodging/14000000/13070000/13060100/13060062/52dadc0d.jpg',
+          '../../LA/Grand Legacy At the Park.avif',
+        ],
+        price:     49699,
+      },
+      {
+        name:      'Portofino Inn & Suites Anaheim',
+        category:  'Opción 4 · vuelo + hotel · 4 noches · opción económica',
+        city:      'Anaheim, California · ~10 min en Uber a Disney California Adventure',
+        check_in:  '6 de octubre, 2026',
+        check_out: '10 de octubre, 2026',
+        nights:    4,
+        room_type: '2 camas Queen',
+        notes:     'Opción más accesible en precio. Habitación amplia con 2 camas Queen ideal para la familia. Estacionamiento gratuito. Piscina. El traslado al parque se hace fácilmente por Uber (~10 min, costo aprox. $10–15 USD por trayecto). Buena relación calidad-precio con excelentes reseñas.',
+        photos:    [
+          'https://images.trvl-media.com/lodging/1000000/40000/32100/32090/a4e36e9c.jpg',
+          '../../LA/Anaheim Portofino.avif',
+        ],
+        price:     41138,
+      },
+    ],
+
+    /* ── Crucero (no aplica) ─────────────────────────────── */
+    cruise: null,
+
+    /* ── Precios ─────────────────────────────────────────── */
+    pricing: {
+      line_items: [
+        { description: 'Opción 1 — Howard Johnson (vuelo Delta + 4 noches, Queen + litera Twin)',      amount: 51498 },
+        { description: 'Opción 2 — Desert Palms (vuelo Delta + 4 noches, 2 Queens + desayuno)',        amount: 53054 },
+        { description: 'Opción 3 — Grand Legacy (vuelo Delta + 4 noches, 2 Queens)',                   amount: 49699 },
+        { description: 'Opción 4 — Portofino Inn (vuelo Delta + 4 noches, 2 Queens · económica)',      amount: 41138 },
+      ],
+      subtotal: 49699,
+      extras:   [
+        { description: 'Traslado redondo aeropuerto LAX ↔ hotel en sedán (opcional)', amount: 8253 },
+        { description: 'Boletos Oogie Boogie Bash — 8 de octubre (2 adultos + 1 niña, precio estimado)', amount: 10448 },
+      ],
+      total:    49699,
+      note:     'Precios en MXN para el grupo completo (2 adultos + 1 niña de 3 años). Cada opción incluye vuelo de ida y vuelta Delta MEX–LAX y 4 noches de hotel. El total mostrado corresponde a la Opción 3 (Grand Legacy) sin extras. Los boletos para el Oogie Boogie Bash son un precio estimado basado en 2025 (~$199 USD por persona para fechas de octubre) — el precio oficial 2026 se confirmará en junio. Tipo de cambio referencial USD/MXN 17.50; puede variar al confirmar.',
+    },
+
+    payment: {
+      bank:       'BBVA',
+      clabe:      '012180015593495708',
+      name:       'Aster Íñigo González',
+      note:       'Transferencia bancaria en MXN. Favor de enviar comprobante por WhatsApp al confirmar.',
+      stripe_url: 'https://buy.stripe.com/14A4gy1KP7j98V27kQ9Ve0x',
+    },
+
+    /* ── Condiciones ─────────────────────────────────────── */
+    terms: [
+      'Precios en MXN para 2 adultos y 1 niña de 3 años.',
+      'Vuelo y hotel sujetos a disponibilidad al momento de reservar.',
+      'Se requiere depósito del 50% para confirmar la reservación.',
+      'Cancelación gratuita — consulta política exacta al reservar.',
+      'Los boletos para Oogie Boogie Bash (8 oct) se cotizan y reservan por separado.',
+      'Los precios no incluyen gastos personales ni servicios no mencionados.',
+      'Tipo de cambio referencial; puede variar al confirmar.',
+    ],
+  };
+  </script>
+
+  <script src="quote.js"></script>
+</body>
+</html>

@@ -193,13 +193,32 @@ function renderFlights(q) {
 }
 
 /* ── Hotels ──────────────────────────────────────────────── */
-function hotelCardHTML(h) {
-  const photo = h.photo
-    ? `<img src="${esc(h.photo)}" alt="${esc(h.name)}" class="hotel-card-photo" loading="lazy">`
-    : '';
+function hotelCardHTML(h, cardIdx) {
+  const photos = h.photos && h.photos.length ? h.photos : (h.photo ? [h.photo] : []);
+  let photoBlock;
+  if (photos.length > 1) {
+    const id = `hotel-carousel-${cardIdx ?? Math.random().toString(36).slice(2)}`;
+    const imgs = photos.map(src =>
+      `<img src="${esc(src)}" alt="${esc(h.name)}" loading="lazy">`
+    ).join('');
+    const dots = photos.map((_, i) =>
+      `<button class="carousel-dot${i === 0 ? ' active' : ''}" data-index="${i}" aria-label="Foto ${i+1}"></button>`
+    ).join('');
+    photoBlock = `
+      <div class="carousel hotel-card-photo" id="${id}" data-current="0">
+        <div class="carousel-track">${imgs}</div>
+        <button class="carousel-btn prev" aria-label="Anterior">&#8249;</button>
+        <button class="carousel-btn next" aria-label="Siguiente">&#8250;</button>
+        <div class="carousel-dots">${dots}</div>
+      </div>`;
+  } else if (photos.length === 1) {
+    photoBlock = `<img src="${esc(photos[0])}" alt="${esc(h.name)}" class="hotel-card-photo" loading="lazy">`;
+  } else {
+    photoBlock = '';
+  }
   return `
     <div class="hotel-card">
-      ${photo}
+      ${photoBlock}
       <p class="hotel-name">${esc(h.name)}</p>
       <div class="hotel-meta">
         ${h.category  ? `<span>${esc(h.category)}</span>`            : ''}
@@ -209,7 +228,7 @@ function hotelCardHTML(h) {
         ${h.nights    ? `<span>${esc(h.nights)} noches</span>`       : ''}
         ${h.room_type ? `<span>${esc(h.room_type)}</span>`           : ''}
       </div>
-      ${h.price != null ? `<p class="hotel-card-price">${fmt(h.price, 'USD')}</p>` : ''}
+      ${h.price != null ? `<p class="hotel-card-price">${fmt(h.price, 'MXN')}</p>` : ''}
       ${h.notes ? `<p class="hotel-card-note">${esc(h.notes)}</p>` : ''}
     </div>`;
 }
@@ -246,7 +265,7 @@ function renderHotels(q) {
     if (section) section.style.display = 'none';
     return;
   }
-  const cards = q.hotels.map(hotelCardHTML).join('');
+  const cards = q.hotels.map((h, i) => hotelCardHTML(h, i)).join('');
   section.innerHTML = `
     <div class="container">
       <p class="section-label">Hospedaje</p>

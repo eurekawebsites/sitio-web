@@ -371,19 +371,75 @@ function renderPricing(q) {
     </div>`;
 }
 
+/* ── Payment installment calculator ─────────────────────── */
+function calcInstallments(departureDateIso) {
+  const today     = new Date();
+  const departure = new Date(departureDateIso + 'T12:00:00');
+  const deadline  = new Date(departure);
+  deadline.setMonth(deadline.getMonth() - 1);
+  const months =
+    (deadline.getFullYear() - today.getFullYear()) * 12 +
+    (deadline.getMonth() - today.getMonth());
+  return Math.max(1, Math.min(24, months));
+}
+
+function fmtMxn(n) {
+  return '$' + n.toLocaleString('es-MX', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+}
+
+function paymentBlock(label, totalMxn, departureDateIso) {
+  const installments   = calcInstallments(departureDateIso);
+  const amountPerMonth = Math.ceil(totalMxn / installments);
+  const monthLabel     = installments === 1 ? 'mensualidad' : 'mensualidades';
+  const tripId         = 'quote-' + label.toLowerCase().replace(/\s+/g, '-');
+  return `
+    <div class="trip-payment-block btn-pay"
+      data-trip-id="${esc(tripId)}"
+      data-trip-name="${esc(label)}"
+      data-total="${totalMxn}"
+      data-installments="${installments}"
+      role="button" tabindex="0"
+      aria-label="Pagar con tarjeta — ${fmtMxn(amountPerMonth)}/mes"
+    >
+      <div class="trip-payment-header">
+        <svg class="trip-payment-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+          <rect x="1" y="4" width="22" height="16" rx="2" ry="2"/>
+          <line x1="1" y1="10" x2="23" y2="10"/>
+        </svg>
+        <span class="trip-payment-label">Pago mensual domiciliado · ${esc(label)}</span>
+      </div>
+      <div class="trip-payment-amount">
+        <span class="trip-payment-price">${fmtMxn(amountPerMonth)}</span>
+        <span class="trip-payment-mo">MXN/mes</span>
+      </div>
+      <p class="trip-payment-detail">${installments} ${monthLabel} · Total ${fmtMxn(totalMxn)} MXN</p>
+      <p class="trip-payment-cta">Pagar con tarjeta &rarr;</p>
+    </div>`;
+}
+
 /* ── Payment ─────────────────────────────────────────────── */
 function renderPayment(q) {
   const section = document.getElementById('payment-section');
   if (!section || !q.payment) { if (section) section.style.display = 'none'; return; }
   const p = q.payment;
-  const stripeBlock = p.stripe_url ? `
-    <div class="payment-or">
-      <span>o paga con tarjeta</span>
-    </div>
-    <a class="payment-stripe-btn" href="${esc(p.stripe_url)}" target="_blank" rel="noopener noreferrer">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
-      Pagar con tarjeta (Stripe)
-    </a>` : '';
+
+  // Build per-hotel payment blocks if hotels have prices and quote has departure
+  let stripeBlocks = '';
+  if (q.hotels && q.hotels.length && q.departure_date_iso) {
+    const hotelsWithPrice = q.hotels.filter(h => h.price != null && h.price > 0);
+    if (hotelsWithPrice.length) {
+      stripeBlocks = `
+        <div class="payment-or"><span>o paga con tarjeta · elige tu opción</span></div>
+        ${hotelsWithPrice.map(h => paymentBlock(h.name, h.price, q.departure_date_iso)).join('')}`;
+    }
+  } else if (p.stripe_url) {
+    stripeBlocks = `
+      <div class="payment-or"><span>o paga con tarjeta</span></div>
+      <a class="payment-stripe-btn" href="${esc(p.stripe_url)}" target="_blank" rel="noopener noreferrer">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+        Pagar con tarjeta (Stripe)
+      </a>`;
+  }
 
   section.innerHTML = `
     <div class="container">
@@ -392,12 +448,49 @@ function renderPayment(q) {
       <h2 style="font-size:1.7rem;color:var(--green);margin-bottom:20px;">Cómo reservar</h2>
       <div class="payment-card">
         <div class="payment-row"><span>Banco</span><strong>${esc(p.bank)}</strong></div>
-        <div class="payment-row"><span>CLABE</span><strong class="payment-clabe">${esc(p.clabe)}</strong></div>
+        <div class="payment-row">
+          <span>CLABE</span>
+          <strong class="payment-clabe">${esc(p.clabe)}</strong>
+          <button class="clabe-copy-btn" onclick="navigator.clipboard.writeText('${esc(p.clabe)}').then(()=>{ this.textContent='¡Copiado!'; setTimeout(()=>this.textContent='Copiar',2000); })">Copiar</button>
+        </div>
         <div class="payment-row"><span>Titular</span><strong>${esc(p.name)}</strong></div>
         ${p.note ? `<p class="payment-note">${esc(p.note)}</p>` : ''}
-        ${stripeBlock}
+        ${stripeBlocks}
       </div>
     </div>`;
+
+  // Init pay buttons (same as main site)
+  const API_BASE = 'https://api-bkhoybmiga-uc.a.run.app';
+  section.querySelectorAll('.btn-pay').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      if (btn.dataset.loading) return;
+      btn.dataset.loading = '1';
+      const cta = btn.querySelector('.trip-payment-cta');
+      if (cta) cta.textContent = 'Redirigiendo…';
+      try {
+        const res = await fetch(API_BASE + '/checkout', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            tripId:       btn.dataset.tripId,
+            tripName:     btn.dataset.tripName,
+            totalMxn:     parseInt(btn.dataset.total, 10),
+            installments: parseInt(btn.dataset.installments, 10),
+            successUrl:   window.location.href + '?pago=exitoso',
+            cancelUrl:    window.location.href,
+          }),
+        });
+        const data = await res.json();
+        if (!res.ok || !data.url) throw new Error(data.error || 'Error');
+        window.location.href = data.url;
+      } catch (err) {
+        delete btn.dataset.loading;
+        const cta = btn.querySelector('.trip-payment-cta');
+        if (cta) cta.textContent = 'Pagar con tarjeta →';
+        alert('No se pudo conectar con el servicio de pago. Intenta de nuevo o escríbenos por WhatsApp.');
+      }
+    });
+  });
 }
 
 /* ── CTA band ────────────────────────────────────────────── */

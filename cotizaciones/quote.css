@@ -813,6 +813,72 @@ h1, h2, h3, h4, h5 {
 }
 .payment-stripe-btn:hover { background: var(--dark-green); }
 
+/* ── CLABE copy button ───────────────────────────────────── */
+.clabe-copy-btn {
+  margin-left: 10px;
+  font-size: 0.7rem;
+  font-family: var(--sans);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--gold);
+  background: transparent;
+  border: 1px solid var(--gold);
+  border-radius: 4px;
+  padding: 2px 8px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+.clabe-copy-btn:hover { background: var(--gold); color: #fff; }
+
+/* ── Monthly payment blocks (matches main site style) ────── */
+.trip-payment-block {
+  border: 1px solid var(--gold);
+  border-radius: var(--radius);
+  padding: 18px 20px 16px;
+  margin-top: 16px;
+  background: rgba(201, 168, 76, 0.06);
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+}
+.trip-payment-block:hover {
+  border-color: #b8963e;
+  background: rgba(201, 168, 76, 0.12);
+  box-shadow: 0 4px 14px rgba(201, 168, 76, 0.18);
+}
+.trip-payment-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+.trip-payment-icon { width: 18px; height: 18px; color: var(--gold); flex-shrink: 0; }
+.trip-payment-label {
+  font-family: var(--sans);
+  font-size: 0.62rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.trip-payment-amount { display: flex; align-items: baseline; gap: 4px; margin-bottom: 4px; }
+.trip-payment-price {
+  font-family: var(--serif);
+  font-size: 1.9rem;
+  font-weight: 500;
+  color: var(--green);
+  line-height: 1;
+}
+.trip-payment-mo { font-family: var(--sans); font-size: 0.78rem; color: var(--muted); }
+.trip-payment-detail { font-family: var(--sans); font-size: 0.72rem; color: var(--muted); margin-bottom: 14px; }
+.trip-payment-cta {
+  font-family: var(--sans);
+  font-size: 0.7rem;
+  font-weight: bold;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin: 0;
+}
+
 /* ── Print / PDF button ──────────────────────────────────── */
 .btn-print {
   display: inline-flex;

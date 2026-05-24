@@ -366,9 +366,6 @@ function renderPricing(q) {
     section.innerHTML = `
       <div class="container">
         <hr class="section-divider">
-        <p class="section-label">Resumen económico</p>
-        <h2>Compara las opciones</h2>
-        <div class="price-cols">${cols}</div>
         ${ticketsRow}
         ${extrasBlock}
         ${note}

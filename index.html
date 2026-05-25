@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
@@ -46,6 +46,27 @@
         <li><a href="#viajes">Viajes</a></li>
         <li><a href="#nosotros">Nosotros</a></li>
         <li><a href="#contacto">Contacto</a></li>
+        <li style="position:relative" id="asesores-li">
+          <button
+            onclick="toggleAsesores(event)"
+            style="display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border:1px solid #bbb;border-radius:6px;font-size:.72rem;letter-spacing:2px;text-transform:uppercase;color:var(--muted);background:transparent;cursor:pointer;font-family:inherit;transition:color .2s,border-color .2s"
+            onmouseover="this.style.color='var(--green)';this.style.borderColor='var(--green)'"
+            onmouseout="this.style.color='var(--muted)';this.style.borderColor='#bbb'"
+            aria-haspopup="true"
+            id="asesores-btn"
+          >
+            Agentes ▾
+          </button>
+          <ul id="asesores-menu" role="menu" style="display:none;position:absolute;right:0;top:calc(100% + 8px);background:#fff;border:1px solid #ddd;border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,0.12);min-width:200px;padding:6px 0;z-index:200;list-style:none">
+            <li role="menuitem">
+              <a href="/tarjeta" style="display:flex;align-items:center;gap:10px;padding:11px 18px;text-decoration:none;color:var(--green);font-size:.85rem;transition:background .15s" onmouseover="this.style.background='#f5f0e8'" onmouseout="this.style.background='transparent'">
+                <span style="width:32px;height:32px;border-radius:50%;background:#4A6741;color:#fff;display:flex;align-items:center;justify-content:center;font-size:.8rem;flex-shrink:0;font-family:Georgia,serif">AI</span>
+                <span><strong style="display:block">Aster Íñigo</strong><span style="font-size:.75rem;color:#888">Asesor de Viajes</span></span>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li style="margin-left:20px;padding-left:20px;border-left:1px solid var(--border)"><a href="/pagos.html" style="display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border:1px solid #bbb;border-radius:6px;font-size:.72rem;letter-spacing:2px;text-transform:uppercase;text-decoration:none;color:var(--muted);background:transparent;transition:color .2s,border-color .2s" onmouseover="this.style.color='var(--green)';this.style.borderColor='var(--green)'" onmouseout="this.style.color='var(--muted)';this.style.borderColor='#bbb'">&#x2192; Iniciar sesión</a></li>
       </ul>
 
     </div>
@@ -161,12 +182,22 @@
         Coordenada Viajes &nbsp;·&nbsp; Ciudad de México &nbsp;·&nbsp; @coordenada.viajes
       </p>
 
-      <a href="https://www.eurekawebsites.tech/" target="_blank" rel="noopener noreferrer" class="footer-powered">Powered by Eureka Websites</a>
+      <a href="https://www.eurekawebsites.tech/" target="_blank" rel="noopener noreferrer" class="footer-powered"><img src="https://raw.githubusercontent.com/eurekawebsites/eureka-website/main/eureka-bird-1.svg" alt="" style="width:16px;height:16px;vertical-align:middle;margin-right:6px;opacity:0.7;" />POWERED BY EUREKA WEBSITES</a>
 
     </div>
   </footer>
 
   <script src="js/main.js"></script>
+  <script>
+    function toggleAsesores(e) {
+      e.stopPropagation();
+      var menu = document.getElementById('asesores-menu');
+      menu.style.display = menu.style.display === 'none' ? 'block' : 'none';
+    }
+    document.addEventListener('click', function() {
+      document.getElementById('asesores-menu').style.display = 'none';
+    });
+  </script>
 
 </body>
 </html>
